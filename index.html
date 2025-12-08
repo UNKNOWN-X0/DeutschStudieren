@@ -720,7 +720,9 @@
       if (direction === "de-to-en") {
         // Accept both singular English and plural forms
         correctAnswers.push(current.word_en.toLowerCase());
-        // Some English words might have plural context
+        if (current.word_en_plural) {
+          correctAnswers.push(current.word_en_plural.toLowerCase());
+        }
       } else {
         // Accept both singular and plural German forms
         correctAnswers.push(current.word_de.toLowerCase());
