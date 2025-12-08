@@ -2,40 +2,519 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>German Practice</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #d00 0%, #ffce00 100%);
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(221, 0, 0, 0.3);
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    main {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .controls, .practice {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255, 206, 0, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+      color: #ffce00;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 206, 0, 0.3);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: #ffce00;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 20px rgba(255, 206, 0, 0.3);
+    }
+
+    select:hover, input:hover {
+      border-color: rgba(255, 206, 0, 0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #d00 0%, #a00 100%);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(221, 0, 0, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(221, 0, 0, 0.6);
+      background: linear-gradient(135deg, #ff0000 0%, #c00 100%);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .practice {
+      text-align: center;
+    }
+
+    #prompt {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(221, 0, 0, 0.2) 0%, rgba(255, 206, 0, 0.2) 100%);
+      border-radius: 15px;
+      font-weight: bold;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 0.5s ease-out;
+      border: 2px solid rgba(255, 206, 0, 0.3);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.02);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    #answer-input {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3em;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-size: 1.3em;
+      font-weight: bold;
+      min-height: 40px;
+      padding: 15px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    #feedback.correct {
+      background: rgba(255, 206, 0, 0.2);
+      color: #ffce00;
+      animation: correct 0.5s ease-out;
+    }
+
+    #feedback.incorrect {
+      background: rgba(221, 0, 0, 0.2);
+      color: #ff6b6b;
+      animation: shake 0.5s ease-out;
+    }
+
+    @keyframes correct {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-10px);
+      }
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: rgba(255, 206, 0, 0.1);
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid rgba(255, 206, 0, 0.3);
+    }
+
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #ffce00;
+    }
+
+    .stat-label {
+      font-size: 0.85em;
+      color: #ccc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      
+      #prompt {
+        font-size: 1.8em;
+        padding: 20px;
+      }
+      
+      .controls, .practice {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>German Word Practice</h1>
+    <h1>🇩🇪 German Word Practice</h1>
   </header>
 
   <main>
     <section class="controls">
-      <label for="category-select">Category:</label>
-      <select id="category-select"></select>
+      <div class="control-group">
+        <label for="category-select">📚 Category</label>
+        <select id="category-select"></select>
+      </div>
 
-      <label for="direction-select">Direction:</label>
-      <select id="direction-select">
-        <option value="de-to-en">German → English</option>
-        <option value="en-to-de">English → German</option>
-      </select>
+      <div class="control-group">
+        <label for="direction-select">🔄 Direction</label>
+        <select id="direction-select">
+          <option value="de-to-en">German → English</option>
+          <option value="en-to-de">English → German</option>
+        </select>
+      </div>
 
-      <button id="start-btn">Start</button>
+      <button id="start-btn">🚀 Start Practice</button>
     </section>
 
     <section class="practice hidden">
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="correct-count">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="total-count">0</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="accuracy">0%</div>
+          <div class="stat-label">Accuracy</div>
+        </div>
+      </div>
+
       <div id="prompt"></div>
 
-      <input id="answer-input" placeholder="Your answer…" autocomplete="off" />
+      <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
 
-      <button id="submit-btn">Submit</button>
+      <button id="submit-btn">✓ Submit Answer</button>
 
       <div id="feedback"></div>
     </section>
   </main>
 
-  <script src="words.js"></script>
-  <script src="script.js"></script>
+  <script>
+    // PASTE YOUR WORDS.JS CONTENT HERE
+    window.GERMAN_WORDS = [
+      // FOOD (30)
+      { word_de: "das Brot", forms: { plural: "die Brote" }, word_en: "bread", category: "food" },
+      { word_de: "der Apfel", forms: { plural: "die Äpfel" }, word_en: "apple", category: "food" },
+      { word_de: "die Banane", forms: { plural: "die Bananen" }, word_en: "banana", category: "food" },
+      { word_de: "die Orange", forms: { plural: "die Orangen" }, word_en: "orange", category: "food" },
+      { word_de: "die Erdbeere", forms: { plural: "die Erdbeeren" }, word_en: "strawberry", category: "food" },
+      { word_de: "die Tomate", forms: { plural: "die Tomaten" }, word_en: "tomato", category: "food" },
+      { word_de: "die Kartoffel", forms: { plural: "die Kartoffeln" }, word_en: "potato", category: "food" },
+      { word_de: "die Karotte", forms: { plural: "die Karotten" }, word_en: "carrot", category: "food" },
+      { word_de: "das Fleisch", forms: { plural: null }, word_en: "meat", category: "food" },
+      { word_de: "der Fisch", forms: { plural: "die Fische" }, word_en: "fish", category: "food" },
+      { word_de: "die Milch", forms: { plural: null }, word_en: "milk", category: "food" },
+      { word_de: "der Käse", forms: { plural: "die Käse" }, word_en: "cheese", category: "food" },
+      { word_de: "der Joghurt", forms: { plural: "die Joghurts" }, word_en: "yogurt", category: "food" },
+      { word_de: "die Butter", forms: { plural: null }, word_en: "butter", category: "food" },
+      { word_de: "das Ei", forms: { plural: "die Eier" }, word_en: "egg", category: "food" },
+      { word_de: "der Reis", forms: { plural: null }, word_en: "rice", category: "food" },
+      { word_de: "die Nudeln", forms: { plural: null }, word_en: "pasta", category: "food" },
+      { word_de: "das Salz", forms: { plural: null }, word_en: "salt", category: "food" },
+      { word_de: "der Zucker", forms: { plural: null }, word_en: "sugar", category: "food" },
+      { word_de: "das Wasser", forms: { plural: null }, word_en: "water", category: "food" },
+      { word_de: "der Kaffee", forms: { plural: null }, word_en: "coffee", category: "food" },
+      { word_de: "der Tee", forms: { plural: null }, word_en: "tea", category: "food" },
+      { word_de: "die Suppe", forms: { plural: "die Suppen" }, word_en: "soup", category: "food" },
+      { word_de: "der Salat", forms: { plural: "die Salate" }, word_en: "salad", category: "food" },
+      { word_de: "das Gemüse", forms: { plural: null }, word_en: "vegetables", category: "food" },
+      { word_de: "das Obst", forms: { plural: null }, word_en: "fruit", category: "food" },
+      { word_de: "die Pizza", forms: { plural: "die Pizzen" }, word_en: "pizza", category: "food" },
+      { word_de: "der Hamburger", forms: { plural: "die Hamburger" }, word_en: "hamburger", category: "food" },
+      { word_de: "die Wurst", forms: { plural: "die Würste" }, word_en: "sausage", category: "food" },
+      { word_de: "das Abendessen", forms: { plural: null }, word_en: "dinner", category: "food" },
+
+      // ANIMALS (30)
+      { word_de: "der Hund", forms: { plural: "die Hunde" }, word_en: "dog", category: "animals" },
+      { word_de: "die Katze", forms: { plural: "die Katzen" }, word_en: "cat", category: "animals" },
+      { word_de: "der Vogel", forms: { plural: "die Vögel" }, word_en: "bird", category: "animals" },
+      { word_de: "die Maus", forms: { plural: "die Mäuse" }, word_en: "mouse", category: "animals" },
+      { word_de: "die Ente", forms: { plural: "die Enten" }, word_en: "duck", category: "animals" },
+      { word_de: "das Pferd", forms: { plural: "die Pferde" }, word_en: "horse", category: "animals" },
+      { word_de: "die Kuh", forms: { plural: "die Kühe" }, word_en: "cow", category: "animals" },
+      { word_de: "das Schwein", forms: { plural: "die Schweine" }, word_en: "pig", category: "animals" },
+      { word_de: "das Schaf", forms: { plural: "die Schafe" }, word_en: "sheep", category: "animals" },
+      { word_de: "die Ziege", forms: { plural: "die Ziegen" }, word_en: "goat", category: "animals" },
+      { word_de: "der Löwe", forms: { plural: "die Löwen" }, word_en: "lion", category: "animals" },
+      { word_de: "der Tiger", forms: { plural: "die Tiger" }, word_en: "tiger", category: "animals" },
+      { word_de: "der Bär", forms: { plural: "die Bären" }, word_en: "bear", category: "animals" },
+      { word_de: "der Fuchs", forms: { plural: "die Füchse" }, word_en: "fox", category: "animals" },
+      { word_de: "der Wolf", forms: { plural: "die Wölfe" }, word_en: "wolf", category: "animals" },
+      { word_de: "der Hase", forms: { plural: "die Hasen" }, word_en: "rabbit", category: "animals" },
+      { word_de: "das Kaninchen", forms: { plural: "die Kaninchen" }, word_en: "bunny", category: "animals" },
+      { word_de: "der Affe", forms: { plural: "die Affen" }, word_en: "monkey", category: "animals" },
+      { word_de: "der Elefant", forms: { plural: "die Elefanten" }, word_en: "elephant", category: "animals" },
+      { word_de: "die Giraffe", forms: { plural: "die Giraffen" }, word_en: "giraffe", category: "animals" },
+      { word_de: "der Pinguin", forms: { plural: "die Pinguine" }, word_en: "penguin", category: "animals" },
+      { word_de: "der Delfin", forms: { plural: "die Delfine" }, word_en: "dolphin", category: "animals" },
+      { word_de: "der Wal", forms: { plural: "die Wale" }, word_en: "whale", category: "animals" },
+      { word_de: "der Hai", forms: { plural: "die Haie" }, word_en: "shark", category: "animals" },
+      { word_de: "die Schlange", forms: { plural: "die Schlangen" }, word_en: "snake", category: "animals" },
+      { word_de: "die Schildkröte", forms: { plural: "die Schildkröten" }, word_en: "turtle", category: "animals" },
+      { word_de: "die Spinne", forms: { plural: "die Spinnen" }, word_en: "spider", category: "animals" },
+      { word_de: "die Biene", forms: { plural: "die Bienen" }, word_en: "bee", category: "animals" },
+      { word_de: "die Ameise", forms: { plural: "die Ameisen" }, word_en: "ant", category: "animals" },
+      { word_de: "die Fliege", forms: { plural: "die Fliegen" }, word_en: "fly", category: "animals" },
+      
+      // CLOTHES (30)
+      { word_de: "die Jacke", forms: { plural: "die Jacken" }, word_en: "jacket", category: "clothes" },
+      { word_de: "das Hemd", forms: { plural: "die Hemden" }, word_en: "shirt", category: "clothes" },
+      { word_de: "die Hose", forms: { plural: "die Hosen" }, word_en: "pants", category: "clothes" },
+      { word_de: "die Schuhe", forms: { plural: "die Schuhe" }, word_en: "shoes", category: "clothes" },
+      { word_de: "der Rock", forms: { plural: "die Röcke" }, word_en: "skirt", category: "clothes" },
+      { word_de: "das Kleid", forms: { plural: "die Kleider" }, word_en: "dress", category: "clothes" },
+      { word_de: "der Pullover", forms: { plural: "die Pullover" }, word_en: "sweater", category: "clothes" },
+      { word_de: "der Mantel", forms: { plural: "die Mäntel" }, word_en: "coat", category: "clothes" },
+      { word_de: "die Bluse", forms: { plural: "die Blusen" }, word_en: "blouse", category: "clothes" },
+      { word_de: "der Anzug", forms: { plural: "die Anzüge" }, word_en: "suit", category: "clothes" },
+      { word_de: "die Unterwäsche", forms: { plural: null }, word_en: "underwear", category: "clothes" },
+      { word_de: "die Socken", forms: { plural: null }, word_en: "socks", category: "clothes" },
+      { word_de: "der Hut", forms: { plural: "die Hüte" }, word_en: "hat", category: "clothes" },
+      { word_de: "die Mütze", forms: { plural: "die Mützen" }, word_en: "cap", category: "clothes" },
+      { word_de: "der Schal", forms: { plural: "die Schals" }, word_en: "scarf", category: "clothes" },
+      { word_de: "die Handschuhe", forms: { plural: null }, word_en: "gloves", category: "clothes" },
+      { word_de: "die Stiefel", forms: { plural: null }, word_en: "boots", category: "clothes" },
+      { word_de: "die Krawatte", forms: { plural: "die Krawatten" }, word_en: "tie", category: "clothes" },
+      { word_de: "die Weste", forms: { plural: "die Westen" }, word_en: "vest", category: "clothes" },
+      { word_de: "das T-Shirt", forms: { plural: "die T-Shirts" }, word_en: "t-shirt", category: "clothes" },
+      { word_de: "die Jeans", forms: { plural: null }, word_en: "jeans", category: "clothes" },
+      { word_de: "die Shorts", forms: { plural: null }, word_en: "shorts", category: "clothes" },
+      { word_de: "der Regenmantel", forms: { plural: "die Regenmäntel" }, word_en: "raincoat", category: "clothes" },
+      { word_de: "die Badehose", forms: { plural: "die Badehosen" }, word_en: "swim trunks", category: "clothes" },
+      { word_de: "der Badeanzug", forms: { plural: "die Badeanzüge" }, word_en: "swimsuit", category: "clothes" },
+      { word_de: "die Flip-Flops", forms: { plural: null }, word_en: "flip-flops", category: "clothes" },
+      { word_de: "die Sportschuhe", forms: { plural: null }, word_en: "sneakers", category: "clothes" },
+      { word_de: "die Hausschuhe", forms: { plural: null }, word_en: "slippers", category: "clothes" },
+      { word_de: "die Strumpfhose", forms: { plural: "die Strumpfhosen" }, word_en: "tights", category: "clothes" },
+      { word_de: "die Kapuzenjacke", forms: { plural: "die Kapuzenjacken" }, word_en: "hoodie", category: "clothes" }
+    ];
+
+    // Main script
+    let vocab = window.GERMAN_WORDS || [];
+    let filtered = [];
+    let current = null;
+    let direction = "de-to-en";
+    let correctCount = 0;
+    let totalCount = 0;
+
+    const categorySelect = document.getElementById("category-select");
+    const directionSelect = document.getElementById("direction-select");
+    const startBtn = document.getElementById("start-btn");
+    const promptEl = document.getElementById("prompt");
+    const answerInput = document.getElementById("answer-input");
+    const submitBtn = document.getElementById("submit-btn");
+    const feedbackEl = document.getElementById("feedback");
+    const practiceSection = document.querySelector(".practice");
+    const correctCountEl = document.getElementById("correct-count");
+    const totalCountEl = document.getElementById("total-count");
+    const accuracyEl = document.getElementById("accuracy");
+
+    function populateCategories() {
+      const categories = [...new Set(vocab.map(w => w.category))].sort();
+      categories.forEach(cat => {
+        const opt = document.createElement("option");
+        opt.value = opt.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        categorySelect.appendChild(opt);
+      });
+    }
+
+    function updateStats() {
+      correctCountEl.textContent = correctCount;
+      totalCountEl.textContent = totalCount;
+      const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+      accuracyEl.textContent = accuracy + "%";
+    }
+
+    function newWord() {
+      current = filtered[Math.floor(Math.random() * filtered.length)];
+
+      if (direction === "de-to-en") {
+        promptEl.textContent = current.word_de + 
+          (current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
+      } else {
+        promptEl.textContent = current.word_en;
+      }
+
+      answerInput.value = "";
+      answerInput.focus();
+      feedbackEl.textContent = "";
+      feedbackEl.className = "";
+    }
+
+    submitBtn.addEventListener("click", () => {
+      const user = answerInput.value.trim().toLowerCase();
+
+      let correct;
+      if (direction === "de-to-en") {
+        correct = current.word_en.toLowerCase();
+      } else {
+        correct = current.word_de.toLowerCase();
+      }
+
+      totalCount++;
+      
+      if (user === correct) {
+        correctCount++;
+        feedbackEl.textContent = "🎉 Correct!";
+        feedbackEl.className = "correct";
+      } else {
+        feedbackEl.textContent = `❌ Incorrect. Correct answer: ${correct}`;
+        feedbackEl.className = "incorrect";
+      }
+
+      updateStats();
+      setTimeout(newWord, 1500);
+    });
+
+    answerInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        submitBtn.click();
+      }
+    });
+
+    startBtn.addEventListener("click", () => {
+      const category = categorySelect.value.toLowerCase();
+      direction = directionSelect.value;
+
+      filtered = vocab.filter(w => w.category === category);
+      if (!filtered.length) return;
+
+      correctCount = 0;
+      totalCount = 0;
+      updateStats();
+
+      practiceSection.classList.remove("hidden");
+      newWord();
+    });
+
+    populateCategories();
+  </script>
 </body>
 </html>
