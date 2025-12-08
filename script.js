@@ -14,10 +14,17 @@ const practiceSection = document.querySelector(".practice");
 
 // Load categories
 function populateCategories() {
+  // Reset dropdown and add "All" as the first option
+  categorySelect.innerHTML = '<option value="all">All</option>';
+
+  // Get unique categories from vocab
   const categories = [...new Set(vocab.map(w => w.category))].sort();
+
+  // Add each category to the dropdown
   categories.forEach(cat => {
     const opt = document.createElement("option");
-    opt.value = opt.textContent = cat;
+    opt.value = cat;
+    opt.textContent = cat;
     categorySelect.appendChild(opt);
   });
 }
@@ -37,33 +44,21 @@ function newWord() {
   feedbackEl.textContent = "";
 }
 
-submitBtn.addEventListener("click", () => {
-  const user = answerInput.value.trim().toLowerCase();
-
-  let correct;
-  if (direction === "de-to-en") {
-    correct = current.word_en.toLowerCase();
-  } else {
-    correct = current.word_de.toLowerCase();
-  }
-
-  if (user === correct) {
-    feedbackEl.textContent = "Correct.";
-    feedbackEl.style.color = "#ffce00";
-  } else {
-    feedbackEl.textContent = `Incorrect. Correct answer: ${correct}`;
-    feedbackEl.style.color = "#d00";
-  }
-
-  setTimeout(newWord, 1200);
-});
-
 startBtn.addEventListener("click", () => {
   const category = categorySelect.value;
   direction = directionSelect.value;
 
-  filtered = vocab.filter(w => w.category === category);
-  if (!filtered.length) return;
+  // If "All" is selected, use all words
+  if (category === "all") {
+    filtered = vocab.slice(); // copy all words
+  } else {
+    filtered = vocab.filter(w => w.category === category);
+  }
+
+  if (!filtered.length) {
+    alert("No words found in this category!");
+    return;
+  }
 
   practiceSection.classList.remove("hidden");
   newWord();
