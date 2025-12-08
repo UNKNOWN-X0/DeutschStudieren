@@ -1,1 +1,128 @@
-<link rel="stylesheet" href="style.css">
+/* ------------------------------
+   GLOBAL DESIGN
+--------------------------------*/
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: #111;
+    color: #f8f8f8;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* German flag gradient header */
+h1 {
+    background: linear-gradient(90deg, #000, #dd0000, #ffce00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.4em;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+/* Page section titles */
+h2 {
+    color: #ffce00;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+button, a {
+    background: #222;
+    color: #ffce00;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 2px solid #dd0000;
+    font-size: 1.1em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.25s;
+}
+
+button:hover, a:hover {
+    background: #dd0000;
+    color: #fff;
+    border-color: #ffce00;
+    transform: translateY(-2px);
+}
+
+/* ------------------------------
+   PRACTICE BOX / QUESTION AREA
+--------------------------------*/
+#practice-area {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #1a1a1a;
+    border: 2px solid #dd0000;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px rgba(221,0,0,0.3);
+}
+
+#question-box {
+    font-size: 1.8em;
+    color: #ffce00;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+/* ------------------------------
+   INPUT FIELDS
+--------------------------------*/
+input, select {
+    padding: 10px;
+    font-size: 1.1em;
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid #ffce00;
+    border-radius: 8px;
+    margin: 10px;
+    background: #000;
+    color: #ffce00;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #dd0000;
+    box-shadow: 0 0 5px #dd0000;
+}
+
+/* ------------------------------
+   RESULT TEXT
+--------------------------------*/
+#result {
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+/* ------------------------------
+   CATEGORY LIST
+--------------------------------*/
+#categoryList {
+    color: #ddd;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* ------------------------------
+   LINKS
+--------------------------------*/
+a {
+    color: #ffce00;
+}
+
+/* ------------------------------
+   HIDDEN UTILITY
+--------------------------------*/
+.hidden {
+    display: none;
+}
