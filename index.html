@@ -3,226 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study German</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        a, button {
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 1.1em;
-            margin: 10px;
-            padding: 10px 18px;
-            border: none;
-            background: #eaf3ff;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        button:hover, a:hover {
-            background: #d8e8ff;
-        }
-
-        .hidden { display: none; }
-        #practice-area { margin-top: 30px; }
-        #question-box { font-size: 1.5em; margin: 20px; }
-        input { padding: 8px; width: 250px; margin: 8px; }
-        #result { font-weight: bold; margin-top: 15px; }
-    </style>
+    <title>German Learning App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>German Vocabulary Trainer</h1>
+    </header>
 
-    <h1>Welcome to My German Study Website</h1>
+    <section id="settings">
+        <h2>Practice Settings</h2>
 
-    <!-- Main Menu -->
-    <p>Select an option:</p>
-    <button onclick="openWordList()">📘 Word List</button>
-    <button onclick="showCategories()">🗂 Categories</button>
-    <button onclick="openPractice()">✏️ Practice</button>
+        <label>Choose Category:</label>
+        <select id="categorySelect">
+            <option value="all">All</option>
+        </select>
 
-    <!-- Word List Link -->
-    <div id="wordList" class="hidden">
-        <h2>German Word List</h2>
-        <p>This opens your Google Sheets database:</p>
-        <a href="https://docs.google.com/spreadsheets/d/1MAUVWHaTJGcv3QMZ1IolQBYbY-n6fMX_N0wLAmSgDJs/edit?usp=sharing" target="_blank">
-            Open German Word List
-        </a>
-    </div>
+        <label>Show:</label>
+        <select id="showMode">
+            <option value="de">German → English</option>
+            <option value="en">English → German</option>
+        </select>
 
-    <!-- Categories Section -->
-    <div id="categories" class="hidden">
-        <h2>Categories</h2>
-        <p id="categoryList">Loading categories...</p>
-    </div>
+        <button id="startBtn">Start Practice</button>
+    </section>
 
-    <!-- Practice Section -->
-    <div id="practice" class="hidden">
-        <h2>Practice Mode</h2>
+    <section id="practice" class="hidden">
+        <h2 id="prompt"></h2>
+        <input type="text" id="answerInput" placeholder="Type your answer...">
+        <button id="checkBtn">Check</button>
+        <p id="feedback"></p>
+    </section>
 
-        <label>
-            Choose category:
-            <select id="categorySelect"></select>
-        </label>
-        <br><br>
-
-        <label>
-            Direction:
-            <select id="directionSelect">
-                <option value="de-to-en">German → English</option>
-                <option value="en-to-de">English → German (with forms)</option>
-            </select>
-        </label>
-
-        <br><br>
-        <button onclick="startPractice()">Start</button>
-
-        <div id="practice-area" class="hidden">
-            <div id="question-box"></div>
-
-            <input id="answer" placeholder="Enter your answer...">
-            <br>
-            <button onclick="checkAnswer()">Submit</button>
-
-            <p id="result"></p>
-        </div>
-    </div>
-
-    <script>
-        // ------------------------------------------------
-        // 1. LOAD DATA FROM GOOGLE SHEETS AS JSON
-        // ------------------------------------------------
-        const sheetURL = "https://docs.google.com/spreadsheets/d/1MAUVWHaTJGcv3QMZ1IolQBYbY-n6fMX_N0wLAmSgDJs/gviz/tq?tqx=out:json";
-
-        let wordList = [];
-        let currentWord = null;
-
-        fetch(sheetURL)
-            .then(r => r.text())
-            .then(text => {
-                const json = JSON.parse(text.substring(47, text.length - 2));
-
-                json.table.rows.forEach(row => {
-                    let cells = row.c;
-
-                    wordList.push({
-                        word_de: cells[0]?.v || "",
-                        forms: cells[1]?.v || "",
-                        word_en: cells[2]?.v || "",
-                        category: cells[3]?.v || "general"
-                    });
-                });
-
-                loadCategories();
-            });
-
-        // ------------------------------------------------
-        // 2. NAVIGATION HANDLERS
-        // ------------------------------------------------
-        function openWordList() {
-            hideAll();
-            document.getElementById("wordList").classList.remove("hidden");
-        }
-
-        function showCategories() {
-            hideAll();
-            document.getElementById("categories").classList.remove("hidden");
-        }
-
-        function openPractice() {
-            hideAll();
-            createCategoryDropdown();
-            document.getElementById("practice").classList.remove("hidden");
-        }
-
-        function hideAll() {
-            document.getElementById("wordList").classList.add("hidden");
-            document.getElementById("categories").classList.add("hidden");
-            document.getElementById("practice").classList.add("hidden");
-        }
-
-        // ------------------------------------------------
-        // 3. CATEGORY LOGIC
-        // ------------------------------------------------
-        function loadCategories() {
-            const catSet = new Set(wordList.map(w => w.category));
-            const list = [...catSet].map(c => `• ${c}`).join("<br>");
-            document.getElementById("categoryList").innerHTML = list;
-        }
-
-        function createCategoryDropdown() {
-            const select = document.getElementById("categorySelect");
-            select.innerHTML = "";
-
-            const catSet = new Set(wordList.map(w => w.category));
-            select.innerHTML += `<option value="all">All</option>`;
-            [...catSet].forEach(c => {
-                select.innerHTML += `<option value="${c}">${c}</option>`;
-            });
-        }
-
-        // ------------------------------------------------
-        // 4. PRACTICE MODE
-        // ------------------------------------------------
-        function startPractice() {
-            document.getElementById("practice-area").classList.remove("hidden");
-            nextQuestion();
-        }
-
-        function nextQuestion() {
-            document.getElementById("result").innerHTML = "";
-            const category = document.getElementById("categorySelect").value;
-            const direction = document.getElementById("directionSelect").value;
-
-            let filtered = category === "all"
-                ? wordList
-                : wordList.filter(w => w.category === category);
-
-            currentWord = filtered[Math.floor(Math.random() * filtered.length)];
-
-            if (direction === "de-to-en") {
-                document.getElementById("question-box").innerText = currentWord.word_de;
-            } else {
-                document.getElementById("question-box").innerText = currentWord.word_en;
-            }
-        }
-
-        function checkAnswer() {
-            const user = document.getElementById("answer").value.trim().toLowerCase();
-            const direction = document.getElementById("directionSelect").value;
-
-            let correct = false;
-
-            if (direction === "de-to-en") {
-                correct = (user === currentWord.word_en.toLowerCase());
-            } else {
-                // Expect German + forms
-                const combined = (currentWord.word_de + " " + currentWord.forms)
-                                 .toLowerCase().replace(/\s+/g," ").trim();
-
-                correct = combined.includes(user);
-            }
-
-            const result = document.getElementById("result");
-
-            if (correct) {
-                result.style.color = "green";
-                result.innerHTML = "Correct!";
-            } else {
-                result.style.color = "red";
-                result.innerHTML = `
-                    Wrong<br>
-                    Correct answer:<br>
-                    <b>${currentWord.word_de}</b> (${currentWord.forms}) → ${currentWord.word_en}
-                `;
-            }
-
-            document.getElementById("answer").value = "";
-            setTimeout(nextQuestion, 2000);
-        }
-    </script>
-
+    <script src="words.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
