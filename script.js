@@ -1,64 +1,73 @@
-const categorySelect = document.getElementById("categorySelect");
-const showMode = document.getElementById("showMode");
-const startBtn = document.getElementById("startBtn");
-const practice = document.getElementById("practice");
-const prompt = document.getElementById("prompt");
-const answerInput = document.getElementById("answerInput");
-const checkBtn = document.getElementById("checkBtn");
-const feedback = document.getElementById("feedback");
+let vocab = window.GERMAN_WORDS || [];
+let filtered = [];
+let current = null;
+let direction = "de-to-en";
 
-let filteredWords = [];
-let currentWord = null;
+const categorySelect = document.getElementById("category-select");
+const directionSelect = document.getElementById("direction-select");
+const startBtn = document.getElementById("start-btn");
+const promptEl = document.getElementById("prompt");
+const answerInput = document.getElementById("answer-input");
+const submitBtn = document.getElementById("submit-btn");
+const feedbackEl = document.getElementById("feedback");
+const practiceSection = document.querySelector(".practice");
 
-// Load categories into the dropdown
-(function loadCategories() {
-    const cats = [...new Set(WORDS.map(w => w.category))];
-    cats.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c;
-        opt.textContent = c;
-        categorySelect.appendChild(opt);
-    });
-})();
-
-startBtn.addEventListener("click", () => {
-    const selected = categorySelect.value;
-
-    filteredWords = selected === "all"
-        ? WORDS
-        : WORDS.filter(w => w.category === selected);
-
-    if (filteredWords.length === 0) {
-        alert("No words in this category.");
-        return;
-    }
-
-    practice.classList.remove("hidden");
-    newPracticeRound();
-});
-
-function newPracticeRound() {
-    currentWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
-    answerInput.value = "";
-    feedback.textContent = "";
-
-    if (showMode.value === "de") {
-        prompt.textContent = `${currentWord.word_de} (${currentWord.forms})`;
-    } else {
-        prompt.textContent = currentWord.word_en;
-    }
+// Load categories
+function populateCategories() {
+  const categories = [...new Set(vocab.map(w => w.category))].sort();
+  categories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = opt.textContent = cat;
+    categorySelect.appendChild(opt);
+  });
 }
 
-checkBtn.addEventListener("click", () => {
-    const ans = answerInput.value.trim().toLowerCase();
+function newWord() {
+  current = filtered[Math.floor(Math.random() * filtered.length)];
 
-    let correct =
-        (showMode.value === "de" && ans === currentWord.word_en.toLowerCase()) ||
-        (showMode.value === "en" && ans === currentWord.word_de.toLowerCase());
+  if (direction === "de-to-en") {
+    promptEl.textContent = current.word_de + 
+      (current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
+  } else {
+    promptEl.textContent = current.word_en;
+  }
 
-    feedback.textContent = correct
-        ? "✔ Correct!"
-        : `✘ Wrong. Answer: ${showMode.value === "de" ? currentWord.word_en : currentWord.word_de}`;
+  answerInput.value = "";
+  answerInput.focus();
+  feedbackEl.textContent = "";
+}
 
-    setTimeout(newPracticeRound, 1500);
+submitBtn.addEventListener("click", () => {
+  const user = answerInput.value.trim().toLowerCase();
+
+  let correct;
+  if (direction === "de-to-en") {
+    correct = current.word_en.toLowerCase();
+  } else {
+    correct = current.word_de.toLowerCase();
+  }
+
+  if (user === correct) {
+    feedbackEl.textContent = "Correct.";
+    feedbackEl.style.color = "#ffce00";
+  } else {
+    feedbackEl.textContent = `Incorrect. Correct answer: ${correct}`;
+    feedbackEl.style.color = "#d00";
+  }
+
+  setTimeout(newWord, 1200);
 });
+
+startBtn.addEventListener("click", () => {
+  const category = categorySelect.value;
+  direction = directionSelect.value;
+
+  filtered = vocab.filter(w => w.category === category);
+  if (!filtered.length) return;
+
+  practiceSection.classList.remove("hidden");
+  newWord();
+});
+
+// Initialize
+populateCategories();
