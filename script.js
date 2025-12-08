@@ -45,15 +45,18 @@ function newWord() {
 }
 
 startBtn.addEventListener("click", () => {
-  const category = categorySelect.value;
+  const category = categorySelect.value.trim().toLowerCase(); // remove whitespace
   direction = directionSelect.value;
 
-  // If "All" is selected, use all words
+  console.log("Selected category:", category);
+
   if (category === "all") {
-    filtered = vocab.slice(); // copy all words
+    filtered = vocab.slice(); // all words
   } else {
-    filtered = vocab.filter(w => w.category === category);
+    filtered = vocab.filter(w => w.category.toLowerCase() === category);
   }
+
+  console.log("Filtered words:", filtered.length);
 
   if (!filtered.length) {
     alert("No words found in this category!");
