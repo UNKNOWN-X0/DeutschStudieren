@@ -1,65 +1,71 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
 }
 
 header {
-    background: linear-gradient(to right, #000, #dd0000, #ffcc00);
-    padding: 20px;
+  background: linear-gradient(to right, #000, #d00, #ffce00);
+  padding: 20px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
 }
 
-h1 {
-    margin: 0;
-    font-size: 2.2em;
-    color: white;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+main {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
 }
 
-section {
-    background: #1a1a1a;
-    margin: 20px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px black;
+.controls, .practice {
+  background: #111;
+  padding: 20px;
+  border-left: 6px solid #d00;
+  margin-bottom: 20px;
+  border-radius: 6px;
 }
 
 label {
-    display: block;
-    margin-top: 10px;
+  display: block;
+  margin-top: 10px;
 }
 
-select, input, button {
-    margin-top: 10px;
-    padding: 10px;
-    width: 80%;
-    border-radius: 6px;
-    border: none;
-    font-size: 1em;
+select, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  background: #000;
+  border: 1px solid #ffce00;
+  color: #fff;
 }
 
 button {
-    background: #dd0000;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  background: #d00;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
-    background: #ffcc00;
-    color: black;
+  background: #a00;
 }
 
-.hidden {
-    display: none;
+#prompt {
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
 #feedback {
-    margin-top: 15px;
-    font-size: 1.2em;
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.hidden {
+  display: none;
 }
