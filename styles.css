@@ -1,0 +1,440 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1810 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 206, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: backgroundScroll 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes backgroundScroll {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+header {
+  background: linear-gradient(135deg, #d00 0%, #ffce00 100%);
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 40px rgba(221, 0, 0, 0.4);
+  animation: slideDown 0.6s ease-out;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+h1 {
+  font-size: 2.8em;
+  font-weight: bold;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1;
+}
+
+main {
+  max-width: 800px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.controls, .practice {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  padding: 35px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255, 206, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.controls:hover, .practice:hover {
+  border-color: rgba(255, 206, 0, 0.3);
+  box-shadow: 0 15px 50px rgba(255, 206, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.control-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  color: #ffce00;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+select, input {
+  width: 100%;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 206, 0, 0.3);
+  border-radius: 15px;
+  color: #fff;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: #ffce00;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 25px rgba(255, 206, 0, 0.4), inset 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+select:hover, input:hover {
+  border-color: rgba(255, 206, 0, 0.6);
+  transform: translateY(-1px);
+}
+
+select {
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, #d00 0%, #a00 100%);
+  border: none;
+  border-radius: 15px;
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 20px rgba(221, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(221, 0, 0, 0.7);
+  background: linear-gradient(135deg, #ff0000 0%, #c00 100%);
+}
+
+button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(221, 0, 0, 0.5);
+}
+
+button span {
+  position: relative;
+  z-index: 1;
+}
+
+.practice {
+  text-align: center;
+}
+
+#prompt {
+  font-size: 2.8em;
+  margin-bottom: 30px;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(221, 0, 0, 0.3) 0%, rgba(255, 206, 0, 0.3) 100%);
+  border-radius: 20px;
+  font-weight: bold;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 0.5s ease-out;
+  border: 3px solid rgba(255, 206, 0, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 206, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#prompt::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #d00, #ffce00, #d00);
+  border-radius: 20px;
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#prompt:hover::before {
+  opacity: 0.5;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#answer-input {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+#answer-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#feedback {
+  margin-top: 25px;
+  font-size: 1.4em;
+  font-weight: bold;
+  min-height: 50px;
+  padding: 20px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#feedback.correct {
+  background: linear-gradient(135deg, rgba(255, 206, 0, 0.3) 0%, rgba(255, 215, 0, 0.4) 100%);
+  color: #ffce00;
+  animation: correct 0.5s ease-out;
+  box-shadow: 0 0 30px rgba(255, 206, 0, 0.5);
+  border: 2px solid rgba(255, 206, 0, 0.6);
+}
+
+#feedback.incorrect {
+  background: linear-gradient(135deg, rgba(221, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0.4) 100%);
+  color: #ff6b6b;
+  animation: shake 0.5s ease-out;
+  box-shadow: 0 0 30px rgba(221, 0, 0, 0.5);
+  border: 2px solid rgba(221, 0, 0, 0.6);
+}
+
+@keyframes correct {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  gap: 20px;
+}
+
+.stat-box {
+  flex: 1;
+  background: linear-gradient(135deg, rgba(255, 206, 0, 0.15) 0%, rgba(221, 0, 0, 0.15) 100%);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid rgba(255, 206, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 206, 0, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 206, 0, 0.3);
+  border-color: rgba(255, 206, 0, 0.6);
+}
+
+.stat-box:hover::before {
+  left: 100%;
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #ffce00;
+  text-shadow: 0 3px 10px rgba(255, 206, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover .stat-number {
+  transform: scale(1.1);
+}
+
+.stat-label {
+  font-size: 0.9em;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
+  
+  #prompt {
+    font-size: 2em;
+    padding: 25px;
+  }
+  
+  .controls, .practice {
+    padding: 25px;
+  }
+  
+  .stats {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Loading animation for categories */
+@keyframes selectGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 206, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 206, 0, 0.6);
+  }
+}
+
+select:focus {
+  animation: selectGlow 2s infinite;
+}
