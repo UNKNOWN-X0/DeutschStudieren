@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German Learning App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>German Practice</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <h1>German Vocabulary Trainer</h1>
-    </header>
+  <header>
+    <h1>German Word Practice</h1>
+  </header>
 
-    <section id="settings">
-        <h2>Practice Settings</h2>
+  <main>
+    <section class="controls">
+      <label for="category-select">Category:</label>
+      <select id="category-select"></select>
 
-        <label>Choose Category:</label>
-        <select id="categorySelect">
-            <option value="all">All</option>
-        </select>
+      <label for="direction-select">Direction:</label>
+      <select id="direction-select">
+        <option value="de-to-en">German → English</option>
+        <option value="en-to-de">English → German</option>
+      </select>
 
-        <label>Show:</label>
-        <select id="showMode">
-            <option value="de">German → English</option>
-            <option value="en">English → German</option>
-        </select>
-
-        <button id="startBtn">Start Practice</button>
+      <button id="start-btn">Start</button>
     </section>
 
-    <section id="practice" class="hidden">
-        <h2 id="prompt"></h2>
-        <input type="text" id="answerInput" placeholder="Type your answer...">
-        <button id="checkBtn">Check</button>
-        <p id="feedback"></p>
-    </section>
+    <section class="practice hidden">
+      <div id="prompt"></div>
 
-    <script src="words.js"></script>
-    <script src="script.js"></script>
+      <input id="answer-input" placeholder="Your answer…" autocomplete="off" />
+
+      <button id="submit-btn">Submit</button>
+
+      <div id="feedback"></div>
+    </section>
+  </main>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
