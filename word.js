@@ -62,5 +62,36 @@ window.GERMAN_WORDS = [
   { word_de: "die Biene", forms: { plural: "die Bienen" }, word_en: "bee", category: "animals" },
   { word_de: "die Ameise", forms: { plural: "die Ameisen" }, word_en: "ant", category: "animals" },
   { word_de: "die Fliege", forms: { plural: "die Fliegen" }, word_en: "fly", category: "animals" },
-
-  ];
+  
+  // CLOTHES (30)
+  { word_de: "die Jacke", forms: { plural: "die Jacken" }, word_en: "jacket", category: "clothes" },
+  { word_de: "das Hemd", forms: { plural: "die Hemden" }, word_en: "shirt", category: "clothes" },
+  { word_de: "die Hose", forms: { plural: "die Hosen" }, word_en: "pants", category: "clothes" },
+  { word_de: "die Schuhe", forms: { plural: "die Schuhe" }, word_en: "shoes", category: "clothes" },
+  { word_de: "der Rock", forms: { plural: "die Röcke" }, word_en: "skirt", category: "clothes" },
+  { word_de: "das Kleid", forms: { plural: "die Kleider" }, word_en: "dress", category: "clothes" },
+  { word_de: "der Pullover", forms: { plural: "die Pullover" }, word_en: "sweater", category: "clothes" },
+  { word_de: "der Mantel", forms: { plural: "die Mäntel" }, word_en: "coat", category: "clothes" },
+  { word_de: "die Bluse", forms: { plural: "die Blusen" }, word_en: "blouse", category: "clothes" },
+  { word_de: "der Anzug", forms: { plural: "die Anzüge" }, word_en: "suit", category: "clothes" },
+  { word_de: "die Unterwäsche", forms: { plural: null }, word_en: "underwear", category: "clothes" },
+  { word_de: "die Socken", forms: { plural: null }, word_en: "socks", category: "clothes" },
+  { word_de: "der Hut", forms: { plural: "die Hüte" }, word_en: "hat", category: "clothes" },
+  { word_de: "die Mütze", forms: { plural: "die Mützen" }, word_en: "cap", category: "clothes" },
+  { word_de: "der Schal", forms: { plural: "die Schals" }, word_en: "scarf", category: "clothes" },
+  { word_de: "die Handschuhe", forms: { plural: null }, word_en: "gloves", category: "clothes" },
+  { word_de: "die Stiefel", forms: { plural: null }, word_en: "boots", category: "clothes" },
+  { word_de: "die Krawatte", forms: { plural: "die Krawatten" }, word_en: "tie", category: "clothes" },
+  { word_de: "die Weste", forms: { plural: "die Westen" }, word_en: "vest", category: "clothes" },
+  { word_de: "das T-Shirt", forms: { plural: "die T-Shirts" }, word_en: "t-shirt", category: "clothes" },
+  { word_de: "die Jeans", forms: { plural: null }, word_en: "jeans", category: "clothes" },
+  { word_de: "die Shorts", forms: { plural: null }, word_en: "shorts", category: "clothes" },
+  { word_de: "der Regenmantel", forms: { plural: "die Regenmäntel" }, word_en: "raincoat", category: "clothes" },
+  { word_de: "die Badehose", forms: { plural: "die Badehosen" }, word_en: "swim trunks", category: "clothes" },
+  { word_de: "der Badeanzug", forms: { plural: "die Badeanzüge" }, word_en: "swimsuit", category: "clothes" },
+  { word_de: "die Flip-Flops", forms: { plural: null }, word_en: "flip-flops", category: "clothes" },
+  { word_de: "die Sportschuhe", forms: { plural: null }, word_en: "sneakers", category: "clothes" },
+  { word_de: "die Hausschuhe", forms: { plural: null }, word_en: "slippers", category: "clothes" },
+  { word_de: "die Strumpfhose", forms: { plural: "die Strumpfhosen" }, word_en: "tights", category: "clothes" },
+  { word_de: "die Kapuzenjacke", forms: { plural: "die Kapuzenjacken" }, word_en: "hoodie", category: "clothes" }
+];
