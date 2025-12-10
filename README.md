@@ -1,146 +1,146 @@
-# 🇩🇪 German Word Practice
+# 🇩🇪 German Words Practice
 
-An interactive web application for learning German vocabulary with a beautiful, modern interface inspired by the German flag colors.
+A beautiful, interactive web application for learning German vocabulary with instant feedback and progress tracking.
+
+![Version](https://img.shields.io/badge/version-3.0.0-green.svg)
 
 ## ✨ Features
 
-- **Category-based Learning**: Practice words organized by categories (Food, Animals, Clothes)
-- **Bidirectional Practice**: Switch between German → English or English → German
-- **Real-time Statistics**: Track your progress with live accuracy metrics
-- **Smooth Animations**: Engaging visual feedback for correct and incorrect answers
-- **Mobile Responsive**: Works perfectly on desktop, tablet, and mobile devices
-- **Keyboard Shortcuts**: Press Enter to submit answers quickly
+### Learning Tools
+- **Multiple Categories** - Practice vocabulary organized by topics (Food, Animals, Clothes, Family, House, City, Professions, Time, Numbers, Colors, Transportation, Body Parts, Weather, School, Verbs, Adjectives, Prepositions, Pronouns, Questions)
+- **Bidirectional Practice** - Switch between German → English and English → German translation modes
+- **Flexible Answers** - Both singular and plural forms are accepted as correct
+- **Smart Word Rotation** - Intelligent system prevents word repetition until all vocabulary in a category has been practiced
+- **Real-time Statistics** - Track correct answers, total attempts, and accuracy percentage
+- **Instant Feedback** - Immediate visual confirmation with correct answer display when wrong
+
+### User Experience
+- **Modern Animated UI** - Dynamic background patterns, glow effects, and smooth transitions
+- **Keyboard Support** - Press Enter to submit answers for faster practice flow
+- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
+- **German Flag Color Scheme** - Visually appealing design using red, black, and gold
+- **Interactive Elements** - Hover effects, ripple animations, and glassmorphism styling
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-No installation required! This is a standalone HTML file that runs directly in your browser.
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- No installation or server required - runs entirely in the browser
 
 ### Installation
 
-1. Download the `index.html` file
-2. Open it in any modern web browser (Chrome, Firefox, Safari, Edge)
-3. Start practicing!
+1. **Download the files** or clone the repository
+2. **Ensure all files are in the same folder:**
+```
+   project-folder/
+   ├── index.html
+   ├── styles.css
+   ├── script.js
+   └── words.js
+```
+3. **Open `index.html`** in your web browser
+4. **Start learning!**
 
 ## 📖 How to Use
 
-1. **Select a Category**: Choose from Food, Animals, or Clothes
-2. **Choose Direction**: 
-   - German → English: See German word, type English translation
-   - English → German: See English word, type German translation (including articles)
-3. **Click "Start Practice"**: Begin your learning session
-4. **Type Your Answer**: Enter the translation in the input field
-5. **Submit**: Click the button or press Enter
-6. **Track Progress**: Watch your statistics update in real-time
+1. **Select a Category** - Choose from the dropdown menu (e.g., Food, Animals, Clothes)
+2. **Choose Direction** - Pick German → English or English → German
+3. **Click "Start Practice"** - Begin your vocabulary session
+4. **Type Your Answer** - Enter the translation in the input field
+5. **Submit** - Press Enter or click the Submit button
+6. **Review Feedback** - See if you're correct and learn from mistakes
+7. **Track Progress** - Monitor your accuracy in real-time
 
-## 📝 Adding More Words
-
-You can easily expand the vocabulary by editing the HTML file:
-
-1. Open `index.html` in a text editor
-2. Find the section marked `// PASTE YOUR WORDS.JS CONTENT HERE`
-3. Add new words following this format:
-
-```javascript
-{ 
-  word_de: "das Haus", 
-  forms: { plural: "die Häuser" }, 
-  word_en: "house", 
-  category: "places" 
-},
+## 📁 Project Structure
+```
+├── index.html          # Main HTML structure
+├── styles.css          # All visual styling and animations
+├── script.js           # Application logic and interactivity
+└── words.js            # Vocabulary database
 ```
 
-### Word Format
+### Modular Architecture
+Each file serves a specific purpose, making the codebase easy to maintain and extend:
+- **HTML** - Semantic structure and content
+- **CSS** - Separated styling with modern animations
+- **JavaScript** - Core functionality and user interactions
+- **Data** - Isolated vocabulary for easy updates
 
-- **word_de**: The German word with article (der/die/das)
-- **forms.plural**: The plural form, or `null` if not applicable
-- **word_en**: The English translation
-- **category**: Category name (lowercase)
+## 🎨 Customization
 
-### Creating New Categories
+### Adding New Words
+Edit `words.js` and add entries following this format:
+```javascript
+{
+  word_de: "das Brot",
+  forms: { plural: "die Brote" },
+  word_en: "bread",
+  word_en_plural: "breads",
+  category: "food"
+}
+```
 
-Simply add words with a new category name, and they'll automatically appear in the dropdown menu!
+### Adding New Categories
+Simply add words with a new `category` value - the app automatically detects and displays all categories.
 
-Example categories you could add:
-- `verbs` - Common German verbs
-- `numbers` - Numbers in German
-- `colors` - Color words
-- `body` - Body parts
-- `home` - Household items
-- `weather` - Weather-related terms
+### Styling Changes
+All visual customization can be done in `styles.css` without touching the core functionality.
 
-## 🎨 Design Features
+## 📊 Version History
 
-- **German Flag Colors**: Black, red, and gold theme throughout
-- **Glassmorphism**: Modern frosted glass effects
-- **Smooth Animations**: 
-  - Slide-down header animation
-  - Pulse effect on new words
-  - Shake animation for incorrect answers
-  - Success animation for correct answers
-- **Hover Effects**: Interactive feedback on all buttons and inputs
+### Version 3.0 (Current)
+- Complete visual overhaul with dynamic animations
+- Modular file structure (HTML, CSS, JS, Data separated)
+- Enhanced interactive elements and glassmorphism design
+- Improved performance and maintainability
 
-## 📊 Statistics Tracking
+### Version 2.0
+- Smart word rotation system (no repetitive words)
+- Flexible answer acceptance (singular and plural forms)
+- External vocabulary system (words.js)
+- Keyboard support (Enter to submit)
 
-The app tracks three key metrics during each practice session:
+### Version 1.0
+- Initial release with core learning features
+- Category selection and bidirectional practice
+- Instant feedback and progress tracking
+- German flag-inspired design
 
-- **Correct**: Number of correct answers
-- **Total**: Total number of attempts
-- **Accuracy**: Percentage of correct answers
+## 🛠️ Technologies Used
 
-Statistics reset when you start a new practice session.
-
-## 🌐 Browser Compatibility
-
-Works on all modern browsers:
-- ✅ Chrome/Edge (recommended)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Opera
-
-## 📱 Mobile Support
-
-Fully responsive design that adapts to:
-- 📱 Smartphones
-- 📱 Tablets
-- 💻 Laptops
-- 🖥️ Desktop computers
-
-## 🔧 Customization
-
-You can customize the app by editing the CSS in the `<style>` section:
-
-- **Colors**: Modify the gradient colors and theme
-- **Fonts**: Change font families and sizes
-- **Timing**: Adjust animation durations
-- **Layout**: Modify spacing and sizing
-
-## 💡 Tips for Effective Learning
-
-1. **Start with German → English** to build recognition
-2. **Switch to English → German** to practice production
-3. **Focus on one category** at a time
-4. **Practice regularly** for best results
-5. **Pay attention to articles** (der/die/das) - they're crucial in German!
-
-## 📄 License
-
-This project is open source and free to use for educational purposes.
+- **HTML5** - Structure and semantics
+- **CSS3** - Advanced styling, animations, and effects
+- **Vanilla JavaScript** - No frameworks or dependencies
+- **Local Storage Ready** - Foundation for future progress saving
 
 ## 🤝 Contributing
 
-Feel free to:
+Want to improve German Words Practice? Here are some ways to contribute:
 - Add more vocabulary words
 - Create new categories
-- Improve the design
-- Fix bugs
-- Suggest new features
+- Improve animations and UI
+- Add new features (audio pronunciation, spaced repetition, etc.)
+- Report bugs or suggest enhancements
 
-## 📧 Support
+## 📝 License
 
-If you encounter any issues or have suggestions, please feel free to reach out or submit feedback.
+This project is open source and available for educational purposes.
+
+## 🎯 Future Enhancements
+
+- Audio pronunciation for German words
+- Spaced repetition algorithm
+- Progress saving across sessions
+- Difficulty levels
+- Timed challenges
+- Achievement system
+- Dark/light theme toggle
+- Multiple language support
+
+## 👤 Author
+
+Created with ❤️ for German language learners
 
 ---
 
-**Happy Learning! Viel Erfolg! 🎓**
+**Happy Learning! Viel Erfolg! 🇩🇪**
