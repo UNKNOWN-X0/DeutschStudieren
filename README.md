@@ -1,146 +1,123 @@
-# 🇩🇪 German Words Practice
+# 🇩🇪 German Words Practice - Enhanced Edition
 
-A beautiful, interactive web application for learning German vocabulary with instant feedback and progress tracking.
+An interactive web application for learning German vocabulary with multiple practice modes, spaced repetition, and online vocabulary integration.
 
-![Version](https://img.shields.io/badge/version-3.0.0-green.svg)
+## ✨ New Features (Latest Update)
 
-## ✨ Features
+### 🎮 Multiple Practice Modes
+1. **Type Answer (One-to-One)** - Classic input mode with instant feedback
+2. **Multiple Choice** - Choose from 4 options, great for quick practice
+3. **Matching Pairs** - Memory-style game matching German-English pairs
 
-### Learning Tools
-- **Multiple Categories** - Practice vocabulary organized by topics (Food, Animals, Clothes, Family, House, City, Professions, Time, Numbers, Colors, Transportation, Body Parts, Weather, School, Verbs, Adjectives, Prepositions, Pronouns, Questions)
-- **Bidirectional Practice** - Switch between German → English and English → German translation modes
-- **Flexible Answers** - Both singular and plural forms are accepted as correct
-- **Smart Word Rotation** - Intelligent system prevents word repetition until all vocabulary in a category has been practiced
-- **Real-time Statistics** - Track correct answers, total attempts, and accuracy percentage
-- **Instant Feedback** - Immediate visual confirmation with correct answer display when wrong
+### 🧠 Spaced Repetition System (SRS)
+- Tracks your performance on each word
+- Words you struggle with appear more frequently
+- Progress saved automatically in browser localStorage
+- Mastered words (80%+ accuracy) tracked separately
 
-### User Experience
-- **Modern Animated UI** - Dynamic background patterns, glow effects, and smooth transitions
-- **Keyboard Support** - Press Enter to submit answers for faster practice flow
-- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
-- **German Flag Color Scheme** - Visually appealing design using red, black, and gold
-- **Interactive Elements** - Hover effects, ripple animations, and glassmorphism styling
+### 🌐 Online Vocabulary Integration
+- Option to fetch additional words from online APIs
+- Fallback to local database if APIs unavailable
+- Merges online and local vocabulary seamlessly
+- Currently supports placeholder API integration (ready for real API keys)
+
+### 📊 Enhanced Progress Tracking
+- Streak counter for consecutive correct answers
+- Words practiced count
+- Words mastered (80%+ accuracy over 5+ attempts)
+- Reset progress option
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No installation or server required - runs entirely in the browser
+1. Open `index.html` in any modern web browser
+2. Select a category from the dropdown
+3. Choose your practice direction (German→English or English→German)
+4. Pick a practice mode
+5. Choose vocabulary source (Local or Online)
+6. Click "Start Practice"
 
-### Installation
+## 📁 File Structure
 
-1. **Download the files** or clone the repository
-2. **Ensure all files are in the same folder:**
 ```
-   project-folder/
-   ├── index.html
-   ├── styles.css
-   ├── script.js
-   └── words.js
-```
-3. **Open `index.html`** in your web browser
-4. **Start learning!**
-
-## 📖 How to Use
-
-1. **Select a Category** - Choose from the dropdown menu (e.g., Food, Animals, Clothes)
-2. **Choose Direction** - Pick German → English or English → German
-3. **Click "Start Practice"** - Begin your vocabulary session
-4. **Type Your Answer** - Enter the translation in the input field
-5. **Submit** - Press Enter or click the Submit button
-6. **Review Feedback** - See if you're correct and learn from mistakes
-7. **Track Progress** - Monitor your accuracy in real-time
-
-## 📁 Project Structure
-```
-├── index.html          # Main HTML structure
-├── styles.css          # All visual styling and animations
-├── script.js           # Application logic and interactivity
-└── words.js            # Vocabulary database
+/workspace
+├── index.html          # Main HTML structure with new UI components
+├── styles.css          # Enhanced styling for all game modes
+├── script.js           # Complete rewrite with SRS and multiple modes
+├── words.js            # 1,663+ German vocabulary words
+└── README.md           # This file
 ```
 
-### Modular Architecture
-Each file serves a specific purpose, making the codebase easy to maintain and extend:
-- **HTML** - Semantic structure and content
-- **CSS** - Separated styling with modern animations
-- **JavaScript** - Core functionality and user interactions
-- **Data** - Isolated vocabulary for easy updates
+## 🎯 How to Use Each Mode
 
-## 🎨 Customization
+### Type Answer Mode
+- See a word in one language
+- Type the translation
+- Get instant feedback with correct answer shown
+- Press Enter or click Submit
 
-### Adding New Words
-Edit `words.js` and add entries following this format:
+### Multiple Choice Mode
+- See a word with 4 possible translations
+- Click the correct option
+- Visual feedback on selection
+- Automatic progression to next word
+
+### Matching Pairs Mode
+- 8 German-English pairs displayed as cards (16 total)
+- Click two cards to find matches
+- Matched pairs stay highlighted
+- Complete all pairs to start a new round
+
+## 🔧 Technical Details
+
+### Spaced Repetition Algorithm
 ```javascript
-{
-  word_de: "das Brot",
-  forms: { plural: "die Brote" },
-  word_en: "bread",
-  word_en_plural: "breads",
-  category: "food"
-}
+weight = 1 + (1 - successRate) * 3
+// successRate = correctAnswers / totalAttempts
+// Weight ranges from 1 (100% accuracy) to 4 (0% accuracy)
 ```
 
-### Adding New Categories
-Simply add words with a new `category` value - the app automatically detects and displays all categories.
+### Local Storage Keys
+- `germanSRS` - Stores word performance data
 
-### Styling Changes
-All visual customization can be done in `styles.css` without touching the core functionality.
+### API Integration Points
+The code includes placeholders for:
+- Dict.cc API
+- Free Dictionary API
+- Easy to add more sources
 
-## 📊 Version History
+## 🎨 Design Features
 
-### Version 3.0 (Current)
-- Complete visual overhaul with dynamic animations
-- Modular file structure (HTML, CSS, JS, Data separated)
-- Enhanced interactive elements and glassmorphism design
-- Improved performance and maintainability
+- Glassmorphism UI with German flag colors (black, red, gold)
+- Animated backgrounds and transitions
+- Responsive design for all screen sizes
+- Visual feedback for correct/incorrect answers
+- Loading indicators for online fetching
 
-### Version 2.0
-- Smart word rotation system (no repetitive words)
-- Flexible answer acceptance (singular and plural forms)
-- External vocabulary system (words.js)
-- Keyboard support (Enter to submit)
+## 📈 Future Enhancements
 
-### Version 1.0
-- Initial release with core learning features
-- Category selection and bidirectional practice
-- Instant feedback and progress tracking
-- German flag-inspired design
+Ready to implement:
+- [ ] Real API integrations (Dict.cc, Leo.org)
+- [ ] Audio pronunciation (Web Speech API)
+- [ ] Sentence context examples
+- [ ] Verb conjugation practice
+- [ ] Daily goals and achievements
+- [ ] Export/import progress data
+- [ ] Dark/light theme toggle
 
-## 🛠️ Technologies Used
+## 🌍 Browser Compatibility
 
-- **HTML5** - Structure and semantics
-- **CSS3** - Advanced styling, animations, and effects
-- **Vanilla JavaScript** - No frameworks or dependencies
-- **Local Storage Ready** - Foundation for future progress saving
+Works on all modern browsers:
+- Chrome/Edge (recommended)
+- Firefox
+- Safari
+- Opera
 
-## 🤝 Contributing
-
-Want to improve German Words Practice? Here are some ways to contribute:
-- Add more vocabulary words
-- Create new categories
-- Improve animations and UI
-- Add new features (audio pronunciation, spaced repetition, etc.)
-- Report bugs or suggest enhancements
+Mobile-responsive for iOS and Android devices.
 
 ## 📝 License
 
-This project is open source and available for educational purposes.
-
-## 🎯 Future Enhancements
-
-- Audio pronunciation for German words
-- Spaced repetition algorithm
-- Progress saving across sessions
-- Difficulty levels
-- Timed challenges
-- Achievement system
-- Dark/light theme toggle
-- Multiple language support
-
-## 👤 Author
-
-Created with ❤️ for German language learners
+Open source - feel free to modify and extend!
 
 ---
 
-**Happy Learning! Viel Erfolg! 🇩🇪**
+**Made by Focus (Gen.11)** 🇩🇪

@@ -12,7 +12,7 @@
     <h1>🇩🇪 German Word Practice</h1>
     <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.85; font-weight: 300; letter-spacing: 2px;">MADE BY FOCUS (GEN.11)</p>
   </header>
-
+  
   <main>
     <section class="controls">
       <div class="control-group">
@@ -28,7 +28,29 @@
         </select>
       </div>
 
+      <div class="control-group">
+        <label for="mode-select">🎮 Practice Mode</label>
+        <select id="mode-select">
+          <option value="input">✍️ Type Answer (One-to-One)</option>
+          <option value="multiple-choice">🔘 Multiple Choice</option>
+          <option value="matching">🔗 Matching Pairs</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="source-select">📖 Vocabulary Source</label>
+        <select id="source-select">
+          <option value="local">📚 Local Database (1,663 words)</option>
+          <option value="online">🌐 Online + Local (API Fetch)</option>
+        </select>
+      </div>
+
       <button id="start-btn">🚀 Start Practice</button>
+      
+      <div class="online-status hidden" id="online-status">
+        <span class="status-indicator"></span>
+        <span class="status-text">Fetching online vocabulary...</span>
+      </div>
     </section>
 
     <section class="practice hidden">
@@ -45,18 +67,47 @@
           <div class="stat-number" id="accuracy">0%</div>
           <div class="stat-label">Accuracy</div>
         </div>
+        <div class="stat-box">
+          <div class="stat-number" id="streak-count">0</div>
+          <div class="stat-label">Streak</div>
+        </div>
       </div>
 
-      <div id="prompt"></div>
+      <!-- Input Mode -->
+      <div id="input-mode" class="mode-section">
+        <div id="prompt"></div>
+        <div id="context-example" class="context-example hidden"></div>
+        <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
+        <button id="submit-btn">✓ Submit Answer</button>
+      </div>
 
-      <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
+      <!-- Multiple Choice Mode -->
+      <div id="multiple-choice-mode" class="mode-section hidden">
+        <div id="mc-prompt"></div>
+        <div id="mc-context-example" class="context-example hidden"></div>
+        <div id="mc-options" class="mc-options"></div>
+      </div>
 
-      <button id="submit-btn">✓ Submit Answer</button>
+      <!-- Matching Mode -->
+      <div id="matching-mode" class="mode-section hidden">
+        <p class="matching-instructions">Match the German words with their English translations</p>
+        <div id="matching-grid" class="matching-grid"></div>
+      </div>
 
       <div id="feedback"></div>
+      
+      <div class="srs-info hidden" id="srs-info">
+        <p>💡 Spaced Repetition: Words you struggle with will appear more frequently!</p>
+      </div>
+    </section>
+    
+    <section class="progress-section hidden" id="progress-section">
+      <h2>📊 Your Progress</h2>
+      <div id="progress-stats"></div>
+      <button id="reset-progress-btn">🔄 Reset Progress</button>
     </section>
   </main>
   
-  <script src="script.js"></script>  <!-- Add this line -->
+  <script src="script.js"></script>
 </body>
 </html>
