@@ -22,21 +22,26 @@ const directionSelect = document.getElementById("direction-select");
 const modeSelect = document.getElementById("mode-select");
 const sourceSelect = document.getElementById("source-select");
 const startBtn = document.getElementById("start-btn");
+const showProgressBtn = document.getElementById("show-progress-btn");
+const hideProgressBtn = document.getElementById("hide-progress-btn");
 const promptEl = document.getElementById("prompt");
 const answerInput = document.getElementById("answer-input");
 const submitBtn = document.getElementById("submit-btn");
 const feedbackEl = document.getElementById("feedback");
 const practiceSection = document.querySelector(".practice");
+const progressSection = document.getElementById("progress-section");
 const correctCountEl = document.getElementById("correct-count");
 const totalCountEl = document.getElementById("total-count");
 const accuracyEl = document.getElementById("accuracy");
 const streakCountEl = document.getElementById("streak-count");
 const onlineStatusEl = document.getElementById("online-status");
-const progressSection = document.getElementById("progress-section");
 const resetProgressBtn = document.getElementById("reset-progress-btn");
 const inputModeSection = document.getElementById("input-mode");
 const multipleChoiceModeSection = document.getElementById("multiple-choice-mode");
 const matchingModeSection = document.getElementById("matching-mode");
+const srsInfoEl = document.getElementById("srs-info");
+const contextExampleEl = document.getElementById("context-example");
+const mcContextExampleEl = document.getElementById("mc-context-example");
 
 function init() {
   populateCategories();
@@ -52,6 +57,19 @@ function init() {
   modeSelect.addEventListener("change", () => { practiceMode = modeSelect.value; });
   sourceSelect.addEventListener("change", () => { sourceType = sourceSelect.value; });
   resetProgressBtn.addEventListener("click", resetProgress);
+  showProgressBtn.addEventListener("click", showProgressSection);
+  hideProgressBtn.addEventListener("click", hideProgressSection);
+}
+
+function showProgressSection() {
+  practiceSection.classList.add("hidden");
+  progressSection.classList.remove("hidden");
+  updateProgressDisplay();
+}
+
+function hideProgressSection() {
+  progressSection.classList.add("hidden");
+  practiceSection.classList.remove("hidden");
 }
 
 function populateCategories() {
@@ -141,12 +159,51 @@ async function fetchOnlineVocabulary(category) {
   }
 }
 
-async function fetchFromDictCC(category) {
-  return new Promise(resolve => setTimeout(() => resolve([]), 500));
+async function fetchFromDictCC(searchTerm) {
+  // Using MyMemory Translation API (dict.cc API is not publicly available)
+  // API endpoint: https://api.mymemory.translated.net/get?q={term}&langpair=de|en
+  try {
+    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(searchTerm)}&langpair=de|en`);
+    if (!response.ok) throw new Error('API request failed');
+    
+    const data = await response.json();
+    const words = [];
+    
+    if (data && data.responseData && data.responseData.matches) {
+      const matches = data.responseData.matches.slice(0, 15);
+      
+      for (const match of matches) {
+        const deWord = match.segment;
+        const enWord = match.translation;
+        
+        if (deWord && enWord && deWord.trim() && enWord.trim()) {
+          // Skip if the word contains HTML or special characters
+          if (deWord.includes('<') || enWord.includes('<')) continue;
+          
+          words.push({
+            word_de: deWord.trim(),
+            word_en: enWord.trim(),
+            word_en_plural: null,
+            forms: { plural: null },
+            category: searchTerm.toLowerCase(),
+            example_de: '',
+            example_en: ''
+          });
+        }
+      }
+    }
+    
+    return words;
+  } catch (error) {
+    console.error('Error fetching from MyMemory API:', error);
+    return [];
+  }
 }
 
 async function fetchFromFreeDictionaryAPI(category) {
-  return new Promise(resolve => setTimeout(() => resolve([]), 500));
+  // Fallback API for English definitions (not German-English pairs)
+  // This is limited but can provide English context
+  return [];
 }
 
 function mergeVocabulary(local, online) {
@@ -176,6 +233,10 @@ async function handleStart() {
   practiceMode = modeSelect.value;
   sourceType = sourceSelect.value;
   
+  // Hide progress section when starting practice
+  progressSection.classList.add("hidden");
+  practiceSection.classList.remove("hidden");
+  
   if (sourceType === "online") {
     filtered = await fetchOnlineVocabulary(category);
   } else {
@@ -195,8 +256,10 @@ async function handleStart() {
   matchedCount = 0;
   updateStats();
   
+  // Show SRS info box
+  srsInfoEl.classList.remove("hidden");
+  
   showModeSection(practiceMode);
-  practiceSection.classList.remove("hidden");
   
   if (practiceMode === "matching") {
     setupMatchingGame();
@@ -230,18 +293,38 @@ function newWord() {
 }
 
 function setupInputQuestion() {
+  // Hide context examples initially
+  contextExampleEl.classList.add("hidden");
+  contextExampleEl.textContent = "";
+  
   if (direction === "de-to-en") {
     promptEl.textContent = current.word_de + (current.forms && current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
   } else {
     promptEl.textContent = current.word_en;
   }
+  
+  // Show example sentence if available
+  if (current.example_de && current.example_en) {
+    contextExampleEl.textContent = `Example: "${current.example_de}" — "${current.example_en}"`;
+    contextExampleEl.classList.remove("hidden");
+  }
 }
 
 function setupMultipleChoiceQuestion() {
+  // Hide context examples initially
+  mcContextExampleEl.classList.add("hidden");
+  mcContextExampleEl.textContent = "";
+  
   if (direction === "de-to-en") {
     document.getElementById("mc-prompt").textContent = current.word_de + (current.forms && current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
   } else {
     document.getElementById("mc-prompt").textContent = current.word_en;
+  }
+  
+  // Show example sentence if available
+  if (current.example_de && current.example_en) {
+    mcContextExampleEl.textContent = `Example: "${current.example_de}" — "${current.example_en}"`;
+    mcContextExampleEl.classList.remove("hidden");
   }
   
   const correctAnswer = direction === "de-to-en" ? current.word_en : current.word_de;
