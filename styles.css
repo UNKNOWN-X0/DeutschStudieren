@@ -652,6 +652,74 @@ select:focus {
   display: block;
 }
 
+.secondary-btn {
+  background: linear-gradient(135deg, rgba(100, 100, 100, 0.5) 0%, rgba(80, 80, 80, 0.5) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* SRS Info Box */
+.srs-info {
+  background: linear-gradient(135deg, rgba(255, 206, 0, 0.15) 0%, rgba(221, 0, 0, 0.15) 100%);
+  border: 2px solid rgba(255, 206, 0, 0.3);
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.srs-info p {
+  color: #ffce00;
+  font-size: 0.95em;
+  margin: 0;
+}
+
+.srs-info.hidden {
+  display: none;
+}
+
+/* Context Example Display */
+.context-example {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid rgba(255, 206, 0, 0.5);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin: 15px 0;
+  font-style: italic;
+  color: #ddd;
+  font-size: 0.9em;
+  animation: fadeIn 0.4s ease;
+}
+
+.context-example.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive adjustments for new features */
 @media (max-width: 768px) {
   .mc-options {

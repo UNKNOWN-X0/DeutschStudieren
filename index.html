@@ -31,7 +31,7 @@
       <div class="control-group">
         <label for="mode-select">🎮 Practice Mode</label>
         <select id="mode-select">
-          <option value="input">✍️ Type Answer (One-to-One)</option>
+          <option value="input">✍️ Type Answer</option>
           <option value="multiple-choice">🔘 Multiple Choice</option>
           <option value="matching">🔗 Matching Pairs</option>
         </select>
@@ -41,11 +41,12 @@
         <label for="source-select">📖 Vocabulary Source</label>
         <select id="source-select">
           <option value="local">📚 Local Database (1,663 words)</option>
-          <option value="online">🌐 Online + Local (API Fetch)</option>
+          <option value="online">🌐 Online + Local (Dict.cc API)</option>
         </select>
       </div>
 
       <button id="start-btn">🚀 Start Practice</button>
+      <button id="show-progress-btn" class="secondary-btn">📊 View Progress</button>
       
       <div class="online-status hidden" id="online-status">
         <span class="status-indicator"></span>
@@ -73,10 +74,15 @@
         </div>
       </div>
 
+      <!-- SRS Info Box -->
+      <div class="srs-info" id="srs-info">
+        <p>💡 <strong>Spaced Repetition Active:</strong> Words you struggle with will appear more frequently!</p>
+      </div>
+
       <!-- Input Mode -->
       <div id="input-mode" class="mode-section">
         <div id="prompt"></div>
-        <div id="context-example" class="context-example hidden"></div>
+        <div id="context-example" class="context-example"></div>
         <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
         <button id="submit-btn">✓ Submit Answer</button>
       </div>
@@ -84,7 +90,7 @@
       <!-- Multiple Choice Mode -->
       <div id="multiple-choice-mode" class="mode-section hidden">
         <div id="mc-prompt"></div>
-        <div id="mc-context-example" class="context-example hidden"></div>
+        <div id="mc-context-example" class="context-example"></div>
         <div id="mc-options" class="mc-options"></div>
       </div>
 
@@ -95,16 +101,13 @@
       </div>
 
       <div id="feedback"></div>
-      
-      <div class="srs-info hidden" id="srs-info">
-        <p>💡 Spaced Repetition: Words you struggle with will appear more frequently!</p>
-      </div>
     </section>
     
     <section class="progress-section hidden" id="progress-section">
       <h2>📊 Your Progress</h2>
       <div id="progress-stats"></div>
       <button id="reset-progress-btn">🔄 Reset Progress</button>
+      <button id="hide-progress-btn" class="secondary-btn">← Back to Practice</button>
     </section>
   </main>
   

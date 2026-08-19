@@ -5,8 +5,8 @@ An interactive web application for learning German vocabulary with multiple prac
 ## ✨ New Features (Latest Update)
 
 ### 🎮 Multiple Practice Modes
-1. **Type Answer (One-to-One)** - Classic input mode with instant feedback
-2. **Multiple Choice** - Choose from 4 options, great for quick practice
+1. **Type Answer** - Classic input mode with instant feedback and example sentences
+2. **Multiple Choice** - Choose from 4 options, great for quick practice with context examples
 3. **Matching Pairs** - Memory-style game matching German-English pairs
 
 ### 🧠 Spaced Repetition System (SRS)
@@ -14,18 +14,25 @@ An interactive web application for learning German vocabulary with multiple prac
 - Words you struggle with appear more frequently
 - Progress saved automatically in browser localStorage
 - Mastered words (80%+ accuracy) tracked separately
+- SRS info box shows active status during practice
 
 ### 🌐 Online Vocabulary Integration
-- Option to fetch additional words from online APIs
+- Fetch additional words from MyMemory Translation API
 - Fallback to local database if APIs unavailable
 - Merges online and local vocabulary seamlessly
-- Currently supports placeholder API integration (ready for real API keys)
+- Real-time fetching with status indicators
 
 ### 📊 Enhanced Progress Tracking
 - Streak counter for consecutive correct answers
 - Words practiced count
 - Words mastered (80%+ accuracy over 5+ attempts)
 - Reset progress option
+- View Progress button to see stats anytime
+
+### 📚 Context Examples
+- Example sentences displayed when available
+- Shows both German and English versions
+- Helps understand word usage in context
 
 ## 🚀 Getting Started
 
@@ -79,10 +86,10 @@ weight = 1 + (1 - successRate) * 3
 ### Local Storage Keys
 - `germanSRS` - Stores word performance data
 
-### API Integration Points
-The code includes placeholders for:
-- Dict.cc API
-- Free Dictionary API
+### API Integration
+Currently integrated:
+- **MyMemory Translation API** - Fetches German-English translations (free, no key required)
+- Fallback to local database if API unavailable
 - Easy to add more sources
 
 ## 🎨 Design Features
@@ -96,13 +103,13 @@ The code includes placeholders for:
 ## 📈 Future Enhancements
 
 Ready to implement:
-- [ ] Real API integrations (Dict.cc, Leo.org)
 - [ ] Audio pronunciation (Web Speech API)
-- [ ] Sentence context examples
+- [ ] More example sentences in local vocabulary
 - [ ] Verb conjugation practice
 - [ ] Daily goals and achievements
 - [ ] Export/import progress data
 - [ ] Dark/light theme toggle
+- [ ] Additional question types (sentence translation, listening)
 
 ## 🌍 Browser Compatibility
 
@@ -116,8 +123,73 @@ Mobile-responsive for iOS and Android devices.
 
 ## 📝 License
 
-Open source - feel free to modify and extend!
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+- ✅ Free to use for personal and commercial purposes
+- ✅ Free to modify and distribute
+- ✅ No warranty provided
+- ✅ Must include original copyright notice
 
 ---
 
 **Made by Focus (Gen.11)** 🇩🇪
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Add Vocabulary**: Contribute new words with example sentences
+2. **Fix Bugs**: Report or fix issues in the code
+3. **New Features**: Implement suggested enhancements from the roadmap
+4. **Improve UI/UX**: Enhance the user interface and experience
+5. **API Integrations**: Add more translation API sources
+
+### How to Contribute
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 🐛 Known Issues & Roadmap
+
+### Current Limitations
+- Online API may have rate limits (MyMemory: ~1000 requests/day)
+- No cloud sync (progress stored locally only)
+- Limited example sentences in local database
+
+### Upcoming Features (Roadmap)
+- [ ] **Audio Pronunciation** - Web Speech API integration
+- [ ] **Sentence Translation Mode** - Translate full sentences
+- [ ] **Listening Practice** - Audio-based questions
+- [ ] **Verb Conjugation Trainer** - Practice German verb forms
+- [ ] **Spaced Repetition 2.0** - Time-based scheduling (Anki-style)
+- [ ] **Progress Cloud Sync** - Optional account system
+- [ ] **Dark/Light Theme** - User preference toggle
+- [ ] **PWA Support** - Installable offline app
+- [ ] **Achievements System** - Badges and daily challenges
+- [ ] **Analytics Dashboard** - Learning insights and weak areas
+- [ ] **Idioms & Phrases** - Common German expressions
+- [ ] **Regional Dialects** - Austrian and Swiss German variants
+
+## 📚 Learning Resources
+
+Complement your practice with these resources:
+- **Dict.cc** - Comprehensive German-English dictionary
+- **Leo.org** - Detailed vocabulary with examples
+- **Duolingo** - Gamified language learning
+- **Deutsche Welle** - Free German courses
+- **Goethe Institut** - Official German learning materials
+
+## ☕ Support
+
+If you find this app helpful, consider:
+- Starring the repository ⭐
+- Sharing with fellow learners
+- Contributing vocabulary or code improvements
+- Providing feedback on features
+
+---
+
+**Happy Learning! Viel Erfolg!** 🎉🇩🇪
