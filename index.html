@@ -1,133 +1,904 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>German Practice</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="words.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Master Pro | Advanced Practice</title>
+    <style>
+        :root {
+            --primary: #DD0000; /* German Red */
+            --secondary: #FFCE00; /* German Gold */
+            --dark: #1a1a1a;
+            --light: #f4f4f9;
+            --glass: rgba(255, 255, 255, 0.95);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Layout & Containers --- */
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--glass);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--dark) 0%, #333 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary);
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 5px; }
+        .subtitle { font-size: 0.9rem; opacity: 0.8; }
+
+        main { flex: 1; padding: 20px; display: flex; flex-direction: column; }
+
+        /* --- Views Management --- */
+        .view { display: none; animation: fadeIn 0.3s ease; }
+        .view.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Setup Screen --- */
+        .setup-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        select, button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s, background 0.2s;
+        }
+        button:hover { background: #bb0000; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        button.secondary { background: #555; }
+        button.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+
+        .source-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            background: #eee;
+            margin-left: 5px;
+        }
+        .source-badge.online { background: var(--secondary); color: var(--dark); }
+
+        /* --- Practice Area --- */
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .mode-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 8px;
+            font-size: 0.9rem;
+            background: #eee;
+            color: #555;
+        }
+        .mode-btn.active {
+            background: var(--dark);
+            color: white;
+        }
+
+        .card-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+        }
+
+        .word-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+        
+        .context-box {
+            background: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            width: 100%;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+        .context-box.show { display: block; animation: slideDown 0.3s; }
+        .context-label { font-size: 0.8rem; color: #777; text-transform: uppercase; letter-spacing: 1px; }
+        .context-text { font-style: italic; color: #444; margin-top: 5px; }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Input Modes */
+        .input-area { width: 100%; max-width: 400px; margin-top: 20px; }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            outline: none;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        /* Multiple Choice Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .option-btn {
+            background: white;
+            border: 2px solid #ddd;
+            color: var(--dark);
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+        .option-btn:hover { border-color: var(--primary); background: #fff5f5; }
+
+        /* Sentence Builder */
+        .sentence-builder { width: 100%; }
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+        }
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .word-chip {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .word-chip:hover { background: var(--secondary); border-color: var(--secondary); }
+        .word-chip.used { opacity: 0.4; pointer-events: none; background: #ddd; }
+
+        /* Feedback States */
+        .correct { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .wrong { background-color: var(--error) !important; color: white !important; border-color: var(--error) !important; animation: shake 0.4s; }
+        
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* Progress Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .stat-val { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: #777; }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* SRS Info */
+        .srs-toast {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .srs-toast.visible { opacity: 1; }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .word-display { font-size: 2rem; }
+            .options-grid { grid-template-columns: 1fr; }
+            .app-container { border-radius: 0; min-height: 100vh; }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>🇩🇪 German Word Practice</h1>
-    <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.85; font-weight: 300; letter-spacing: 2px;">MADE BY FOCUS (GEN.11)</p>
-  </header>
-  
-  <main>
-    <section class="controls">
-      <div class="control-group">
-        <label for="category-select">📚 Category</label>
-        <select id="category-select"></select>
-      </div>
 
-      <div class="control-group">
-        <label for="direction-select">🔄 Direction</label>
-        <select id="direction-select">
-          <option value="de-to-en">German → English</option>
-          <option value="en-to-de">English → German</option>
-        </select>
-      </div>
+<div class="app-container">
+    <header>
+        <h1>🇩🇪 German Master Pro</h1>
+        <div class="subtitle">Advanced Vocabulary & SRS Training</div>
+    </header>
 
-      <div class="control-group">
-        <label for="mode-select">🎮 Practice Mode</label>
-        <select id="mode-select">
-          <option value="input">✍️ Type Answer</option>
-          <option value="multiple-choice">🔘 Multiple Choice</option>
-          <option value="matching">🔗 Matching Pairs</option>
-          <option value="listening">🎧 Listening Practice</option>
-          <option value="sentence-build">📝 Build Sentence</option>
-        </select>
-      </div>
+    <div id="srs-toast" class="srs-toast">SRS Active: Prioritizing weak words</div>
 
-      <div class="control-group">
-        <label for="source-select">📖 Vocabulary Source</label>
-        <select id="source-select">
-          <option value="local">📚 Local Database (1,663 words)</option>
-          <option value="online">🌐 Online + Local (Dict.cc API)</option>
-        </select>
-      </div>
+    <main>
+        <!-- SETUP VIEW -->
+        <div id="view-setup" class="view active">
+            <div class="setup-group">
+                <label>Category</label>
+                <select id="category-select">
+                    <option value="all">All Categories</option>
+                    <option value="food">Food & Drink</option>
+                    <option value="travel">Travel & Directions</option>
+                    <option value="verbs">Common Verbs</option>
+                    <option value="phrases">Essential Phrases</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
 
-      <button id="start-btn">🚀 Start Practice</button>
-      <button id="show-progress-btn" class="secondary-btn">📊 View Progress</button>
-      
-      <div class="online-status hidden" id="online-status">
-        <span class="status-indicator"></span>
-        <span class="status-text">Fetching online vocabulary...</span>
-      </div>
-    </section>
+            <div class="setup-group">
+                <label>Data Source</label>
+                <select id="source-select">
+                    <option value="local">Local Database Only (Offline)</option>
+                    <option value="hybrid">Hybrid (Local + Online Fetch)</option>
+                </select>
+                <small style="color:#666; display:block; margin-top:5px;">
+                    Hybrid mode fetches real translations via API if local list is empty.
+                </small>
+            </div>
 
-    <section class="practice hidden" id="practice-section">
-      <div class="stats">
-        <div class="stat-box">
-          <div class="stat-number" id="correct-count">0</div>
-          <div class="stat-label">Correct</div>
+            <div class="setup-group">
+                <label>Practice Mode</label>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="input">Type Answer</button>
+                    <button class="mode-btn" data-mode="multiple">Multiple Choice</button>
+                    <button class="mode-btn" data-mode="listening">Listening</button>
+                    <button class="mode-btn" data-mode="sentence">Sentence Build</button>
+                </div>
+            </div>
+
+            <button id="btn-start">Start Practice Session</button>
+            <button class="secondary" id="btn-progress" style="margin-top: 10px;">📊 View Progress Stats</button>
+            
+            <div id="fetch-status" style="margin-top:15px; text-align:center; font-size:0.9rem;"></div>
+            <div class="loader" id="loader"></div>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="total-count">0</div>
-          <div class="stat-label">Total</div>
+
+        <!-- PRACTICE VIEW -->
+        <div id="view-practice" class="view">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <button class="outline" style="width:auto; padding:5px 15px;" id="btn-exit">← Exit</button>
+                <span id="session-counter" style="font-weight:bold; color:#555;">Word 1/20</span>
+            </div>
+
+            <div class="card-area">
+                <!-- Dynamic Content Area -->
+                <div id="question-container">
+                    <div class="word-display" id="main-word">Loading...</div>
+                    
+                    <!-- Context Example (Hidden until needed) -->
+                    <div id="context-display" class="context-box">
+                        <div class="context-label">Example Usage</div>
+                        <div class="context-text" id="context-text">...</div>
+                    </div>
+
+                    <!-- Input Mode -->
+                    <div id="mode-input" class="input-area">
+                        <input type="text" id="user-input" placeholder="Type translation..." autocomplete="off">
+                        <button id="btn-check-input" style="margin-top:10px;">Check Answer</button>
+                    </div>
+
+                    <!-- Multiple Choice Mode -->
+                    <div id="mode-multiple" class="options-grid" style="display:none;"></div>
+
+                    <!-- Listening Mode -->
+                    <div id="mode-listening" class="input-area" style="display:none; text-align:center;">
+                        <button id="btn-play-audio" style="background:var(--dark); margin-bottom:15px; border-radius:50%; width:60px; height:60px; font-size:1.5rem;">🔊</button>
+                        <p style="margin-bottom:10px; color:#666;">Listen and type what you hear</p>
+                        <input type="text" id="listen-input" placeholder="Type here..." autocomplete="off">
+                        <button id="btn-check-listen" style="margin-top:10px;">Check</button>
+                    </div>
+
+                    <!-- Sentence Mode -->
+                    <div id="mode-sentence" class="sentence-builder" style="display:none; width:100%;">
+                        <p style="margin-bottom:10px; color:#666;">Build the sentence: <strong id="sentence-prompt">...</strong></p>
+                        <div class="drop-zone" id="sentence-drop"></div>
+                        <div class="word-bank" id="sentence-bank"></div>
+                        <button id="btn-check-sentence" style="margin-top:20px; width:100%;">Check Sentence</button>
+                    </div>
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="feedback-area" style="margin-top:20px; text-align:center; display:none;">
+                    <h2 id="feedback-title" style="font-size:1.5rem; margin-bottom:5px;"></h2>
+                    <p id="feedback-msg" style="color:#666;"></p>
+                    <button id="btn-next" style="margin-top:15px; background:var(--dark);">Next Word →</button>
+                </div>
+            </div>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="accuracy">0%</div>
-          <div class="stat-label">Accuracy</div>
+
+        <!-- PROGRESS VIEW -->
+        <div id="view-progress" class="view">
+            <button class="outline" style="width:auto; padding:5px 15px; margin-bottom:20px;" id="btn-back-setup">← Back to Setup</button>
+            
+            <h2 style="margin-bottom:20px;">Your Learning Stats</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-val" id="stat-total">0</div>
+                    <div class="stat-label">Words Practiced</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val" id="stat-accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val" id="stat-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val" id="stat-mastered">0</div>
+                    <div class="stat-label">Mastered Words</div>
+                </div>
+            </div>
+
+            <div class="stat-card" style="text-align:left; margin-bottom:20px;">
+                <label>SRS Review Queue</label>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="srs-bar"></div>
+                </div>
+                <p style="font-size:0.9rem; color:#666; margin-top:5px;">
+                    <span id="srs-count">0</span> words due for review today.
+                </p>
+            </div>
+
+            <button class="secondary" id="btn-reset-data" style="margin-top:20px; background:#e74c3c;">Reset All Data</button>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="streak-count">0</div>
-          <div class="stat-label">Streak</div>
-        </div>
-      </div>
+    </main>
+</div>
 
-      <!-- SRS Info Box -->
-      <div class="srs-info" id="srs-info">
-        <p>💡 <strong>Spaced Repetition Active:</strong> Words you struggle with will appear more frequently!</p>
-      </div>
+<script>
+/**
+ * GERMAN MASTER PRO - COMPLETE REWORK
+ * Features: SRS, Online Fetching (MyMemory API), Listening, Sentence Building
+ */
 
-      <!-- Input Mode -->
-      <div id="input-mode" class="mode-section">
-        <div id="prompt"></div>
-        <div id="context-example" class="context-example"></div>
-        <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
-        <button id="submit-btn">✓ Submit Answer</button>
-      </div>
+// --- 1. CONFIGURATION & STATE ---
+const CONFIG = {
+    apiBase: 'https://api.mymemory.translated.net/get',
+    speechLang: 'de-DE',
+    srsIntervals: [1, 3, 7, 14, 30] // Days
+};
 
-      <!-- Multiple Choice Mode -->
-      <div id="multiple-choice-mode" class="mode-section hidden">
-        <div id="mc-prompt"></div>
-        <div id="mc-context-example" class="context-example"></div>
-        <div id="mc-options" class="mc-options"></div>
-      </div>
+const STATE = {
+    currentView: 'setup',
+    mode: 'input',
+    category: 'all',
+    source: 'local',
+    sessionQueue: [],
+    currentWord: null,
+    stats: {
+        totalPracticed: 0,
+        correctCount: 0,
+        streak: 0,
+        lastLogin: null,
+        wordHistory: {} // { "german_word": { ease: 2.5, nextReview: timestamp, count: 5 } }
+    },
+    fetchedWords: [] // Cache for online words
+};
 
-      <!-- Matching Mode -->
-      <div id="matching-mode" class="mode-section hidden">
-        <p class="matching-instructions">Match the German words with their English translations</p>
-        <div id="matching-grid" class="matching-grid"></div>
-      </div>
+// --- 2. LOCAL DATABASE (Fallback & Base) ---
+const LOCAL_DB = [
+    { de: "der Apfel", en: "the apple", cat: "food", context: "Der Apfel ist rot." },
+    { de: "das Brot", en: "the bread", cat: "food", context: "Ich esse Brot zum Frühstück." },
+    { de: "gehen", en: "to go", cat: "verbs", context: "Wir gehen nach Hause." },
+    { de: "sehen", en: "to see", cat: "verbs", context: "Kannst du das sehen?" },
+    { de: "Guten Tag", en: "Good day", cat: "phrases", context: "Guten Tag, wie geht es Ihnen?" },
+    { de: "Danke schön", en: "Thank you very much", cat: "phrases", context: "Danke schön für Ihre Hilfe." },
+    { de: "der Zug", en: "the train", cat: "travel", context: "Der Zug hat Verspätung." },
+    { de: "das Hotel", en: "the hotel", cat: "travel", context: "Das Hotel liegt im Zentrum." },
+    { de: "arbeiten", en: "to work", cat: "business", context: "Er arbeitet in einer Bank." },
+    { de: "die Sitzung", en: "the meeting", cat: "business", context: "Die Sitzung beginnt um neun." }
+];
 
-      <!-- Listening Mode -->
-      <div id="listening-mode" class="mode-section hidden">
-        <div id="listening-prompt"></div>
-        <button id="play-again-btn" class="secondary-btn">🔊 Play Again</button>
-        <input id="listening-input" placeholder="Type what you hear..." autocomplete="off" />
-        <button id="listening-submit-btn">✓ Submit Answer</button>
-      </div>
+// --- 3. API SERVICE (Online Fetching) ---
+const ApiService = {
+    async fetchCategory(category) {
+        if (STATE.source === 'local') return [];
+        
+        const loader = document.getElementById('loader');
+        const status = document.getElementById('fetch-status');
+        loader.style.display = 'block';
+        status.textContent = "Fetching online vocabulary...";
 
-      <!-- Sentence Build Mode -->
-      <div id="sentence-build-mode" class="mode-section hidden">
-        <p class="matching-instructions">Click words in order to build the sentence</p>
-        <div id="sentence-build-container"></div>
-        <button id="sentence-check-btn" class="secondary-btn">✓ Check Sentence</button>
-      </div>
+        try {
+            // Map categories to search terms for API
+            const terms = {
+                'food': 'food items german',
+                'travel': 'travel phrases german',
+                'verbs': 'common german verbs',
+                'phrases': 'basic german greetings',
+                'business': 'business german vocabulary'
+            };
+            
+            const query = terms[category] || 'german vocabulary';
+            // Fetching a broad set and filtering client-side because free APIs are limited
+            const url = `${CONFIG.apiBase}?q=${encodeURIComponent(query)}&langpair=de|EN&mmax=10`;
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.responseStatus === 200 && data.matches) {
+                const cleaned = data.matches.map(m => ({
+                    de: m.segment.split('=')[0]?.trim() || m.segment, // Simple parsing hack for demo
+                    en: m.translation,
+                    cat: category,
+                    context: "", // API doesn't always give context
+                    isOnline: true
+                })).filter(w => w.de.length > 2 && w.en.length > 2); // Basic validation
+                
+                loader.style.display = 'none';
+                status.textContent = `Fetched ${cleaned.length} words online.`;
+                return cleaned;
+            }
+            throw new Error("API Limit or Error");
+        } catch (err) {
+            console.warn("API Fetch failed, falling back to local", err);
+            loader.style.display = 'none';
+            status.textContent = "Online fetch failed. Using local database.";
+            return [];
+        }
+    }
+};
 
-      <div id="feedback"></div>
-    </section>
-    
-    <section class="progress-section hidden" id="progress-section">
-      <h2>📊 Your Progress</h2>
-      <div id="progress-stats"></div>
-      <button id="reset-progress-btn">🔄 Reset Progress</button>
-      <button id="hide-progress-btn" class="secondary-btn">← Back to Practice</button>
-    </section>
-  </main>
-  
-  <script src="script.js"></script>
+// --- 4. SRS ENGINE ---
+const SRSEngine = {
+    getDueWords(allWords) {
+        const now = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000;
+        
+        // Filter words that are due for review
+        return allWords.filter(word => {
+            const history = STATE.stats.wordHistory[word.de] || {};
+            const nextReview = history.nextReview || 0;
+            return nextReview <= now;
+        });
+    },
+
+    update(wordKey, isCorrect) {
+        if (!STATE.stats.wordHistory[wordKey]) {
+            STATE.stats.wordHistory[wordKey] = { ease: 2.5, interval: 0, reviews: 0, nextReview: 0 };
+        }
+        
+        const record = STATE.stats.wordHistory[wordKey];
+        
+        if (isCorrect) {
+            record.reviews++;
+            record.interval = record.interval === 0 ? 1 : Math.round(record.interval * record.ease);
+            record.ease = Math.max(1.3, record.ease + 0.1); // Increase ease
+        } else {
+            record.interval = 1; // Reset to 1 day
+            record.ease = Math.max(1.3, record.ease - 0.2); // Decrease ease
+        }
+        
+        record.nextReview = Date.now() + (record.interval * 24 * 60 * 60 * 1000);
+        this.saveStats();
+    },
+
+    saveStats() {
+        localStorage.setItem('germanMasterStats', JSON.stringify(STATE.stats));
+    },
+
+    loadStats() {
+        const saved = localStorage.getItem('germanMasterStats');
+        if (saved) STATE.stats = { ...STATE.stats, ...JSON.parse(saved) };
+        
+        // Handle streak logic
+        const today = new Date().toDateString();
+        if (STATE.stats.lastLogin !== today) {
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            if (STATE.stats.lastLogin !== yesterday) {
+                STATE.stats.streak = 0; // Broken streak
+            }
+            STATE.stats.lastLogin = today;
+            STATE.stats.streak++;
+            this.saveStats();
+        }
+    }
+};
+
+// --- 5. UI CONTROLLER ---
+const UI = {
+    showView(viewId) {
+        document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+        document.getElementById(`view-${viewId}`).classList.add('active');
+        STATE.currentView = viewId;
+    },
+
+    toggleMode(btn) {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        STATE.mode = btn.dataset.mode;
+    },
+
+    renderQuestion(word) {
+        const container = document.getElementById('question-container');
+        const mainWord = document.getElementById('main-word');
+        const contextBox = document.getElementById('context-display');
+        const feedback = document.getElementById('feedback-area');
+        
+        // Reset UI
+        feedback.style.display = 'none';
+        contextBox.classList.remove('show');
+        
+        // Set Main Word
+        mainWord.textContent = STATE.mode === 'listening' ? "🔊 Listen" : word.de;
+        if(STATE.mode === 'listening') this.speak(word.de);
+
+        // Show Context if available
+        if (word.context) {
+            document.getElementById('context-text').textContent = `"${word.context}"`;
+            setTimeout(() => contextBox.classList.add('show'), 500);
+        }
+
+        // Render Specific Mode Inputs
+        document.getElementById('mode-input').style.display = 'none';
+        document.getElementById('mode-multiple').style.display = 'none';
+        document.getElementById('mode-listening').style.display = 'none';
+        document.getElementById('mode-sentence').style.display = 'none';
+
+        if (STATE.mode === 'input') {
+            document.getElementById('mode-input').style.display = 'block';
+            document.getElementById('user-input').value = '';
+            document.getElementById('user-input').focus();
+        } 
+        else if (STATE.mode === 'multiple') {
+            document.getElementById('mode-multiple').style.display = 'grid';
+            this.generateOptions(word);
+        }
+        else if (STATE.mode === 'listening') {
+            document.getElementById('mode-listening').style.display = 'block';
+            document.getElementById('listen-input').value = '';
+            document.getElementById('listen-input').focus();
+        }
+        else if (STATE.mode === 'sentence') {
+            document.getElementById('mode-sentence').style.display = 'block';
+            this.setupSentenceMode(word);
+        }
+    },
+
+    generateOptions(correctWord) {
+        const grid = document.getElementById('mode-multiple');
+        grid.innerHTML = '';
+        
+        // Get 3 distractors
+        const allWords = [...LOCAL_DB, ...STATE.fetchedWords];
+        const distractors = allWords
+            .filter(w => w.en !== correctWord.en)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3);
+        
+        const options = [correctWord, ...distractors].sort(() => 0.5 - Math.random());
+        
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt.en;
+            btn.onclick = () => this.handleAnswer(opt.en === correctWord.en);
+            grid.appendChild(btn);
+        });
+    },
+
+    setupSentenceMode(word) {
+        // Simple sentence builder: Use the context sentence or create a dummy one
+        const sentence = word.context || `${word.de} ist wichtig.`;
+        const words = sentence.split(' ');
+        
+        document.getElementById('sentence-prompt').textContent = word.en;
+        const dropZone = document.getElementById('sentence-drop');
+        const bank = document.getElementById('sentence-bank');
+        
+        dropZone.innerHTML = '';
+        bank.innerHTML = '';
+        
+        // Scramble
+        const scrambled = [...words].sort(() => 0.5 - Math.random());
+        
+        scrambled.forEach((w, idx) => {
+            const chip = document.createElement('div');
+            chip.className = 'word-chip';
+            chip.textContent = w;
+            chip.dataset.idx = idx;
+            chip.onclick = () => {
+                if(chip.parentElement === bank) {
+                    dropZone.appendChild(chip);
+                } else {
+                    bank.appendChild(chip);
+                }
+            };
+            bank.appendChild(chip);
+        });
+
+        // Store correct answer for checking
+        window.currentSentenceAnswer = sentence;
+    },
+
+    speak(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            window.speechSynthesis.speak(utterance);
+        }
+    },
+
+    showFeedback(isCorrect, correctAnswer) {
+        const feedback = document.getElementById('feedback-area');
+        const title = document.getElementById('feedback-title');
+        const msg = document.getElementById('feedback-msg');
+        
+        feedback.style.display = 'block';
+        
+        if (isCorrect) {
+            title.textContent = "Richtig! 🎉";
+            title.style.color = "var(--success)";
+            msg.textContent = "";
+            // Play success sound optionally
+        } else {
+            title.textContent = "Falsch ❌";
+            title.style.color = "var(--error)";
+            msg.textContent = `Correct: ${correctAnswer}`;
+        }
+        
+        document.getElementById('btn-next').focus();
+    },
+
+    updateStatsUI() {
+        document.getElementById('stat-total').textContent = STATE.stats.totalPracticed;
+        const acc = STATE.stats.totalPracticed > 0 
+            ? Math.round((STATE.stats.correctCount / STATE.stats.totalPracticed) * 100) 
+            : 0;
+        document.getElementById('stat-accuracy').textContent = acc + "%";
+        document.getElementById('stat-streak').textContent = STATE.stats.streak;
+        
+        const mastered = Object.values(STATE.stats.wordHistory).filter(r => r.reviews >= 5).length;
+        document.getElementById('stat-mastered').textContent = mastered;
+
+        // SRS Queue Count
+        const dueCount = SRSEngine.getDueWords([...LOCAL_DB, ...STATE.fetchedWords]).length;
+        document.getElementById('srs-count').textContent = dueCount;
+        document.getElementById('srs-bar').style.width = Math.min(100, (dueCount / 20) * 100) + "%";
+    }
+};
+
+// --- 6. MAIN LOGIC CONTROLLER ---
+const App = {
+    init() {
+        SRSEngine.loadStats();
+        this.bindEvents();
+        UI.updateStatsUI();
+    },
+
+    bindEvents() {
+        // Navigation
+        document.getElementById('btn-start').onclick = () => this.startSession();
+        document.getElementById('btn-exit').onclick = () => UI.showView('setup');
+        document.getElementById('btn-progress').onclick = () => {
+            UI.updateStatsUI();
+            UI.showView('progress');
+        };
+        document.getElementById('btn-back-setup').onclick = () => UI.showView('setup');
+        document.getElementById('btn-reset-data').onclick = () => {
+            if(confirm("Delete all progress?")) {
+                localStorage.removeItem('germanMasterStats');
+                location.reload();
+            }
+        };
+
+        // Mode Selection
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.onclick = (e) => UI.toggleMode(e.target);
+        });
+
+        // Check Buttons
+        document.getElementById('btn-check-input').onclick = () => this.checkInput();
+        document.getElementById('user-input').onkeypress = (e) => { if(e.key==='Enter') this.checkInput(); };
+        
+        document.getElementById('btn-check-listen').onclick = () => this.checkListening();
+        document.getElementById('listen-input').onkeypress = (e) => { if(e.key==='Enter') this.checkListening(); };
+        document.getElementById('btn-play-audio').onclick = () => {
+            if(STATE.currentWord) UI.speak(STATE.currentWord.de);
+        };
+
+        document.getElementById('btn-check-sentence').onclick = () => this.checkSentence();
+        document.getElementById('btn-next').onclick = () => this.nextWord();
+    },
+
+    async startSession() {
+        STATE.category = document.getElementById('category-select').value;
+        STATE.source = document.getElementById('source-select').value;
+        
+        let pool = [...LOCAL_DB];
+        
+        // Filter Local
+        if (STATE.category !== 'all') {
+            pool = pool.filter(w => w.cat === STATE.category);
+        }
+
+        // Fetch Online if Hybrid
+        if (STATE.source === 'hybrid') {
+            const onlineWords = await ApiService.fetchCategory(STATE.category);
+            STATE.fetchedWords = onlineWords;
+            pool = [...pool, ...onlineWords];
+        }
+
+        if (pool.length === 0) {
+            alert("No words found for this category.");
+            return;
+        }
+
+        // Apply SRS: Prioritize due words, then random
+        const dueWords = SRSEngine.getDueWords(pool);
+        const remaining = pool.filter(w => !dueWords.includes(w));
+        
+        // Mix: 50% due words, 50% random new/review
+        STATE.sessionQueue = [
+            ...dueWords.sort(() => 0.5 - Math.random()).slice(0, 10),
+            ...remaining.sort(() => 0.5 - Math.random()).slice(0, 10)
+        ];
+
+        if (STATE.sessionQueue.length === 0) {
+             // Fallback if SRS filters everything out (rare)
+             STATE.sessionQueue = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
+        }
+
+        UI.showView('practice');
+        this.loadNextWord();
+    },
+
+    loadNextWord() {
+        if (STATE.sessionQueue.length === 0) {
+            alert("Session Complete! Great job.");
+            UI.showView('setup');
+            return;
+        }
+
+        STATE.currentWord = STATE.sessionQueue.pop();
+        document.getElementById('session-counter').textContent = `Words Left: ${STATE.sessionQueue.length + 1}`;
+        UI.renderQuestion(STATE.currentWord);
+    },
+
+    checkInput() {
+        const input = document.getElementById('user-input').value.trim().toLowerCase();
+        const target = STATE.currentWord.en.toLowerCase();
+        // Simple normalization: remove punctuation
+        const cleanInput = input.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        const cleanTarget = target.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        
+        const isCorrect = cleanInput === cleanTarget || cleanTarget.includes(cleanInput);
+        this.processResult(isCorrect, STATE.currentWord.en);
+    },
+
+    checkListening() {
+        const input = document.getElementById('listen-input').value.trim().toLowerCase();
+        const target = STATE.currentWord.de.toLowerCase(); // Expecting German input for listening
+        const isCorrect = input === target;
+        this.processResult(isCorrect, STATE.currentWord.de);
+    },
+
+    checkSentence() {
+        const built = Array.from(document.getElementById('sentence-drop').children)
+            .map(c => c.textContent).join(' ');
+        const target = window.currentSentenceAnswer;
+        const isCorrect = built === target;
+        this.processResult(isCorrect, target);
+    },
+
+    processResult(isCorrect, correctText) {
+        // Update Stats
+        STATE.stats.totalPracticed++;
+        if (isCorrect) STATE.stats.correctCount++;
+        
+        // Update SRS
+        SRSEngine.update(STATE.currentWord.de, isCorrect);
+        SRSEngine.saveStats();
+
+        UI.showFeedback(isCorrect, correctText);
+        
+        // Visual flair on card
+        const card = document.querySelector('.card-area');
+        card.classList.add(isCorrect ? 'correct' : 'wrong');
+        setTimeout(() => card.classList.remove('correct', 'wrong'), 500);
+    },
+
+    nextWord() {
+        this.loadNextWord();
+    }
+};
+
+// Start App
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+</script>
 </body>
 </html>
