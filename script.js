@@ -216,9 +216,68 @@ async function fetchFromDictCC(searchTerm) {
 }
 
 async function fetchFromFreeDictionaryAPI(category) {
-  // Fallback API for English definitions (not German-English pairs)
-  // This is limited but can provide English context
-  return [];
+  // Fetch additional German-English pairs from MyMemory API using category keywords
+  const categoryKeywords = {
+    'food': ['essen', 'trinken', 'obst', 'gemüse'],
+    'animals': ['tier', 'hund', 'katze', 'vogel'],
+    'clothes': ['kleidung', 'hemd', 'hose', 'schuh'],
+    'family': ['familie', 'mutter', 'vater', 'kind'],
+    'house': ['haus', 'zimmer', 'tür', 'fenster'],
+    'city': ['stadt', 'straße', 'gebäude', 'platz'],
+    'professions': ['beruf', 'lehrer', 'arzt', 'ingenieur'],
+    'time': ['zeit', 'uhr', 'tag', 'woche'],
+    'numbers': ['zahl', 'eins', 'zwei', 'drei'],
+    'colors': ['farbe', 'rot', 'blau', 'grün'],
+    'transportation': ['verkehr', 'auto', 'zug', 'bus'],
+    'body parts': ['körper', 'hand', 'fuß', 'kopf'],
+    'weather': ['wetter', 'regen', 'sonne', 'schnee'],
+    'school': ['schule', 'buch', 'stift', 'lernen'],
+    'verbs': ['verb', 'machen', 'gehen', 'sehen'],
+    'adjectives': ['adjektiv', 'groß', 'klein', 'gut'],
+    'prepositions': ['präposition', 'in', 'auf', 'unter'],
+    'pronouns': ['pronomen', 'ich', 'du', 'er'],
+    'questions': ['frage', 'wer', 'was', 'wo'],
+    'directions': ['richtung', 'norden', 'süden', 'osten'],
+    'most common 1000': ['der', 'die', 'das', 'ist']
+  };
+  
+  const keywords = categoryKeywords[category] || [category];
+  const allWords = [];
+  
+  for (const keyword of keywords) {
+    try {
+      const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(keyword)}&langpair=de|en`);
+      if (!response.ok) continue;
+      
+      const data = await response.json();
+      if (data && data.responseData && data.responseData.matches) {
+        const matches = data.responseData.matches.slice(0, 5);
+        
+        for (const match of matches) {
+          const deWord = match.segment;
+          const enWord = match.translation;
+          
+          if (deWord && enWord && deWord.trim() && enWord.trim()) {
+            if (deWord.includes('<') || enWord.includes('<')) continue;
+            if (deWord.split(' ').length > 3 || enWord.split(' ').length > 3) continue;
+            
+            allWords.push({
+              word_de: deWord.trim(),
+              word_en: enWord.trim(),
+              category: category,
+              example_de: null,
+              example_en: null,
+              forms: null
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.warn(`Failed to fetch for keyword ${keyword}:`, error);
+    }
+  }
+  
+  return allWords;
 }
 
 function mergeVocabulary(local, online) {
