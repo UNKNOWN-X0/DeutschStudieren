@@ -14,6 +14,9 @@ let usedWords = [];
 let matchingPairs = [];
 let selectedCard = null;
 let matchedCount = 0;
+let listeningAudio = null;
+let sentenceParts = [];
+let userSentence = [];
 
 let srsData = JSON.parse(localStorage.getItem('germanSRS')) || {};
 
@@ -39,6 +42,11 @@ const resetProgressBtn = document.getElementById("reset-progress-btn");
 const inputModeSection = document.getElementById("input-mode");
 const multipleChoiceModeSection = document.getElementById("multiple-choice-mode");
 const matchingModeSection = document.getElementById("matching-mode");
+const listeningModeSection = document.getElementById("listening-mode");
+const sentenceBuildModeSection = document.getElementById("sentence-build-mode");
+const listeningInput = document.getElementById("listening-input");
+const listeningSubmitBtn = document.getElementById("listening-submit-btn");
+const sentenceCheckBtn = document.getElementById("sentence-check-btn");
 const srsInfoEl = document.getElementById("srs-info");
 const contextExampleEl = document.getElementById("context-example");
 const mcContextExampleEl = document.getElementById("mc-context-example");
@@ -53,6 +61,13 @@ function init() {
   answerInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") submitBtn.click();
   });
+  
+  // Add listeners for new modes
+  listeningSubmitBtn.addEventListener("click", handleListeningSubmit);
+  listeningInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") listeningSubmitBtn.click();
+  });
+  sentenceCheckBtn.addEventListener("click", checkSentenceBuild);
   
   modeSelect.addEventListener("change", () => { practiceMode = modeSelect.value; });
   sourceSelect.addEventListener("change", () => { sourceType = sourceSelect.value; });
@@ -272,10 +287,20 @@ function showModeSection(mode) {
   inputModeSection.classList.add("hidden");
   multipleChoiceModeSection.classList.add("hidden");
   matchingModeSection.classList.add("hidden");
+  listeningModeSection.classList.add("hidden");
+  sentenceBuildModeSection.classList.add("hidden");
   
   if (mode === "input") inputModeSection.classList.remove("hidden");
   else if (mode === "multiple-choice") multipleChoiceModeSection.classList.remove("hidden");
   else if (mode === "matching") matchingModeSection.classList.remove("hidden");
+  else if (mode === "listening") {
+    listeningModeSection.classList.remove("hidden");
+    setupListeningQuestion();
+  }
+  else if (mode === "sentence-build") {
+    sentenceBuildModeSection.classList.remove("hidden");
+    setupSentenceBuildQuestion();
+  }
 }
 
 function newWord() {
@@ -285,6 +310,8 @@ function newWord() {
   
   if (practiceMode === "input") setupInputQuestion();
   else if (practiceMode === "multiple-choice") setupMultipleChoiceQuestion();
+  else if (practiceMode === "listening") setupListeningQuestion();
+  else if (practiceMode === "sentence-build") setupSentenceBuildQuestion();
   
   answerInput.value = "";
   answerInput.focus();
@@ -386,6 +413,130 @@ function handleMultipleChoiceAnswer(selected, correct) {
   }, 1500);
 }
 
+function setupListeningQuestion() {
+  const promptEl = document.getElementById("listening-prompt");
+  const playAgainBtn = document.getElementById("play-again-btn");
+  
+  // Determine which word to use based on direction
+  const textToSpeak = direction === "de-to-en" ? current.word_de : current.word_en;
+  
+  // Show instruction
+  promptEl.textContent = "Listen and type what you hear:";
+  
+  // Play audio automatically after a short delay
+  setTimeout(() => speakText(textToSpeak), 500);
+  
+  // Setup play again button
+  playAgainBtn.onclick = () => speakText(textToSpeak);
+}
+
+function speakText(text) {
+  // Cancel any ongoing speech
+  if (window.speechSynthesis.cancel) {
+    window.speechSynthesis.cancel();
+  }
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = direction === "de-to-en" ? 'de-DE' : 'en-US';
+  utterance.rate = 0.9; // Slightly slower for learning
+  utterance.pitch = 1;
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+function setupSentenceBuildQuestion() {
+  const container = document.getElementById("sentence-build-container");
+  container.innerHTML = "";
+  userSentence = [];
+  
+  // Create a simple sentence from the word
+  const isGerman = direction === "en-to-de";
+  const targetWord = isGerman ? current.word_de : current.word_en;
+  const example = isGerman ? current.example_de : current.example_en;
+  
+  // If we have an example sentence, use it; otherwise create a simple one
+  let sentenceText = example || `${targetWord} ist wichtig.`;
+  
+  // Split into parts and shuffle
+  const parts = sentenceText.split(" ").filter(p => p.trim());
+  sentenceParts = parts.map((part, idx) => ({ id: idx, text: part }));
+  
+  // Shuffle parts for display
+  const shuffled = [...sentenceParts].sort(() => Math.random() - 0.5);
+  
+  // Create word bank
+  const wordBank = document.createElement("div");
+  wordBank.className = "word-bank";
+  shuffled.forEach(part => {
+    const btn = document.createElement("button");
+    btn.className = "word-part";
+    btn.textContent = part.text;
+    btn.dataset.id = part.id;
+    btn.addEventListener("click", () => handleWordPartClick(btn, 'bank'));
+    wordBank.appendChild(btn);
+  });
+  container.appendChild(wordBank);
+  
+  // Create sentence area
+  const sentenceArea = document.createElement("div");
+  sentenceArea.className = "sentence-area";
+  sentenceArea.id = "user-sentence-area";
+  container.appendChild(sentenceArea);
+  
+  // Play audio automatically
+  setTimeout(() => speakText(targetWord), 500);
+}
+
+function handleWordPartClick(btn, location) {
+  const sentenceArea = document.getElementById("user-sentence-area");
+  
+  if (location === 'bank') {
+    // Move from bank to sentence
+    btn.classList.add('used');
+    const clone = btn.cloneNode(true);
+    clone.classList.remove('used');
+    clone.addEventListener("click", () => handleWordPartClick(clone, 'sentence'));
+    sentenceArea.appendChild(clone);
+    userSentence.push({ id: btn.dataset.id, text: btn.textContent });
+  } else {
+    // Move from sentence back to bank
+    const originalBtn = Array.from(document.querySelectorAll('.word-bank button'))
+      .find(b => b.dataset.id === btn.dataset.id);
+    if (originalBtn) {
+      originalBtn.classList.remove('used');
+    }
+    btn.remove();
+    userSentence = userSentence.filter(item => item.id !== btn.dataset.id);
+  }
+}
+
+function checkSentenceBuild() {
+  const isGerman = direction === "en-to-de";
+  const targetWord = isGerman ? current.word_de : current.word_en;
+  const example = isGerman ? current.example_de : current.example_en;
+  const correctSentence = example || `${targetWord} ist wichtig.`;
+  
+  const userSentenceText = userSentence.map(p => p.text).join(" ");
+  
+  totalCount++;
+  
+  if (userSentenceText === correctSentence) {
+    correctCount++;
+    streakCount++;
+    feedbackEl.textContent = "🎉 Correct sentence!";
+    feedbackEl.className = "correct";
+    updateSRS(current, true);
+  } else {
+    streakCount = 0;
+    feedbackEl.textContent = `❌ Incorrect. Correct: ${correctSentence}`;
+    feedbackEl.className = "incorrect";
+    updateSRS(current, false);
+  }
+  
+  updateStats();
+  setTimeout(newWord, 2000);
+}
+
 function setupMatchingGame() {
   const grid = document.getElementById("matching-grid");
   grid.innerHTML = "";
@@ -455,6 +606,12 @@ function handleCardClick(cardEl) {
 }
 
 function handleSubmit() {
+  // Handle different practice modes
+  if (practiceMode === "sentence-build") {
+    checkSentenceBuild();
+    return;
+  }
+  
   const user = answerInput.value.trim().toLowerCase();
   
   let correctAnswers = [];
@@ -483,6 +640,36 @@ function handleSubmit() {
   }
   
   updateStats();
+  setTimeout(newWord, 1500);
+}
+
+function handleListeningSubmit() {
+  const user = listeningInput.value.trim().toLowerCase();
+  
+  let correctAnswer = "";
+  if (direction === "de-to-en") {
+    correctAnswer = current.word_en.toLowerCase();
+  } else {
+    correctAnswer = current.word_de.toLowerCase();
+  }
+  
+  totalCount++;
+  
+  if (user === correctAnswer) {
+    correctCount++;
+    streakCount++;
+    feedbackEl.textContent = "🎉 Correct!";
+    feedbackEl.className = "correct";
+    updateSRS(current, true);
+  } else {
+    streakCount = 0;
+    feedbackEl.textContent = `❌ Incorrect. Correct answer: ${correctAnswer}`;
+    feedbackEl.className = "incorrect";
+    updateSRS(current, false);
+  }
+  
+  updateStats();
+  listeningInput.value = "";
   setTimeout(newWord, 1500);
 }
 

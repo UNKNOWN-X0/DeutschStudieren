@@ -34,6 +34,8 @@
           <option value="input">✍️ Type Answer</option>
           <option value="multiple-choice">🔘 Multiple Choice</option>
           <option value="matching">🔗 Matching Pairs</option>
+          <option value="listening">🎧 Listening Practice</option>
+          <option value="sentence-build">📝 Build Sentence</option>
         </select>
       </div>
 
@@ -98,6 +100,21 @@
       <div id="matching-mode" class="mode-section hidden">
         <p class="matching-instructions">Match the German words with their English translations</p>
         <div id="matching-grid" class="matching-grid"></div>
+      </div>
+
+      <!-- Listening Mode -->
+      <div id="listening-mode" class="mode-section hidden">
+        <div id="listening-prompt"></div>
+        <button id="play-again-btn" class="secondary-btn">🔊 Play Again</button>
+        <input id="listening-input" placeholder="Type what you hear..." autocomplete="off" />
+        <button id="listening-submit-btn">✓ Submit Answer</button>
+      </div>
+
+      <!-- Sentence Build Mode -->
+      <div id="sentence-build-mode" class="mode-section hidden">
+        <p class="matching-instructions">Click words in order to build the sentence</p>
+        <div id="sentence-build-container"></div>
+        <button id="sentence-check-btn" class="secondary-btn">✓ Check Sentence</button>
       </div>
 
       <div id="feedback"></div>
