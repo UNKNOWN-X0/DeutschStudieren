@@ -225,7 +225,7 @@ button span {
   text-align: center;
 }
 
-#prompt {
+#prompt, #mc-prompt {
   font-size: 2.8em;
   margin-bottom: 30px;
   padding: 40px;
@@ -244,7 +244,7 @@ button span {
   overflow: hidden;
 }
 
-#prompt::before {
+#prompt::before, #mc-prompt::before {
   content: '';
   position: absolute;
   top: -2px;
@@ -259,7 +259,7 @@ button span {
   transition: opacity 0.3s ease;
 }
 
-#prompt:hover::before {
+#prompt:hover::before, #mc-prompt:hover::before {
   opacity: 0.5;
 }
 
@@ -410,7 +410,7 @@ button span {
     font-size: 2em;
   }
   
-  #prompt {
+  #prompt, #mc-prompt {
     font-size: 2em;
     padding: 25px;
   }
