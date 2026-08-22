@@ -748,3 +748,11 @@ select:focus {
     min-height: 50px;
   }
 }
+
+/* Topic input hint (online vocabulary mode) */
+.topic-hint {
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: #aaa;
+  font-style: italic;
+}
