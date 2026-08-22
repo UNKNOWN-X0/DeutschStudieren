@@ -1,5 +1,5 @@
 // Enhanced German Words Practice Script
-// Features: Multiple practice modes, Online API integration, Spaced Repetition System
+// Features: Multiple practice modes, Online vocabulary fetching (any topic), Spaced Repetition System
 
 let vocab = window.GERMAN_WORDS || [];
 let filtered = [];
@@ -18,6 +18,9 @@ let matchedCount = 0;
 let srsData = JSON.parse(localStorage.getItem('germanSRS')) || {};
 
 const categorySelect = document.getElementById("category-select");
+const categoryGroup = document.getElementById("category-group");
+const topicInputGroup = document.getElementById("topic-input-group");
+const topicInput = document.getElementById("topic-input");
 const directionSelect = document.getElementById("direction-select");
 const modeSelect = document.getElementById("mode-select");
 const sourceSelect = document.getElementById("source-select");
@@ -47,18 +50,37 @@ function init() {
   populateCategories();
   loadSRSData();
   updateProgressDisplay();
+  toggleSourceInputs();
   
   startBtn.addEventListener("click", handleStart);
   submitBtn.addEventListener("click", handleSubmit);
   answerInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") submitBtn.click();
   });
+  topicInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") startBtn.click();
+  });
   
   modeSelect.addEventListener("change", () => { practiceMode = modeSelect.value; });
-  sourceSelect.addEventListener("change", () => { sourceType = sourceSelect.value; });
+  sourceSelect.addEventListener("change", () => {
+    sourceType = sourceSelect.value;
+    toggleSourceInputs();
+  });
   resetProgressBtn.addEventListener("click", resetProgress);
   showProgressBtn.addEventListener("click", showProgressSection);
   hideProgressBtn.addEventListener("click", hideProgressSection);
+}
+
+// Show the category dropdown for local mode, or the free-text topic box for online mode.
+// Online mode no longer depends on the local word list at all.
+function toggleSourceInputs() {
+  if (sourceSelect.value === "online") {
+    categoryGroup.classList.add("hidden");
+    topicInputGroup.classList.remove("hidden");
+  } else {
+    categoryGroup.classList.remove("hidden");
+    topicInputGroup.classList.add("hidden");
+  }
 }
 
 function showProgressSection() {
@@ -133,87 +155,136 @@ function selectWordWithSRS() {
   return current;
 }
 
-async function fetchOnlineVocabulary(category) {
-  showOnlineStatus(true, "Fetching from online sources...");
-  
+// ---------------------------------------------------------------------------
+// ONLINE VOCABULARY FETCHING
+//
+// This no longer depends on the local words.js database at all. Given any
+// topic string, we:
+//   1. Ask Datamuse for a batch of English words that are semantically
+//      related to the topic ("means like" query).
+//   2. Translate each of those English words into German via MyMemory.
+//   3. Build a vocabulary list purely from those results.
+// ---------------------------------------------------------------------------
+
+async function fetchOnlineVocabulary(topic) {
+  showOnlineStatus(true, `Finding words related to "${topic}"...`);
+
   try {
-    const apiPromises = [fetchFromDictCC(category), fetchFromFreeDictionaryAPI(category)];
-    const results = await Promise.allSettled(apiPromises);
-    const onlineWords = [];
-    
-    results.forEach(result => {
-      if (result.status === 'fulfilled' && result.value) onlineWords.push(...result.value);
-    });
-    
-    const localWords = vocab.filter(w => w.category.toLowerCase() === category.toLowerCase());
-    const merged = mergeVocabulary(localWords, onlineWords);
-    
-    showOnlineStatus(false, `Added ${onlineWords.length} online words!`);
-    setTimeout(() => showOnlineStatus(false, ""), 3000);
-    return merged;
+    const relatedWords = await fetchRelatedWords(topic);
+
+    if (!relatedWords.length) {
+      showOnlineStatus(false, "No related words found. Try a different topic.");
+      setTimeout(() => showOnlineStatus(false, ""), 3000);
+      return [];
+    }
+
+    showOnlineStatus(true, `Translating ${relatedWords.length} words to German...`);
+    const translated = await translateWordsToGerman(relatedWords, topic);
+
+    if (!translated.length) {
+      showOnlineStatus(false, "Couldn't translate any words. Try a different topic.");
+      setTimeout(() => showOnlineStatus(false, ""), 3000);
+      return [];
+    }
+
+    showOnlineStatus(true, `Loaded ${translated.length} words for "${topic}"!`);
+    setTimeout(() => showOnlineStatus(false, ""), 2500);
+    return translated;
   } catch (error) {
     console.error("Error fetching online vocabulary:", error);
-    showOnlineStatus(false, "Using local database only");
+    showOnlineStatus(false, "Couldn't fetch words online. Please check your connection and try again.");
     setTimeout(() => showOnlineStatus(false, ""), 3000);
-    return vocab.filter(w => w.category.toLowerCase() === category.toLowerCase());
-  }
-}
-
-async function fetchFromDictCC(searchTerm) {
-  // Using MyMemory Translation API (dict.cc API is not publicly available)
-  // API endpoint: https://api.mymemory.translated.net/get?q={term}&langpair=de|en
-  try {
-    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(searchTerm)}&langpair=de|en`);
-    if (!response.ok) throw new Error('API request failed');
-    
-    const data = await response.json();
-    const words = [];
-    
-    if (data && data.responseData && data.responseData.matches) {
-      const matches = data.responseData.matches.slice(0, 15);
-      
-      for (const match of matches) {
-        const deWord = match.segment;
-        const enWord = match.translation;
-        
-        if (deWord && enWord && deWord.trim() && enWord.trim()) {
-          // Skip if the word contains HTML or special characters
-          if (deWord.includes('<') || enWord.includes('<')) continue;
-          
-          words.push({
-            word_de: deWord.trim(),
-            word_en: enWord.trim(),
-            word_en_plural: null,
-            forms: { plural: null },
-            category: searchTerm.toLowerCase(),
-            example_de: '',
-            example_en: ''
-          });
-        }
-      }
-    }
-    
-    return words;
-  } catch (error) {
-    console.error('Error fetching from MyMemory API:', error);
     return [];
   }
 }
 
-async function fetchFromFreeDictionaryAPI(category) {
-  // Fallback API for English definitions (not German-English pairs)
-  // This is limited but can provide English context
-  return [];
+// Get English words related to a topic using the free Datamuse API.
+// Docs: https://www.datamuse.com/api/
+async function fetchRelatedWords(topic) {
+  const cleanTopic = topic.trim().toLowerCase();
+  if (!cleanTopic) return [];
+
+  try {
+    // "ml" = "means like" -> semantically related words
+    const response = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(cleanTopic)}&max=25`);
+    if (!response.ok) throw new Error("Datamuse request failed");
+
+    const data = await response.json();
+
+    const relatedOnly = (Array.isArray(data) ? data : [])
+      .map(entry => entry.word)
+      .filter(w => typeof w === "string" && /^[a-zA-Z][a-zA-Z\s-]*$/.test(w))
+      .filter(w => w.toLowerCase() !== cleanTopic)
+      .slice(0, 19);
+
+    // Always include the topic word itself, plus its related words
+    const words = [cleanTopic, ...relatedOnly];
+
+    // De-duplicate while preserving order
+    return [...new Set(words.map(w => w.toLowerCase()))];
+  } catch (error) {
+    console.error("Error fetching related words from Datamuse:", error);
+    // Fall back to just the topic word so the user still gets *something*
+    return [cleanTopic];
+  }
 }
 
-function mergeVocabulary(local, online) {
-  const map = new Map();
-  local.forEach(w => map.set(`${w.word_de}_${w.word_en}`, w));
-  online.forEach(w => {
-    const key = `${w.word_de}_${w.word_en}`;
-    if (!map.has(key)) map.set(key, w);
+// Translate a list of English words into German using MyMemory, running a
+// small pool of requests concurrently so it's fast without hammering the API.
+async function translateWordsToGerman(words, category) {
+  const results = [];
+  const concurrency = 5;
+  let index = 0;
+
+  async function worker() {
+    while (index < words.length) {
+      const currentIndex = index++;
+      const word = words[currentIndex];
+      const translation = await translateSingleWord(word);
+      if (translation) {
+        results.push({
+          word_de: translation,
+          forms: { plural: null },
+          word_en: word,
+          word_en_plural: null,
+          category: category.trim().toLowerCase(),
+          example_de: "",
+          example_en: ""
+        });
+      }
+    }
+  }
+
+  const workers = Array.from({ length: Math.min(concurrency, words.length) }, worker);
+  await Promise.all(workers);
+
+  // De-duplicate by German word (case-insensitive)
+  const seen = new Set();
+  return results.filter(w => {
+    const key = w.word_de.toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
-  return Array.from(map.values());
+}
+
+async function translateSingleWord(word) {
+  try {
+    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|de`);
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const translated = data?.responseData?.translatedText;
+
+    if (!translated) return null;
+    if (translated.includes("<")) return null; // skip anything with HTML in it
+    if (/no\s+translation|invalid|error/i.test(translated)) return null;
+
+    return translated.trim();
+  } catch (error) {
+    console.error(`Error translating "${word}":`, error);
+    return null;
+  }
 }
 
 function showOnlineStatus(showing, text) {
@@ -222,13 +293,19 @@ function showOnlineStatus(showing, text) {
     onlineStatusEl.querySelector(".status-text").textContent = text;
     onlineStatusEl.querySelector(".status-indicator").classList.add("loading");
   } else {
-    if (text) onlineStatusEl.querySelector(".status-text").textContent = text;
-    if (!text) onlineStatusEl.classList.add("hidden");
+    onlineStatusEl.querySelector(".status-indicator").classList.remove("loading");
+    if (text) {
+      onlineStatusEl.querySelector(".status-text").textContent = text;
+      onlineStatusEl.classList.remove("hidden");
+    } else {
+      onlineStatusEl.classList.add("hidden");
+    }
   }
 }
 
+// ---------------------------------------------------------------------------
+
 async function handleStart() {
-  const category = categorySelect.value.toLowerCase();
   direction = directionSelect.value;
   practiceMode = modeSelect.value;
   sourceType = sourceSelect.value;
@@ -238,13 +315,21 @@ async function handleStart() {
   practiceSection.classList.remove("hidden");
   
   if (sourceType === "online") {
-    filtered = await fetchOnlineVocabulary(category);
+    const topic = topicInput.value.trim();
+    if (!topic) {
+      feedbackEl.textContent = "Please type a topic to fetch words online (e.g. 'cooking', 'space')!";
+      feedbackEl.className = "incorrect";
+      practiceSection.classList.add("hidden");
+      return;
+    }
+    filtered = await fetchOnlineVocabulary(topic);
   } else {
+    const category = categorySelect.value.toLowerCase();
     filtered = vocab.filter(w => w.category.toLowerCase() === category);
   }
   
   if (!filtered.length) {
-    feedbackEl.textContent = "No words found in this category!";
+    feedbackEl.textContent = "No words found! Try a different category or topic.";
     feedbackEl.className = "incorrect";
     return;
   }
