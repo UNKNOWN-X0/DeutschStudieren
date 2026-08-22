@@ -16,8 +16,22 @@
   <main>
     <section class="controls">
       <div class="control-group">
+        <label for="source-select">📖 Vocabulary Source</label>
+        <select id="source-select">
+          <option value="local">📚 Local Database (1,663 words)</option>
+          <option value="online">🌐 Online (Any Topic)</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="category-group">
         <label for="category-select">📚 Category</label>
         <select id="category-select"></select>
+      </div>
+
+      <div class="control-group hidden" id="topic-input-group">
+        <label for="topic-input">🔎 Topic (type anything!)</label>
+        <input id="topic-input" placeholder="e.g. cooking, space, emotions, sports..." autocomplete="off" />
+        <p class="topic-hint">We'll find related English words and translate them to German for you.</p>
       </div>
 
       <div class="control-group">
@@ -34,14 +48,6 @@
           <option value="input">✍️ Type Answer</option>
           <option value="multiple-choice">🔘 Multiple Choice</option>
           <option value="matching">🔗 Matching Pairs</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label for="source-select">📖 Vocabulary Source</label>
-        <select id="source-select">
-          <option value="local">📚 Local Database (1,663 words)</option>
-          <option value="online">🌐 Online + Local (Dict.cc API)</option>
         </select>
       </div>
 
