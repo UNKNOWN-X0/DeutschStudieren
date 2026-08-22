@@ -30,10 +30,12 @@
             align-items: center;
             margin: 0;
             padding: 20px;
+            color: var(--text-main);
         }
 
         .container {
             background: var(--glass);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
             box-shadow: var(--shadow);
             width: 100%;
@@ -58,9 +60,8 @@
         label { font-weight: bold; font-size: 0.9rem; color: #666; }
         
         select, button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 12px 15px;
+            border-radius: 10px;
             border: 1px solid #ddd;
             font-size: 1rem;
             transition: all 0.3s ease;
@@ -70,7 +71,6 @@
             background: var(--primary);
             color: white;
             border: none;
-            cursor: pointer;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -143,7 +143,6 @@
         }
         input[type="text"]:focus { border-color: var(--primary); outline: none; }
 
-        /* Multiple Choice Grid */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -164,7 +163,7 @@
         .sentence-bank {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
             margin: 15px 0;
             min-height: 50px;
@@ -216,7 +215,6 @@
             margin: 20px auto;
             display: none;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     </style>
 </head>
@@ -377,6 +375,7 @@ const app = {
         this.els.game.style.display = 'block';
         this.els.modeDisplay.textContent = `Mode: ${this.mode.charAt(0).toUpperCase() + this.mode.slice(1)}`;
 
+    if (source === 'hybrid') {
         try {
             // Construct API URL
             // We ask for German-English pairs containing the category keyword
@@ -726,11 +725,140 @@ const app = {
             this.showStats();
         }
     }
-};
+    
+    showContext();
+    document.getElementById('check-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'inline-block';
+}
 
 // Start App
 app.init();
 
+        if (isCorrect) handleCorrect();
+        else handleWrong();
+    }
+
+    showContext();
+    document.getElementById('check-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'inline-block';
+    document.getElementById('next-btn').focus();
+}
+
+function handleCorrect() {
+    feedbackMsg.textContent = "✅ Correct!";
+    feedbackMsg.className = "feedback correct";
+    currentSession.correctCount++;
+    updateSRS(currentSession.activeWord, true);
+}
+
+function handleWrong() {
+    const isDeToEn = currentSession.direction === 'de-en';
+    const correctText = isDeToEn ? currentSession.activeWord.en : currentSession.activeWord.de;
+    feedbackMsg.textContent = `❌ Wrong! The answer was: ${correctText}`;
+    feedbackMsg.className = "feedback wrong";
+    updateSRS(currentSession.activeWord, false);
+}
+
+function showContext() {
+    if (currentSession.activeWord.example) {
+        contextDisplay.classList.add('visible');
+    }
+}
+
+function nextWord() {
+    currentSession.totalCount++;
+    currentSession.currentIndex++;
+    loadCurrentWord();
+}
+
+function playAudio() {
+    const text = currentSession.activeWord.de;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'de-DE';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+}
+
+function updateSRS(wordObj, isCorrect) {
+    const wordId = `${wordObj.de}-${wordObj.en}`;
+    let record = JSON.parse(localStorage.getItem(`srs_${wordId}`)) || { interval: 1, ease: 2.5, due: Date.now() };
+    
+    if (isCorrect) {
+        record.interval = Math.round(record.interval * record.ease);
+        record.ease = Math.max(1.3, record.ease + 0.1);
+    } else {
+        record.interval = 1;
+        record.ease = Math.max(1.3, record.ease - 0.2);
+    }
+    
+    record.due = Date.now() + (record.interval * 24 * 60 * 60 * 1000);
+    localStorage.setItem(`srs_${wordId}`, JSON.stringify(record));
+
+    userProgress.totalPracticed++;
+    if (isCorrect) userProgress.correctAnswers++;
+    
+    if (record.interval > 21 && !userProgress.masteredWords.includes(wordId)) {
+        userProgress.masteredWords.push(wordId);
+    }
+    
+    saveProgress();
+}
+
+function saveProgress() {
+    const today = new Date().toDateString();
+    if (userProgress.lastLogin !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (userProgress.lastLogin === yesterday) {
+            userProgress.streak++;
+        } else if (userProgress.lastLogin !== today) {
+            userProgress.streak = 1;
+        }
+        userProgress.lastLogin = today;
+    }
+    
+    localStorage.setItem('germanAppProgress', JSON.stringify(userProgress));
+    updateStatsUI();
+}
+
+function updateStatsUI() {
+    document.getElementById('stat-total').textContent = userProgress.totalPracticed;
+    const acc = userProgress.totalPracticed === 0 ? 0 : Math.round((userProgress.correctAnswers / userProgress.totalPracticed) * 100);
+    document.getElementById('stat-accuracy').textContent = acc + '%';
+    document.getElementById('stat-streak').textContent = userProgress.streak;
+    document.getElementById('stat-mastered').textContent = userProgress.masteredWords.length;
+}
+
+function showProgress() {
+    setupPanel.style.display = 'none';
+    practiceArea.style.display = 'none';
+    progressSection.style.display = 'block';
+    updateStatsUI();
+}
+
+function showSetup() {
+    progressSection.style.display = 'none';
+    practiceArea.style.display = 'none';
+    setupPanel.style.display = 'block';
+    srsInfo.style.display = 'none';
+}
+
+function endSession() {
+    alert(`Session Complete!\nCorrect: ${currentSession.correctCount}/${currentSession.totalCount}`);
+    showSetup();
+}
+
+function resetProgress() {
+    if(confirm("Are you sure? This deletes all history.")) {
+        localStorage.removeItem('germanAppProgress');
+        for (let i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).startsWith('srs_')) {
+                localStorage.removeItem(localStorage.key(i));
+            }
+        }
+        userProgress = { totalPracticed: 0, correctAnswers: 0, streak: 0, lastLogin: null, masteredWords: [] };
+        updateStatsUI();
+    }
+}
 </script>
 </body>
 </html>
