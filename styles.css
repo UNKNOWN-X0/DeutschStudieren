@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1810 100%);
   color: #fff;
   min-height: 100vh;
@@ -15,13 +15,17 @@ body {
 }
 
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255, 206, 0, 0.03) 1px, transparent 1px);
+  background: radial-gradient(
+    circle,
+    rgba(255, 206, 0, 0.03) 1px,
+    transparent 1px
+  );
   background-size: 50px 50px;
   animation: backgroundScroll 20s linear infinite;
   pointer-events: none;
@@ -51,13 +55,18 @@ header {
 }
 
 header::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   animation: shine 3s infinite;
 }
 
@@ -96,7 +105,8 @@ main {
   z-index: 1;
 }
 
-.controls, .practice {
+.controls,
+.practice {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
   padding: 35px;
@@ -108,7 +118,8 @@ main {
   transition: all 0.3s ease;
 }
 
-.controls:hover, .practice:hover {
+.controls:hover,
+.practice:hover {
   border-color: rgba(255, 206, 0, 0.3);
   box-shadow: 0 15px 50px rgba(255, 206, 0, 0.15);
 }
@@ -140,7 +151,8 @@ label {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-select, input {
+select,
+input {
   width: 100%;
   padding: 18px 20px;
   background: rgba(0, 0, 0, 0.5);
@@ -152,15 +164,19 @@ select, input {
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-select:focus, input:focus {
+select:focus,
+input:focus {
   outline: none;
   border-color: #ffce00;
   background: rgba(0, 0, 0, 0.7);
-  box-shadow: 0 0 25px rgba(255, 206, 0, 0.4), inset 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 25px rgba(255, 206, 0, 0.4),
+    inset 0 2px 8px rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
 
-select:hover, input:hover {
+select:hover,
+input:hover {
   border-color: rgba(255, 206, 0, 0.6);
   transform: translateY(-1px);
 }
@@ -188,7 +204,7 @@ button {
 }
 
 button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -197,7 +213,9 @@ button::before {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 button:hover::before {
@@ -229,7 +247,11 @@ button span {
   font-size: 2.8em;
   margin-bottom: 30px;
   padding: 40px;
-  background: linear-gradient(135deg, rgba(221, 0, 0, 0.3) 0%, rgba(255, 206, 0, 0.3) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(221, 0, 0, 0.3) 0%,
+    rgba(255, 206, 0, 0.3) 100%
+  );
   border-radius: 20px;
   font-weight: bold;
   min-height: 120px;
@@ -245,7 +267,7 @@ button span {
 }
 
 #prompt::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
@@ -302,7 +324,11 @@ button span {
 }
 
 #feedback.correct {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.3) 0%, rgba(255, 215, 0, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.3) 0%,
+    rgba(255, 215, 0, 0.4) 100%
+  );
   color: #ffce00;
   animation: correct 0.5s ease-out;
   box-shadow: 0 0 30px rgba(255, 206, 0, 0.5);
@@ -310,7 +336,11 @@ button span {
 }
 
 #feedback.incorrect {
-  background: linear-gradient(135deg, rgba(221, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(221, 0, 0, 0.3) 0%,
+    rgba(255, 0, 0, 0.4) 100%
+  );
   color: #ff6b6b;
   animation: shake 0.5s ease-out;
   box-shadow: 0 0 30px rgba(221, 0, 0, 0.5);
@@ -318,7 +348,8 @@ button span {
 }
 
 @keyframes correct {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   25% {
@@ -330,13 +361,21 @@ button span {
 }
 
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-10px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(10px);
   }
 }
@@ -354,7 +393,11 @@ button span {
 
 .stat-box {
   flex: 1;
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.15) 0%, rgba(221, 0, 0, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.15) 0%,
+    rgba(221, 0, 0, 0.15) 100%
+  );
   padding: 20px;
   border-radius: 15px;
   text-align: center;
@@ -365,13 +408,18 @@ button span {
 }
 
 .stat-box::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 206, 0, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 206, 0, 0.2),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -409,16 +457,17 @@ button span {
   h1 {
     font-size: 2em;
   }
-  
+
   #prompt {
     font-size: 2em;
     padding: 25px;
   }
-  
-  .controls, .practice {
+
+  .controls,
+  .practice {
     padding: 25px;
   }
-  
+
   .stats {
     flex-direction: column;
     gap: 15px;
@@ -427,7 +476,8 @@ button span {
 
 /* Loading animation for categories */
 @keyframes selectGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(255, 206, 0, 0.3);
   }
   50% {
@@ -452,7 +502,11 @@ select:focus {
 }
 
 .mc-option {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.2) 0%, rgba(221, 0, 0, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.2) 0%,
+    rgba(221, 0, 0, 0.2) 100%
+  );
   border: 2px solid rgba(255, 206, 0, 0.4);
   padding: 20px;
   border-radius: 15px;
@@ -490,7 +544,11 @@ select:focus {
 }
 
 .matching-card {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.15) 0%, rgba(221, 0, 0, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.15) 0%,
+    rgba(221, 0, 0, 0.15) 100%
+  );
   border: 2px solid rgba(255, 206, 0, 0.3);
   padding: 20px 10px;
   border-radius: 15px;
@@ -513,14 +571,22 @@ select:focus {
 }
 
 .matching-card.selected {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.4) 0%, rgba(221, 0, 0, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.4) 0%,
+    rgba(221, 0, 0, 0.4) 100%
+  );
   border-color: rgba(255, 206, 0, 0.9);
   box-shadow: 0 0 30px rgba(255, 206, 0, 0.6);
   transform: scale(1.05);
 }
 
 .matching-card.matched {
-  background: linear-gradient(135deg, rgba(0, 200, 0, 0.3) 0%, rgba(0, 150, 0, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 200, 0, 0.3) 0%,
+    rgba(0, 150, 0, 0.4) 100%
+  );
   border-color: rgba(0, 255, 0, 0.6);
   opacity: 0.7;
   cursor: default;
@@ -528,7 +594,8 @@ select:focus {
 }
 
 @keyframes matchPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -624,7 +691,11 @@ select:focus {
 }
 
 .progress-stat {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.1) 0%, rgba(221, 0, 0, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.1) 0%,
+    rgba(221, 0, 0, 0.1) 100%
+  );
   padding: 20px;
   border-radius: 15px;
   text-align: center;
@@ -646,14 +717,22 @@ select:focus {
 }
 
 #reset-progress-btn {
-  background: linear-gradient(135deg, rgba(221, 0, 0, 0.5) 0%, rgba(150, 0, 0, 0.5) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(221, 0, 0, 0.5) 0%,
+    rgba(150, 0, 0, 0.5) 100%
+  );
   max-width: 300px;
   margin: 0 auto;
   display: block;
 }
 
 .secondary-btn {
-  background: linear-gradient(135deg, rgba(100, 100, 100, 0.5) 0%, rgba(80, 80, 80, 0.5) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 100, 100, 0.5) 0%,
+    rgba(80, 80, 80, 0.5) 100%
+  );
   border: 2px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 14px 28px;
@@ -673,7 +752,11 @@ select:focus {
 
 /* SRS Info Box */
 .srs-info {
-  background: linear-gradient(135deg, rgba(255, 206, 0, 0.15) 0%, rgba(221, 0, 0, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 206, 0, 0.15) 0%,
+    rgba(221, 0, 0, 0.15) 100%
+  );
   border: 2px solid rgba(255, 206, 0, 0.3);
   border-radius: 15px;
   padding: 15px 20px;
@@ -725,11 +808,11 @@ select:focus {
   .mc-options {
     grid-template-columns: 1fr;
   }
-  
+
   .matching-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .matching-card {
     min-height: 60px;
     font-size: 1em;
@@ -741,7 +824,7 @@ select:focus {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  
+
   .matching-card {
     padding: 15px 8px;
     font-size: 0.9em;

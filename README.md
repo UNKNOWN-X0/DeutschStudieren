@@ -5,11 +5,13 @@ An interactive web application for learning German vocabulary with multiple prac
 ## ✨ New Features (Latest Update)
 
 ### 🎮 Multiple Practice Modes
+
 1. **Type Answer** - Classic input mode with instant feedback and example sentences
 2. **Multiple Choice** - Choose from 4 options, great for quick practice with context examples
 3. **Matching Pairs** - Memory-style game matching German-English pairs
 
 ### 🧠 Spaced Repetition System (SRS)
+
 - Tracks your performance on each word
 - Words you struggle with appear more frequently
 - Progress saved automatically in browser localStorage
@@ -17,12 +19,14 @@ An interactive web application for learning German vocabulary with multiple prac
 - SRS info box shows active status during practice
 
 ### 🌐 Online Vocabulary Integration
+
 - Fetch additional words from MyMemory Translation API
 - Fallback to local database if APIs unavailable
 - Merges online and local vocabulary seamlessly
 - Real-time fetching with status indicators
 
 ### 📊 Enhanced Progress Tracking
+
 - Streak counter for consecutive correct answers
 - Words practiced count
 - Words mastered (80%+ accuracy over 5+ attempts)
@@ -30,6 +34,7 @@ An interactive web application for learning German vocabulary with multiple prac
 - View Progress button to see stats anytime
 
 ### 📚 Context Examples
+
 - Example sentences displayed when available
 - Shows both German and English versions
 - Helps understand word usage in context
@@ -57,18 +62,21 @@ An interactive web application for learning German vocabulary with multiple prac
 ## 🎯 How to Use Each Mode
 
 ### Type Answer Mode
+
 - See a word in one language
 - Type the translation
 - Get instant feedback with correct answer shown
 - Press Enter or click Submit
 
 ### Multiple Choice Mode
+
 - See a word with 4 possible translations
 - Click the correct option
 - Visual feedback on selection
 - Automatic progression to next word
 
 ### Matching Pairs Mode
+
 - 8 German-English pairs displayed as cards (16 total)
 - Click two cards to find matches
 - Matched pairs stay highlighted
@@ -77,17 +85,21 @@ An interactive web application for learning German vocabulary with multiple prac
 ## 🔧 Technical Details
 
 ### Spaced Repetition Algorithm
+
 ```javascript
-weight = 1 + (1 - successRate) * 3
+weight = 1 + (1 - successRate) * 3;
 // successRate = correctAnswers / totalAttempts
 // Weight ranges from 1 (100% accuracy) to 4 (0% accuracy)
 ```
 
 ### Local Storage Keys
+
 - `germanSRS` - Stores word performance data
 
 ### API Integration
+
 Currently integrated:
+
 - **MyMemory Translation API** - Fetches German-English translations (free, no key required)
 - Fallback to local database if API unavailable
 - Easy to add more sources
@@ -103,6 +115,7 @@ Currently integrated:
 ## 📈 Future Enhancements
 
 Ready to implement:
+
 - [ ] Audio pronunciation (Web Speech API)
 - [ ] More example sentences in local vocabulary
 - [ ] Verb conjugation practice
@@ -114,6 +127,7 @@ Ready to implement:
 ## 🌍 Browser Compatibility
 
 Works on all modern browsers:
+
 - Chrome/Edge (recommended)
 - Firefox
 - Safari
@@ -126,6 +140,7 @@ Mobile-responsive for iOS and Android devices.
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ### MIT License Summary
+
 - ✅ Free to use for personal and commercial purposes
 - ✅ Free to modify and distribute
 - ✅ No warranty provided
@@ -146,6 +161,7 @@ Contributions are welcome! Here's how you can help:
 5. **API Integrations**: Add more translation API sources
 
 ### How to Contribute
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
@@ -155,11 +171,13 @@ Contributions are welcome! Here's how you can help:
 ## 🐛 Known Issues & Roadmap
 
 ### Current Limitations
+
 - Online API may have rate limits (MyMemory: ~1000 requests/day)
 - No cloud sync (progress stored locally only)
 - Limited example sentences in local database
 
 ### Upcoming Features (Roadmap)
+
 - [ ] **Audio Pronunciation** - Web Speech API integration
 - [ ] **Sentence Translation Mode** - Translate full sentences
 - [ ] **Listening Practice** - Audio-based questions
@@ -176,6 +194,7 @@ Contributions are welcome! Here's how you can help:
 ## 📚 Learning Resources
 
 Complement your practice with these resources:
+
 - **Dict.cc** - Comprehensive German-English dictionary
 - **Leo.org** - Detailed vocabulary with examples
 - **Duolingo** - Gamified language learning
@@ -185,6 +204,7 @@ Complement your practice with these resources:
 ## ☕ Support
 
 If you find this app helpful, consider:
+
 - Starring the repository ⭐
 - Sharing with fellow learners
 - Contributing vocabulary or code improvements

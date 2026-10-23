@@ -1,122 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>German Practice</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="words.js"></script>
-</head>
-<body>
-  <header>
-    <h1>🇩🇪 German Word Practice</h1>
-    <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.85; font-weight: 300; letter-spacing: 2px;">MADE BY FOCUS (GEN.11)</p>
-  </header>
-  
-  <main>
-    <section class="controls">
-      <div class="control-group">
-        <label for="source-select">📖 Vocabulary Source</label>
-        <select id="source-select">
-          <option value="local">📚 Local Database (1,663 words)</option>
-          <option value="online">🌐 Online (Any Topic)</option>
-        </select>
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>German Practice</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="words.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>🇩🇪 German Word Practice</h1>
+      <p
+        style="
+          margin-top: 10px;
+          font-size: 0.85em;
+          opacity: 0.85;
+          font-weight: 300;
+          letter-spacing: 2px;
+        "
+      >
+        MADE BY FOCUS (GEN.11)
+      </p>
+    </header>
 
-      <div class="control-group" id="category-group">
-        <label for="category-select">📚 Category</label>
-        <select id="category-select"></select>
-      </div>
-
-      <div class="control-group hidden" id="topic-input-group">
-        <label for="topic-input">🔎 Topic (type anything!)</label>
-        <input id="topic-input" placeholder="e.g. cooking, space, emotions, sports..." autocomplete="off" />
-        <p class="topic-hint">We'll find related English words and translate them to German for you.</p>
-      </div>
-
-      <div class="control-group">
-        <label for="direction-select">🔄 Direction</label>
-        <select id="direction-select">
-          <option value="de-to-en">German → English</option>
-          <option value="en-to-de">English → German</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label for="mode-select">🎮 Practice Mode</label>
-        <select id="mode-select">
-          <option value="input">✍️ Type Answer</option>
-          <option value="multiple-choice">🔘 Multiple Choice</option>
-          <option value="matching">🔗 Matching Pairs</option>
-        </select>
-      </div>
-
-      <button id="start-btn">🚀 Start Practice</button>
-      <button id="show-progress-btn" class="secondary-btn">📊 View Progress</button>
-      
-      <div class="online-status hidden" id="online-status">
-        <span class="status-indicator"></span>
-        <span class="status-text">Fetching online vocabulary...</span>
-      </div>
-    </section>
-
-    <section class="practice hidden">
-      <div class="stats">
-        <div class="stat-box">
-          <div class="stat-number" id="correct-count">0</div>
-          <div class="stat-label">Correct</div>
+    <main>
+      <section class="controls">
+        <div class="control-group">
+          <label for="source-select">📖 Vocabulary Source</label>
+          <select id="source-select">
+            <option value="local">📚 Local Database (1,663 words)</option>
+            <option value="online">🌐 Online (Any Topic)</option>
+          </select>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="total-count">0</div>
-          <div class="stat-label">Total</div>
+
+        <div class="control-group" id="category-group">
+          <label for="category-select">📚 Category</label>
+          <select id="category-select"></select>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="accuracy">0%</div>
-          <div class="stat-label">Accuracy</div>
+
+        <div class="control-group hidden" id="topic-input-group">
+          <label for="topic-input">🔎 Topic (type anything!)</label>
+          <input
+            id="topic-input"
+            placeholder="e.g. cooking, space, emotions, sports..."
+            autocomplete="off"
+          />
+          <p class="topic-hint">
+            We'll find related English words and translate them to German for
+            you.
+          </p>
         </div>
-        <div class="stat-box">
-          <div class="stat-number" id="streak-count">0</div>
-          <div class="stat-label">Streak</div>
+
+        <div class="control-group">
+          <label for="direction-select">🔄 Direction</label>
+          <select id="direction-select">
+            <option value="de-to-en">German → English</option>
+            <option value="en-to-de">English → German</option>
+          </select>
         </div>
-      </div>
 
-      <!-- SRS Info Box -->
-      <div class="srs-info" id="srs-info">
-        <p>💡 <strong>Spaced Repetition Active:</strong> Words you struggle with will appear more frequently!</p>
-      </div>
+        <div class="control-group">
+          <label for="mode-select">🎮 Practice Mode</label>
+          <select id="mode-select">
+            <option value="input">✍️ Type Answer</option>
+            <option value="multiple-choice">🔘 Multiple Choice</option>
+            <option value="matching">🔗 Matching Pairs</option>
+          </select>
+        </div>
 
-      <!-- Input Mode -->
-      <div id="input-mode" class="mode-section">
-        <div id="prompt"></div>
-        <div id="context-example" class="context-example"></div>
-        <input id="answer-input" placeholder="Type your answer here..." autocomplete="off" />
-        <button id="submit-btn">✓ Submit Answer</button>
-      </div>
+        <button id="start-btn">🚀 Start Practice</button>
+        <button id="show-progress-btn" class="secondary-btn">
+          📊 View Progress
+        </button>
 
-      <!-- Multiple Choice Mode -->
-      <div id="multiple-choice-mode" class="mode-section hidden">
-        <div id="mc-prompt"></div>
-        <div id="mc-context-example" class="context-example"></div>
-        <div id="mc-options" class="mc-options"></div>
-      </div>
+        <div class="online-status hidden" id="online-status">
+          <span class="status-indicator"></span>
+          <span class="status-text">Fetching online vocabulary...</span>
+        </div>
+      </section>
 
-      <!-- Matching Mode -->
-      <div id="matching-mode" class="mode-section hidden">
-        <p class="matching-instructions">Match the German words with their English translations</p>
-        <div id="matching-grid" class="matching-grid"></div>
-      </div>
+      <section class="practice hidden">
+        <div class="stats">
+          <div class="stat-box">
+            <div class="stat-number" id="correct-count">0</div>
+            <div class="stat-label">Correct</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="total-count">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="accuracy">0%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="streak-count">0</div>
+            <div class="stat-label">Streak</div>
+          </div>
+        </div>
 
-      <div id="feedback"></div>
-    </section>
-    
-    <section class="progress-section hidden" id="progress-section">
-      <h2>📊 Your Progress</h2>
-      <div id="progress-stats"></div>
-      <button id="reset-progress-btn">🔄 Reset Progress</button>
-      <button id="hide-progress-btn" class="secondary-btn">← Back to Practice</button>
-    </section>
-  </main>
-  
-  <script src="script.js"></script>
-</body>
+        <!-- SRS Info Box -->
+        <div class="srs-info" id="srs-info">
+          <p>
+            💡 <strong>Spaced Repetition Active:</strong> Words you struggle
+            with will appear more frequently!
+          </p>
+        </div>
+
+        <!-- Input Mode -->
+        <div id="input-mode" class="mode-section">
+          <div id="prompt"></div>
+          <div id="context-example" class="context-example"></div>
+          <input
+            id="answer-input"
+            placeholder="Type your answer here..."
+            autocomplete="off"
+          />
+          <button id="submit-btn">✓ Submit Answer</button>
+        </div>
+
+        <!-- Multiple Choice Mode -->
+        <div id="multiple-choice-mode" class="mode-section hidden">
+          <div id="mc-prompt"></div>
+          <div id="mc-context-example" class="context-example"></div>
+          <div id="mc-options" class="mc-options"></div>
+        </div>
+
+        <!-- Matching Mode -->
+        <div id="matching-mode" class="mode-section hidden">
+          <p class="matching-instructions">
+            Match the German words with their English translations
+          </p>
+          <div id="matching-grid" class="matching-grid"></div>
+        </div>
+
+        <div id="feedback"></div>
+      </section>
+
+      <section class="progress-section hidden" id="progress-section">
+        <h2>📊 Your Progress</h2>
+        <div id="progress-stats"></div>
+        <button id="reset-progress-btn">🔄 Reset Progress</button>
+        <button id="hide-progress-btn" class="secondary-btn">
+          ← Back to Practice
+        </button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
 </html>

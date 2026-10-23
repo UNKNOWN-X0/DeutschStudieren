@@ -15,7 +15,7 @@ let matchingPairs = [];
 let selectedCard = null;
 let matchedCount = 0;
 
-let srsData = JSON.parse(localStorage.getItem('germanSRS')) || {};
+let srsData = JSON.parse(localStorage.getItem("germanSRS")) || {};
 
 const categorySelect = document.getElementById("category-select");
 const categoryGroup = document.getElementById("category-group");
@@ -40,7 +40,9 @@ const streakCountEl = document.getElementById("streak-count");
 const onlineStatusEl = document.getElementById("online-status");
 const resetProgressBtn = document.getElementById("reset-progress-btn");
 const inputModeSection = document.getElementById("input-mode");
-const multipleChoiceModeSection = document.getElementById("multiple-choice-mode");
+const multipleChoiceModeSection = document.getElementById(
+  "multiple-choice-mode",
+);
 const matchingModeSection = document.getElementById("matching-mode");
 const srsInfoEl = document.getElementById("srs-info");
 const contextExampleEl = document.getElementById("context-example");
@@ -51,7 +53,7 @@ function init() {
   loadSRSData();
   updateProgressDisplay();
   toggleSourceInputs();
-  
+
   startBtn.addEventListener("click", handleStart);
   submitBtn.addEventListener("click", handleSubmit);
   answerInput.addEventListener("keypress", (e) => {
@@ -60,8 +62,10 @@ function init() {
   topicInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") startBtn.click();
   });
-  
-  modeSelect.addEventListener("change", () => { practiceMode = modeSelect.value; });
+
+  modeSelect.addEventListener("change", () => {
+    practiceMode = modeSelect.value;
+  });
   sourceSelect.addEventListener("change", () => {
     sourceType = sourceSelect.value;
     toggleSourceInputs();
@@ -95,8 +99,8 @@ function hideProgressSection() {
 }
 
 function populateCategories() {
-  const categories = [...new Set(vocab.map(w => w.category))].sort();
-  categories.forEach(cat => {
+  const categories = [...new Set(vocab.map((w) => w.category))].sort();
+  categories.forEach((cat) => {
     const opt = document.createElement("option");
     opt.value = opt.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
     categorySelect.appendChild(opt);
@@ -107,13 +111,18 @@ function updateStats() {
   correctCountEl.textContent = correctCount;
   totalCountEl.textContent = totalCount;
   streakCountEl.textContent = streakCount;
-  const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+  const accuracy =
+    totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
   accuracyEl.textContent = accuracy + "%";
   saveSRSData();
 }
 
-function loadSRSData() { srsData = JSON.parse(localStorage.getItem('germanSRS')) || {}; }
-function saveSRSData() { localStorage.setItem('germanSRS', JSON.stringify(srsData)); }
+function loadSRSData() {
+  srsData = JSON.parse(localStorage.getItem("germanSRS")) || {};
+}
+function saveSRSData() {
+  localStorage.setItem("germanSRS", JSON.stringify(srsData));
+}
 
 function getSRSWeight(word) {
   const key = `${word.word_de}_${word.word_en}`;
@@ -125,7 +134,8 @@ function getSRSWeight(word) {
 
 function updateSRS(word, isCorrect) {
   const key = `${word.word_de}_${word.word_en}`;
-  if (!srsData[key]) srsData[key] = { correct: 0, total: 0, lastPracticed: null };
+  if (!srsData[key])
+    srsData[key] = { correct: 0, total: 0, lastPracticed: null };
   srsData[key].total++;
   if (isCorrect) srsData[key].correct++;
   srsData[key].lastPracticed = new Date().toISOString();
@@ -134,12 +144,12 @@ function updateSRS(word, isCorrect) {
 
 function selectWordWithSRS() {
   if (usedWords.length >= filtered.length) usedWords = [];
-  const available = filtered.filter(w => !usedWords.includes(w));
+  const available = filtered.filter((w) => !usedWords.includes(w));
   if (available.length === 0) return null;
-  
-  const weights = available.map(w => getSRSWeight(w));
+
+  const weights = available.map((w) => getSRSWeight(w));
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-  
+
   let random = Math.random() * totalWeight;
   for (let i = 0; i < available.length; i++) {
     random -= weights[i];
@@ -149,7 +159,7 @@ function selectWordWithSRS() {
       return current;
     }
   }
-  
+
   current = available[0];
   usedWords.push(current);
   return current;
@@ -178,11 +188,17 @@ async function fetchOnlineVocabulary(topic) {
       return [];
     }
 
-    showOnlineStatus(true, `Translating ${relatedWords.length} words to German...`);
+    showOnlineStatus(
+      true,
+      `Translating ${relatedWords.length} words to German...`,
+    );
     const translated = await translateWordsToGerman(relatedWords, topic);
 
     if (!translated.length) {
-      showOnlineStatus(false, "Couldn't translate any words. Try a different topic.");
+      showOnlineStatus(
+        false,
+        "Couldn't translate any words. Try a different topic.",
+      );
       setTimeout(() => showOnlineStatus(false, ""), 3000);
       return [];
     }
@@ -192,7 +208,10 @@ async function fetchOnlineVocabulary(topic) {
     return translated;
   } catch (error) {
     console.error("Error fetching online vocabulary:", error);
-    showOnlineStatus(false, "Couldn't fetch words online. Please check your connection and try again.");
+    showOnlineStatus(
+      false,
+      "Couldn't fetch words online. Please check your connection and try again.",
+    );
     setTimeout(() => showOnlineStatus(false, ""), 3000);
     return [];
   }
@@ -206,22 +225,24 @@ async function fetchRelatedWords(topic) {
 
   try {
     // "ml" = "means like" -> semantically related words
-    const response = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(cleanTopic)}&max=25`);
+    const response = await fetch(
+      `https://api.datamuse.com/words?ml=${encodeURIComponent(cleanTopic)}&max=25`,
+    );
     if (!response.ok) throw new Error("Datamuse request failed");
 
     const data = await response.json();
 
     const relatedOnly = (Array.isArray(data) ? data : [])
-      .map(entry => entry.word)
-      .filter(w => typeof w === "string" && /^[a-zA-Z][a-zA-Z\s-]*$/.test(w))
-      .filter(w => w.toLowerCase() !== cleanTopic)
+      .map((entry) => entry.word)
+      .filter((w) => typeof w === "string" && /^[a-zA-Z][a-zA-Z\s-]*$/.test(w))
+      .filter((w) => w.toLowerCase() !== cleanTopic)
       .slice(0, 19);
 
     // Always include the topic word itself, plus its related words
     const words = [cleanTopic, ...relatedOnly];
 
     // De-duplicate while preserving order
-    return [...new Set(words.map(w => w.toLowerCase()))];
+    return [...new Set(words.map((w) => w.toLowerCase()))];
   } catch (error) {
     console.error("Error fetching related words from Datamuse:", error);
     // Fall back to just the topic word so the user still gets *something*
@@ -249,18 +270,21 @@ async function translateWordsToGerman(words, category) {
           word_en_plural: null,
           category: category.trim().toLowerCase(),
           example_de: "",
-          example_en: ""
+          example_en: "",
         });
       }
     }
   }
 
-  const workers = Array.from({ length: Math.min(concurrency, words.length) }, worker);
+  const workers = Array.from(
+    { length: Math.min(concurrency, words.length) },
+    worker,
+  );
   await Promise.all(workers);
 
   // De-duplicate by German word (case-insensitive)
   const seen = new Set();
-  return results.filter(w => {
+  return results.filter((w) => {
     const key = w.word_de.toLowerCase();
     if (!key || seen.has(key)) return false;
     seen.add(key);
@@ -270,7 +294,9 @@ async function translateWordsToGerman(words, category) {
 
 async function translateSingleWord(word) {
   try {
-    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|de`);
+    const response = await fetch(
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|de`,
+    );
     if (!response.ok) return null;
 
     const data = await response.json();
@@ -293,7 +319,9 @@ function showOnlineStatus(showing, text) {
     onlineStatusEl.querySelector(".status-text").textContent = text;
     onlineStatusEl.querySelector(".status-indicator").classList.add("loading");
   } else {
-    onlineStatusEl.querySelector(".status-indicator").classList.remove("loading");
+    onlineStatusEl
+      .querySelector(".status-indicator")
+      .classList.remove("loading");
     if (text) {
       onlineStatusEl.querySelector(".status-text").textContent = text;
       onlineStatusEl.classList.remove("hidden");
@@ -309,15 +337,16 @@ async function handleStart() {
   direction = directionSelect.value;
   practiceMode = modeSelect.value;
   sourceType = sourceSelect.value;
-  
+
   // Hide progress section when starting practice
   progressSection.classList.add("hidden");
   practiceSection.classList.remove("hidden");
-  
+
   if (sourceType === "online") {
     const topic = topicInput.value.trim();
     if (!topic) {
-      feedbackEl.textContent = "Please type a topic to fetch words online (e.g. 'cooking', 'space')!";
+      feedbackEl.textContent =
+        "Please type a topic to fetch words online (e.g. 'cooking', 'space')!";
       feedbackEl.className = "incorrect";
       practiceSection.classList.add("hidden");
       return;
@@ -325,27 +354,28 @@ async function handleStart() {
     filtered = await fetchOnlineVocabulary(topic);
   } else {
     const category = categorySelect.value.toLowerCase();
-    filtered = vocab.filter(w => w.category.toLowerCase() === category);
+    filtered = vocab.filter((w) => w.category.toLowerCase() === category);
   }
-  
+
   if (!filtered.length) {
-    feedbackEl.textContent = "No words found! Try a different category or topic.";
+    feedbackEl.textContent =
+      "No words found! Try a different category or topic.";
     feedbackEl.className = "incorrect";
     return;
   }
-  
+
   correctCount = 0;
   totalCount = 0;
   streakCount = 0;
   usedWords = [];
   matchedCount = 0;
   updateStats();
-  
+
   // Show SRS info box
   srsInfoEl.classList.remove("hidden");
-  
+
   showModeSection(practiceMode);
-  
+
   if (practiceMode === "matching") {
     setupMatchingGame();
   } else {
@@ -357,9 +387,10 @@ function showModeSection(mode) {
   inputModeSection.classList.add("hidden");
   multipleChoiceModeSection.classList.add("hidden");
   matchingModeSection.classList.add("hidden");
-  
+
   if (mode === "input") inputModeSection.classList.remove("hidden");
-  else if (mode === "multiple-choice") multipleChoiceModeSection.classList.remove("hidden");
+  else if (mode === "multiple-choice")
+    multipleChoiceModeSection.classList.remove("hidden");
   else if (mode === "matching") matchingModeSection.classList.remove("hidden");
 }
 
@@ -367,10 +398,10 @@ function newWord() {
   const word = selectWordWithSRS();
   if (!word) return;
   current = word;
-  
+
   if (practiceMode === "input") setupInputQuestion();
   else if (practiceMode === "multiple-choice") setupMultipleChoiceQuestion();
-  
+
   answerInput.value = "";
   answerInput.focus();
   feedbackEl.textContent = "";
@@ -381,13 +412,17 @@ function setupInputQuestion() {
   // Hide context examples initially
   contextExampleEl.classList.add("hidden");
   contextExampleEl.textContent = "";
-  
+
   if (direction === "de-to-en") {
-    promptEl.textContent = current.word_de + (current.forms && current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
+    promptEl.textContent =
+      current.word_de +
+      (current.forms && current.forms.plural
+        ? ` (Pl: ${current.forms.plural})`
+        : "");
   } else {
     promptEl.textContent = current.word_en;
   }
-  
+
   // Show example sentence if available
   if (current.example_de && current.example_en) {
     contextExampleEl.textContent = `Example: "${current.example_de}" — "${current.example_en}"`;
@@ -399,30 +434,37 @@ function setupMultipleChoiceQuestion() {
   // Hide context examples initially
   mcContextExampleEl.classList.add("hidden");
   mcContextExampleEl.textContent = "";
-  
+
   if (direction === "de-to-en") {
-    document.getElementById("mc-prompt").textContent = current.word_de + (current.forms && current.forms.plural ? ` (Pl: ${current.forms.plural})` : "");
+    document.getElementById("mc-prompt").textContent =
+      current.word_de +
+      (current.forms && current.forms.plural
+        ? ` (Pl: ${current.forms.plural})`
+        : "");
   } else {
     document.getElementById("mc-prompt").textContent = current.word_en;
   }
-  
+
   // Show example sentence if available
   if (current.example_de && current.example_en) {
     mcContextExampleEl.textContent = `Example: "${current.example_de}" — "${current.example_en}"`;
     mcContextExampleEl.classList.remove("hidden");
   }
-  
-  const correctAnswer = direction === "de-to-en" ? current.word_en : current.word_de;
+
+  const correctAnswer =
+    direction === "de-to-en" ? current.word_en : current.word_de;
   const options = generateMultipleChoiceOptions(correctAnswer, direction);
-  
+
   const optionsContainer = document.getElementById("mc-options");
   optionsContainer.innerHTML = "";
-  
-  options.forEach(option => {
+
+  options.forEach((option) => {
     const btn = document.createElement("button");
     btn.className = "mc-option";
     btn.textContent = option;
-    btn.addEventListener("click", () => handleMultipleChoiceAnswer(option, correctAnswer));
+    btn.addEventListener("click", () =>
+      handleMultipleChoiceAnswer(option, correctAnswer),
+    );
     optionsContainer.appendChild(btn);
   });
 }
@@ -430,15 +472,15 @@ function setupMultipleChoiceQuestion() {
 function generateMultipleChoiceOptions(correctAnswer, dir) {
   const options = [correctAnswer];
   const wrongAnswers = filtered
-    .filter(w => {
+    .filter((w) => {
       const answer = dir === "de-to-en" ? w.word_en : w.word_de;
       return answer !== correctAnswer && answer !== null;
     })
-    .map(w => dir === "de-to-en" ? w.word_en : w.word_de)
+    .map((w) => (dir === "de-to-en" ? w.word_en : w.word_de))
     .filter((v, i, a) => a.indexOf(v) === i)
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
-  
+
   options.push(...wrongAnswers);
   return options.sort(() => Math.random() - 0.5);
 }
@@ -446,7 +488,7 @@ function generateMultipleChoiceOptions(correctAnswer, dir) {
 function handleMultipleChoiceAnswer(selected, correct) {
   totalCount++;
   const isCorrect = selected.toLowerCase() === correct.toLowerCase();
-  
+
   if (isCorrect) {
     correctCount++;
     streakCount++;
@@ -459,14 +501,14 @@ function handleMultipleChoiceAnswer(selected, correct) {
     feedbackEl.className = "incorrect";
     updateSRS(current, false);
   }
-  
+
   updateStats();
-  
+
   const buttons = document.querySelectorAll(".mc-option");
-  buttons.forEach(btn => btn.disabled = true);
-  
+  buttons.forEach((btn) => (btn.disabled = true));
+
   setTimeout(() => {
-    buttons.forEach(btn => btn.disabled = false);
+    buttons.forEach((btn) => (btn.disabled = false));
     newWord();
   }, 1500);
 }
@@ -475,26 +517,36 @@ function setupMatchingGame() {
   const grid = document.getElementById("matching-grid");
   grid.innerHTML = "";
   matchedCount = 0;
-  
+
   const pairs = [];
-  const available = filtered.filter(w => w.word_en && w.word_de);
-  
+  const available = filtered.filter((w) => w.word_en && w.word_de);
+
   for (let i = 0; i < Math.min(8, available.length); i++) {
     const word = available[Math.floor(Math.random() * available.length)];
-    if (!pairs.find(p => p.word_de === word.word_de)) pairs.push(word);
+    if (!pairs.find((p) => p.word_de === word.word_de)) pairs.push(word);
   }
-  
+
   matchingPairs = pairs;
-  
+
   const cards = [];
   pairs.forEach((pair, index) => {
-    cards.push({ id: `de-${index}`, word: pair.word_de, pairId: index, lang: 'de' });
-    cards.push({ id: `en-${index}`, word: pair.word_en, pairId: index, lang: 'en' });
+    cards.push({
+      id: `de-${index}`,
+      word: pair.word_de,
+      pairId: index,
+      lang: "de",
+    });
+    cards.push({
+      id: `en-${index}`,
+      word: pair.word_en,
+      pairId: index,
+      lang: "en",
+    });
   });
-  
+
   cards.sort(() => Math.random() - 0.5);
-  
-  cards.forEach(card => {
+
+  cards.forEach((card) => {
     const cardEl = document.createElement("div");
     cardEl.className = "matching-card";
     cardEl.dataset.id = card.id;
@@ -506,16 +558,20 @@ function setupMatchingGame() {
 }
 
 function handleCardClick(cardEl) {
-  if (cardEl.classList.contains("matched") || cardEl.classList.contains("selected")) return;
-  
+  if (
+    cardEl.classList.contains("matched") ||
+    cardEl.classList.contains("selected")
+  )
+    return;
+
   cardEl.classList.add("selected");
-  
+
   if (!selectedCard) {
     selectedCard = cardEl;
   } else {
     const pairId1 = selectedCard.dataset.pairId;
     const pairId2 = cardEl.dataset.pairId;
-    
+
     if (pairId1 === pairId2) {
       selectedCard.classList.add("matched");
       cardEl.classList.add("matched");
@@ -523,7 +579,7 @@ function handleCardClick(cardEl) {
       cardEl.classList.remove("selected");
       matchedCount++;
       selectedCard = null;
-      
+
       if (matchedCount === matchingPairs.length) {
         feedbackEl.textContent = "🎉 All pairs matched! Starting new round...";
         feedbackEl.className = "correct";
@@ -541,18 +597,20 @@ function handleCardClick(cardEl) {
 
 function handleSubmit() {
   const user = answerInput.value.trim().toLowerCase();
-  
+
   let correctAnswers = [];
   if (direction === "de-to-en") {
     correctAnswers.push(current.word_en.toLowerCase());
-    if (current.word_en_plural) correctAnswers.push(current.word_en_plural.toLowerCase());
+    if (current.word_en_plural)
+      correctAnswers.push(current.word_en_plural.toLowerCase());
   } else {
     correctAnswers.push(current.word_de.toLowerCase());
-    if (current.forms && current.forms.plural) correctAnswers.push(current.forms.plural.toLowerCase());
+    if (current.forms && current.forms.plural)
+      correctAnswers.push(current.forms.plural.toLowerCase());
   }
-  
+
   totalCount++;
-  
+
   if (correctAnswers.includes(user)) {
     correctCount++;
     streakCount++;
@@ -566,7 +624,7 @@ function handleSubmit() {
     feedbackEl.className = "incorrect";
     updateSRS(current, false);
   }
-  
+
   updateStats();
   setTimeout(newWord, 1500);
 }
@@ -574,11 +632,11 @@ function handleSubmit() {
 function updateProgressDisplay() {
   const statsDiv = document.getElementById("progress-stats");
   const practicedWords = Object.keys(srsData).length;
-  const masteredWords = Object.values(srsData).filter(d => {
+  const masteredWords = Object.values(srsData).filter((d) => {
     const rate = d.correct / d.total;
     return d.total >= 5 && rate >= 0.8;
   }).length;
-  
+
   statsDiv.innerHTML = `
     <div class="progress-stat">
       <span class="stat-label">Words Practiced</span>
@@ -592,8 +650,12 @@ function updateProgressDisplay() {
 }
 
 function resetProgress() {
-  if (confirm("Are you sure you want to reset all progress? This cannot be undone.")) {
-    localStorage.removeItem('germanSRS');
+  if (
+    confirm(
+      "Are you sure you want to reset all progress? This cannot be undone.",
+    )
+  ) {
+    localStorage.removeItem("germanSRS");
     srsData = {};
     updateProgressDisplay();
     feedbackEl.textContent = "Progress reset successfully!";
