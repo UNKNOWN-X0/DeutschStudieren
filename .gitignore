@@ -1,1 +1,6 @@
 Nothing should be ignored in this case, as the changes only include source files (.md, .html, .js, .css) without any build artifacts, dependencies, or temporary files.
+# Graphify local cache and extraction sidecars
+graphify-out/cache/
+graphify-out/cost.json
+graphify-out/.graphify_*
+!graphify-out/.graphify_labels.json
