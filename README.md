@@ -2,7 +2,7 @@
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![HTML5](https://img.shields.io/badge/HTML5-CSS3-orange)](https://developer.mozilla.org/)
-[![Latest release](https://img.shields.io/github/v/release/UNKNOWN-X0/DeutschStudieren)](https://github.com/UNKNOWN-X0/DeutschStudieren/releases)
+[![Version](https://img.shields.io/badge/version-V3.0-green.svg)](https://github.com/UNKNOWN-X0/DeutschStudieren/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A browser-based German vocabulary trainer with typed answers, multiple choice, matching pairs, and performance-weighted word practice.
