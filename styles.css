@@ -839,3 +839,8 @@ select:focus {
   color: #aaa;
   font-style: italic;
 }
+
+/* Keep the idle online indicator hidden despite its flex layout. */
+.online-status.hidden {
+  display: none;
+}

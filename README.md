@@ -54,7 +54,7 @@ An interactive web application for learning German vocabulary with multiple prac
 /workspace
 ├── index.html          # Main HTML structure with new UI components
 ├── styles.css          # Enhanced styling for all game modes
-├── script.js           # Complete rewrite with SRS and multiple modes
+├── js/                 # Setup, SRS, vocabulary API, and practice-mode modules
 ├── words.js            # 1,663+ German vocabulary words
 └── README.md           # This file
 ```
@@ -213,3 +213,17 @@ If you find this app helpful, consider:
 ---
 
 **Happy Learning! Viel Erfolg!** 🎉🇩🇪
+
+## Module map
+
+- `index.html`: layout and ordered script loading; `styles.css`: presentation.
+- `words.js`: vocabulary data, loaded before the feature scripts.
+- `js/state.js`, `js/dom.js`: practice state and element references.
+- `js/setup.js`: event wiring, categories, and progress visibility.
+- `js/spaced-repetition.js`: persistence and word weighting.
+- `js/vocabulary-api.js`: online vocabulary requests and status.
+- `js/practice.js`: starting a session and input questions.
+- `js/multiple-choice.js`, `js/matching.js`: individual practice modes.
+- `js/answers-and-progress.js`: typed-answer scoring, progress, and startup.
+
+These are classic feature scripts sharing the original scope. Preserve their order in `index.html`; no build step is required. Preview with Live Server.
