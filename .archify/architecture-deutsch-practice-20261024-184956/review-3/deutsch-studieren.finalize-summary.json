@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+    "sha256": "7e50b4ab157982f4141f3e60a3946562385453b787ad4929f471c5048c11525e",
+    "bytes": 7289
+  },
+  "artifact": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+    "sha256": "dd68ea468d198018b5a23d166f7515121e9de8021dc60445c0ee032b313b1163",
+    "bytes": 831461
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.23.1, libuv 1.51.0, darwin; pid=31177, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize.json",
+    "summaryReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize-summary.json",
+    "browserCheckReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:48:29.002Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1143,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

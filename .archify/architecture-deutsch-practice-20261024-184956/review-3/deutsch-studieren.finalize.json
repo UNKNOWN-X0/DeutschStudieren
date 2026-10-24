@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-24T17:22:37.155Z",
+  "specification": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+    "sha256": "7e50b4ab157982f4141f3e60a3946562385453b787ad4929f471c5048c11525e",
+    "bytes": 7289
+  },
+  "artifact": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+    "sha256": "dd68ea468d198018b5a23d166f7515121e9de8021dc60445c0ee032b313b1163",
+    "bytes": 831461
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Users/thanate/.nvm/versions/node/v22.23.1/bin/node",
+        "/Users/thanate/.codex/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/Users/thanate/Developer/Education/DeutschStudieren",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "7e50b4ab157982f4141f3e60a3946562385453b787ad4929f471c5048c11525e",
+          "bytes": 7289
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 412,
+      "command": [
+        "/Users/thanate/.nvm/versions/node/v22.23.1/bin/node",
+        "/Users/thanate/.codex/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/Users/thanate/Developer/Education/DeutschStudieren",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "d4c77952-0f89-458c-b9fc-00a92a195e8e",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+        "output": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "specification": {
+          "sha256": "7e50b4ab157982f4141f3e60a3946562385453b787ad4929f471c5048c11525e",
+          "bytes": 7289
+        },
+        "artifact": {
+          "sha256": "dd68ea468d198018b5a23d166f7515121e9de8021dc60445c0ee032b313b1163",
+          "bytes": 831461
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/UNKNOWN-X0/DeutschStudieren",
+          "revision": "489252e23e5fd1f14b93837aee6ad9d1a4f5cede",
+          "references": 19
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 132,
+      "command": [
+        "/Users/thanate/.nvm/versions/node/v22.23.1/bin/node",
+        "/Users/thanate/.codex/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "artifact": {
+          "sha256": "dd68ea468d198018b5a23d166f7515121e9de8021dc60445c0ee032b313b1163",
+          "bytes": 831461
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 59.5,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 6.3,
+            "maxBends": 1,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 13,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 1,
+            "shortEndpointSegmentCount": 1,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": true,
+            "emptyTopPx": 65,
+            "emptyTopRatio": 0.097,
+            "occupiedTop": 65,
+            "viewBoxTop": 0,
+            "canvasHeight": 667,
+            "typicalNodeHeight": 74,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "recognized-declared-wide",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 1170,
+            "actualBudgetPx": 1170,
+            "actualReaderWidth": 1200,
+            "desiredReaderWidth": 1200,
+            "viewportCap": 1376,
+            "limit": "source-size",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "practice-app"
+            },
+            "minimumSourceTextPx": 6.3,
+            "minimumProjectedTextPx": 6.3,
+            "semanticTextCount": 30
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "d4c77952-0f89-458c-b9fc-00a92a195e8e"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 428,
+      "command": [
+        "/Users/thanate/.nvm/versions/node/v22.23.1/bin/node",
+        "/Users/thanate/.codex/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "d4c77952-0f89-458c-b9fc-00a92a195e8e",
+        "artifact": {
+          "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+          "sha256": "dd68ea468d198018b5a23d166f7515121e9de8021dc60445c0ee032b313b1163",
+          "bytes": 831461
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/browser-check-runtime",
+            "severity": "error",
+            "message": "browser-check could not complete its Chrome inspection.",
+            "subject": {
+              "artifact": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html"
+            },
+            "evidence": {
+              "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.23.1, libuv 1.51.0, darwin; pid=31177, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+            },
+            "supportedFixes": [
+              "resolve the reported Chrome inspection error, then rerun browser-check"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3",
+          "receipt": "deutsch-studieren.browser-check.json",
+          "files": []
+        },
+        "error": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.23.1, libuv 1.51.0, darwin; pid=31177, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.23.1, libuv 1.51.0, darwin; pid=31177, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize.json",
+    "summaryReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize-summary.json",
+    "browserCheckReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-10-24T17:22:38.298Z",
+  "durationMs": 1143,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:48:29.002Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
