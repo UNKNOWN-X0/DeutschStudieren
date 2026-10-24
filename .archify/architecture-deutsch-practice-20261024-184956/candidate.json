@@ -2,14 +2,15 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "DeutschStudieren — Browser Practice Architecture",
+    "title": "DeutschStudieren Architecture",
     "output": ".archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
     "quality_profile": "showcase",
+    "locale": "en",
     "repository": {
       "url": "https://github.com/UNKNOWN-X0/DeutschStudieren.git",
       "provider": "github",
       "link_mode": "web",
-      "revision": "489252e23e5fd1f14b93837aee6ad9d1a4f5cede"
+      "revision": "5f70455f3a93f29966531b3f50ad48356aec0e90"
     }
   },
   "components": [
@@ -17,14 +18,14 @@
       "id": "learner",
       "type": "external",
       "label": "Learner",
-      "sublabel": "chooses source and practice mode",
+      "sublabel": "chooses vocabulary and practice mode",
       "pos": [
         40,
-        65
+        120
       ],
       "size": [
-        145,
-        64
+        175,
+        78
       ],
       "sources": [
         {
@@ -38,14 +39,14 @@
       "id": "pages",
       "type": "cloud",
       "label": "GitHub Pages",
-      "sublabel": "hosted German Practice app",
+      "sublabel": "hosted German practice app",
       "pos": [
         250,
-        65
+        120
       ],
       "size": [
-        155,
-        64
+        190,
+        78
       ],
       "sources": [
         {
@@ -61,123 +62,126 @@
       ]
     },
     {
-      "id": "practice-app",
+      "id": "practice-page",
       "type": "frontend",
-      "label": "German Practice app",
-      "sublabel": "typed · multiple choice · matching · progress",
+      "label": "Practice page",
+      "sublabel": "controls · practice · progress",
       "pos": [
-        490,
-        165
+        470,
+        120
       ],
       "size": [
-        180,
-        76
+        200,
+        84
       ],
       "sources": [
         {
           "path": "index.html",
           "line": 26,
-          "end_line": 79
+          "end_line": 80
+        },
+        {
+          "path": "index.html",
+          "line": 82,
+          "end_line": 147
         },
         {
           "path": "index.html",
           "line": 150,
           "end_line": 158
-        },
-        {
-          "path": "README.md",
-          "line": 36,
-          "end_line": 50
         }
       ]
     },
     {
-      "id": "bundled-vocabulary",
-      "type": "database",
-      "label": "Bundled vocabulary",
-      "sublabel": "words.js · 1,663 local words",
+      "id": "session-controller",
+      "type": "frontend",
+      "label": "Session setup and flow",
+      "sublabel": "source · direction · mode",
       "pos": [
-        725,
-        130
+        470,
+        275
       ],
       "size": [
-        180,
-        74
+        210,
+        88
       ],
       "sources": [
         {
-          "path": "index.html",
-          "line": 8
+          "path": "js/setup.js",
+          "line": 1,
+          "end_line": 25
         },
         {
-          "path": "index.html",
-          "line": 27,
-          "end_line": 33
+          "path": "js/state.js",
+          "line": 4,
+          "end_line": 22
         },
+        {
+          "path": "js/practice.js",
+          "line": 1,
+          "end_line": 55
+        }
+      ]
+    },
+    {
+      "id": "bundled-words",
+      "type": "database",
+      "label": "Bundled German words",
+      "sublabel": "words.js · 1,663 entries",
+      "pos": [
+        700,
+        85
+      ],
+      "size": [
+        200,
+        80
+      ],
+      "sources": [
         {
           "path": "words.js",
           "line": 1,
           "end_line": 12
+        },
+        {
+          "path": "index.html",
+          "line": 7,
+          "end_line": 8
+        },
+        {
+          "path": "index.html",
+          "line": 29,
+          "end_line": 39
         }
       ]
     },
     {
-      "id": "progress-store",
-      "type": "database",
-      "label": "Practice progress",
-      "sublabel": "browser localStorage · germanSRS",
-      "pos": [
-        725,
-        285
-      ],
-      "size": [
-        180,
-        74
-      ],
-      "sources": [
-        {
-          "path": "README.md",
-          "line": 19
-        },
-        {
-          "path": "README.md",
-          "line": 62
-        },
-        {
-          "path": "js/spaced-repetition.js",
-          "line": 1,
-          "end_line": 23
-        }
-      ]
-    },
-    {
-      "id": "online-vocabulary",
+      "id": "online-loader",
       "type": "frontend",
-      "label": "Online vocabulary module",
-      "sublabel": "js/vocabulary-api.js",
+      "label": "Online vocabulary loader",
+      "sublabel": "topic → related words → German",
       "pos": [
-        725,
-        440
+        700,
+        230
       ],
       "size": [
-        180,
-        74
+        200,
+        86
       ],
       "sources": [
         {
           "path": "js/vocabulary-api.js",
           "line": 12,
-          "end_line": 28
+          "end_line": 50
         },
         {
           "path": "js/vocabulary-api.js",
           "line": 55,
-          "end_line": 65
+          "end_line": 83
         },
         {
           "path": "js/vocabulary-api.js",
-          "line": 128,
-          "end_line": 146
+          "line": 86,
+          "end_line": 125
         }
       ]
     },
@@ -187,18 +191,18 @@
       "label": "Datamuse API",
       "sublabel": "related English words",
       "pos": [
-        975,
-        390
+        955,
+        150
       ],
       "size": [
-        155,
-        74
+        165,
+        78
       ],
       "sources": [
         {
           "path": "js/vocabulary-api.js",
-          "line": 53,
-          "end_line": 78
+          "line": 55,
+          "end_line": 83
         }
       ]
     },
@@ -206,20 +210,165 @@
       "id": "mymemory",
       "type": "external",
       "label": "MyMemory API",
-      "sublabel": "English → German translations",
+      "sublabel": "English → German translation",
       "pos": [
-        975,
-        515
+        955,
+        290
       ],
       "size": [
-        155,
-        74
+        175,
+        82
       ],
       "sources": [
         {
           "path": "js/vocabulary-api.js",
           "line": 86,
+          "end_line": 147
+        }
+      ]
+    },
+    {
+      "id": "typed-mode",
+      "type": "frontend",
+      "label": "Typed-answer mode",
+      "sublabel": "answer check · score + SRS",
+      "pos": [
+        700,
+        370
+      ],
+      "size": [
+        200,
+        84
+      ],
+      "sources": [
+        {
+          "path": "js/practice.js",
+          "line": 68,
           "end_line": 105
+        },
+        {
+          "path": "js/answers-and-progress.js",
+          "line": 1,
+          "end_line": 46
+        },
+        {
+          "path": "index.html",
+          "line": 110,
+          "end_line": 120
+        }
+      ]
+    },
+    {
+      "id": "multiple-choice-mode",
+      "type": "frontend",
+      "label": "Multiple-choice mode",
+      "sublabel": "choices · score + SRS",
+      "pos": [
+        700,
+        505
+      ],
+      "size": [
+        205,
+        84
+      ],
+      "sources": [
+        {
+          "path": "js/multiple-choice.js",
+          "line": 1,
+          "end_line": 38
+        },
+        {
+          "path": "js/multiple-choice.js",
+          "line": 40,
+          "end_line": 83
+        },
+        {
+          "path": "index.html",
+          "line": 122,
+          "end_line": 127
+        }
+      ]
+    },
+    {
+      "id": "matching-mode",
+      "type": "frontend",
+      "label": "Matching-pairs mode",
+      "sublabel": "up to 8 pairs · next round",
+      "pos": [
+        700,
+        640
+      ],
+      "size": [
+        205,
+        84
+      ],
+      "sources": [
+        {
+          "path": "js/matching.js",
+          "line": 1,
+          "end_line": 49
+        },
+        {
+          "path": "js/matching.js",
+          "line": 51,
+          "end_line": 90
+        },
+        {
+          "path": "index.html",
+          "line": 129,
+          "end_line": 135
+        }
+      ]
+    },
+    {
+      "id": "srs-engine",
+      "type": "frontend",
+      "label": "Spaced-repetition logic",
+      "sublabel": "weights words by past accuracy",
+      "pos": [
+        470,
+        475
+      ],
+      "size": [
+        200,
+        84
+      ],
+      "sources": [
+        {
+          "path": "js/spaced-repetition.js",
+          "line": 1,
+          "end_line": 47
+        }
+      ]
+    },
+    {
+      "id": "progress-storage",
+      "type": "database",
+      "label": "Browser progress storage",
+      "sublabel": "localStorage · germanSRS",
+      "pos": [
+        470,
+        620
+      ],
+      "size": [
+        200,
+        82
+      ],
+      "sources": [
+        {
+          "path": "js/spaced-repetition.js",
+          "line": 1,
+          "end_line": 5
+        },
+        {
+          "path": "README.md",
+          "line": 60,
+          "end_line": 62
+        },
+        {
+          "path": "js/answers-and-progress.js",
+          "line": 68,
+          "end_line": 79
         }
       ]
     },
@@ -227,14 +376,14 @@
       "id": "repository",
       "type": "cloud",
       "label": "GitHub repository",
-      "sublabel": "HTML · CSS · JavaScript",
+      "sublabel": "static HTML · CSS · JavaScript",
       "pos": [
-        250,
-        430
+        40,
+        680
       ],
       "size": [
-        155,
-        64
+        185,
+        76
       ],
       "sources": [
         {
@@ -248,14 +397,14 @@
       "id": "jekyll-ci",
       "type": "cloud",
       "label": "Jekyll CI",
-      "sublabel": "site build check",
+      "sublabel": "Docker build on push / PR to main",
       "pos": [
         250,
-        535
+        680
       ],
       "size": [
-        155,
-        64
+        205,
+        80
       ],
       "sources": [
         {
@@ -269,12 +418,17 @@
   "boundaries": [
     {
       "kind": "region",
-      "label": "Learner’s browser",
+      "label": "Learner's browser",
       "wraps": [
-        "practice-app",
-        "bundled-vocabulary",
-        "progress-store",
-        "online-vocabulary"
+        "practice-page",
+        "session-controller",
+        "bundled-words",
+        "online-loader",
+        "typed-mode",
+        "multiple-choice-mode",
+        "matching-mode",
+        "srs-engine",
+        "progress-storage"
       ]
     }
   ],
@@ -286,69 +440,122 @@
       "label": "HTTPS"
     },
     {
-      "id": "pages-to-app",
+      "id": "pages-to-practice",
       "from": "pages",
-      "to": "practice-app",
-      "label": "serves static UI"
+      "to": "practice-page",
+      "label": "serves static page"
     },
     {
       "id": "repository-to-pages",
       "from": "repository",
       "to": "pages",
-      "label": "app source files"
+      "label": "site content"
     },
     {
       "id": "repository-to-ci",
       "from": "repository",
       "to": "jekyll-ci",
-      "label": "push / PR build"
+      "label": "push / PR to main"
     },
     {
-      "id": "app-to-bundled-vocabulary",
-      "from": "bundled-vocabulary",
-      "to": "practice-app",
-      "label": "local source mode"
+      "id": "page-to-session",
+      "from": "practice-page",
+      "to": "session-controller",
+      "label": "loads classic scripts in order"
     },
     {
-      "id": "app-to-progress",
-      "from": "practice-app",
-      "to": "progress-store",
-      "label": "read / save SRS data"
+      "id": "words-to-session",
+      "from": "bundled-words",
+      "to": "session-controller",
+      "label": "local list · selected category"
     },
     {
-      "id": "app-to-online-module",
-      "from": "practice-app",
-      "to": "online-vocabulary",
-      "label": "online topic mode"
+      "id": "session-to-online",
+      "from": "session-controller",
+      "to": "online-loader",
+      "label": "fetch entered topic"
     },
     {
       "id": "online-to-datamuse",
-      "from": "online-vocabulary",
+      "from": "online-loader",
       "to": "datamuse",
-      "label": "topic → related words"
+      "label": "find related words"
     },
     {
       "id": "online-to-mymemory",
-      "from": "online-vocabulary",
+      "from": "online-loader",
       "to": "mymemory",
-      "label": "terms → translations"
+      "label": "translate terms"
+    },
+    {
+      "id": "session-to-typed",
+      "from": "session-controller",
+      "to": "typed-mode",
+      "label": "choose typed mode"
+    },
+    {
+      "id": "session-to-multiple-choice",
+      "from": "session-controller",
+      "to": "multiple-choice-mode",
+      "label": "choose multiple choice"
+    },
+    {
+      "id": "session-to-matching",
+      "from": "session-controller",
+      "to": "matching-mode",
+      "label": "choose matching"
+    },
+    {
+      "id": "session-to-srs",
+      "from": "session-controller",
+      "to": "srs-engine",
+      "label": "select weighted word · typed / choice"
+    },
+    {
+      "id": "typed-to-srs",
+      "from": "typed-mode",
+      "to": "srs-engine",
+      "label": "record answer correctness"
+    },
+    {
+      "id": "multiple-choice-to-srs",
+      "from": "multiple-choice-mode",
+      "to": "srs-engine",
+      "label": "record answer correctness"
+    },
+    {
+      "id": "srs-to-storage",
+      "from": "srs-engine",
+      "to": "progress-storage",
+      "label": "read / write germanSRS"
     }
   ],
   "cards": [
     {
       "dot": "cyan",
-      "title": "Vocabulary choices",
+      "title": "Vocabulary sources",
       "items": [
-        "The bundled word list works without a network connection. (README.md:30)",
-        "Online mode sends the requested topic to Datamuse and vocabulary terms to MyMemory. (README.md:62; js/vocabulary-api.js:53–78, 128–142)"
+        "The bundled list loads with the page, works offline, and is filtered by category. (index.html:7–8, 29–39; README.md:28–30)",
+        "Online mode sends the topic to Datamuse, then translates related English terms through MyMemory. Datamuse failure falls back to the topic alone; if translation yields no usable words, the session cannot start. (js/vocabulary-api.js:12–50, 55–83, 86–125)",
+        "The online services depend on the network. The topic goes to Datamuse and vocabulary terms go to MyMemory. (README.md:32–34, 60–62)"
       ]
     },
     {
       "dot": "emerald",
-      "title": "Saved progress",
+      "title": "Practice and progress",
       "items": [
-        "Spaced-repetition counts and last-practiced dates are stored under germanSRS in local browser storage. (js/spaced-repetition.js:1–5, 16–23)",
-        "Clearing browser storage removes that progress. (README.md:62)"
+        "Typed and multiple-choice answers update the score and SRS record. Lower past success raises a word's selection weight. (js/answers-and-progress.js:28–45; js/multiple-choice.js:56–75; js/spaced-repetition.js:8–23, 26–47)",
+        "Matching displays up to eight pairs and starts another round when all are matched. Its handler does not update answer counts or SRS progress. (js/matching.js:9–20, 51–89)",
+        "Progress stays in this browser under germanSRS. Reset removes that key; clearing browser storage also removes the saved record. (js/spaced-repetition.js:1–5; js/answers-and-progress.js:68–79; README.md:60–62)"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Hosting and checks",
+      "items": [
+        "The README links to the hosted GitHub Pages app. The checked-in files don't specify the Pages deployment branch or source setting. (README.md:8–10, 24–30)",
+        "The Jekyll Docker workflow runs on pushes and pull requests to main and builds the site; it has no publish step. (README.md:52–58; .github/workflows/jekyll-docker.yml:1–19)",
+        "For local use, open index.html directly; no build or package install is required. (README.md:28–30)"
       ]
     }
   ]

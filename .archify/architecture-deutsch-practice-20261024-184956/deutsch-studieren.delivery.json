@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "82f168bd-9d94-4166-8442-75fab1a5d610",
+  "receiptId": "224c06ab-87ed-4fc3-ac3e-6b1f9cd5aeae",
   "status": "current",
   "command": "deliver",
   "type": "architecture",
   "input": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
   "output": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
   "specification": {
-    "sha256": "7e50b4ab157982f4141f3e60a3946562385453b787ad4929f471c5048c11525e",
-    "bytes": 7289
+    "sha256": "df6dc97d97b66507326f0f597e1caa3ba268d9c76f2e46222321271f15497ae8",
+    "bytes": 12671
   },
   "artifact": {
-    "sha256": "d6fd9992c5220993b7022f57b35d9ffd72ec74066aa11fa617e1807d420cac49",
-    "bytes": 831241
+    "sha256": "2498a9fd446a4b743ee9b98477bdf9640cafd0adb84131bae21209cb204bb0e2",
+    "bytes": 851512
   }
 }

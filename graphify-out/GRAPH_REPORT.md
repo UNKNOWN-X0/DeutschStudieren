@@ -1,12 +1,19 @@
 # Graph Report - DeutschStudieren  (2026-10-24)
 
 ## Corpus Check
-- Corpus is ~31,869 words - fits in a single context window. You may not need a graph.
+- 30 files · ~106,332 words
+- Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 4 file(s) not represented in the graph (top: (none) 3, .css 1)
 
 ## Summary
-- 109 nodes · 122 edges · 12 communities (9 shown, 3 thin omitted)
+- 119 nodes · 129 edges · 15 communities (10 shown, 5 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.85)
-- Token cost: unavailable (agent usage metadata was not exposed)
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `5f70455f`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - DOM and Progress State
@@ -20,6 +27,9 @@
 - Multiple Choice Mode
 - Shared Session State
 - Matching Mode
+- Q: How should DeutschStudieren's architecture and graph cover its full learning journey, state, external services, and deployment?
+- Project instructions
+- CLAUDE.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `init()` - 8 edges
@@ -30,8 +40,8 @@
 6. `handleStart()` - 4 edges
 7. `newWord()` - 4 edges
 8. `fetchOnlineVocabulary()` - 4 edges
-9. `build` - 3 edges
-10. `handleSubmit()` - 3 edges
+9. `Q: How should DeutschStudieren's architecture and graph cover its full learning journey, state, external services, and deployment?` - 4 edges
+10. `build` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `handleSubmit()` --indirect_call--> `newWord()`  [INFERRED]
@@ -42,13 +52,13 @@
   js/setup.js → js/answers-and-progress.js
 - `init()` --indirect_call--> `resetProgress()`  [INFERRED]
   js/setup.js → js/answers-and-progress.js
-- `Online topic search control` --implements--> `Online topic-based vocabulary`  [EXTRACTED]
+- `Practice progress view` --conceptually_related_to--> `Local browser progress storage`  [INFERRED]
   index.html → README.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (12 total, 3 thin omitted)
+## Communities (15 total, 5 thin omitted)
 
 ### Community 0 - "DOM and Progress State"
 Cohesion: 0.07
@@ -86,19 +96,23 @@ Nodes (3): generateMultipleChoiceOptions(), handleMultipleChoiceAnswer(), setupM
 Cohesion: 0.50
 Nodes (3): filtered, matchingPairs, usedWords
 
+### Community 12 - "Q: How should DeutschStudieren's architecture and graph cover its full learning journey, state, external services, and deployment?"
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: How should DeutschStudieren's architecture and graph cover its full learning journey, state, external services, and deployment?, Source Nodes
+
 ## Knowledge Gaps
-- **4 isolated node(s):** `Datamuse related-word service`, `MyMemory translation service`, `Performance-weighted spaced repetition`, `Accuracy, answer count, and streak display`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 51 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 isolated node(s):** `Accuracy, answer count, and streak display`, `Datamuse related-word service`, `MyMemory translation service`, `Performance-weighted spaced repetition`
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 59 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `init()` connect `Answer and Progress Flow` to `Practice Session Management`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `init()` (e.g. with `handleSubmit()` and `resetProgress()`) actually correct?**
   _`init()` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Datamuse related-word service`, `MyMemory translation service`, `Performance-weighted spaced repetition` to the rest of the system?**
+- **What connects `Accuracy, answer count, and streak display`, `Datamuse related-word service`, `MyMemory translation service` to the rest of the system?**
   _4 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `DOM and Progress State` be split into smaller, more focused modules?**
   _Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected._

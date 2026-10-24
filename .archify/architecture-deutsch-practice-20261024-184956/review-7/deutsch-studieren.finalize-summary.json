@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/candidate.json",
+    "sha256": "df6dc97d97b66507326f0f597e1caa3ba268d9c76f2e46222321271f15497ae8",
+    "bytes": 12671
+  },
+  "artifact": {
+    "path": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html",
+    "sha256": "2498a9fd446a4b743ee9b98477bdf9640cafd0adb84131bae21209cb204bb0e2",
+    "bytes": 851512
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.finalize.json",
+    "summaryReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.finalize-summary.json",
+    "browserCheckReceipt": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:48:29.002Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3956,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 3,
+      "routesOverSuggestedBends": 4,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "session-to-multiple-choice",
+            "from": "session-controller",
+            "to": "multiple-choice-mode",
+            "label": "choose multiple choice",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "right": {
+            "id": "typed-to-srs",
+            "from": "typed-mode",
+            "to": "srs-engine",
+            "label": "record answer correctness",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            800,
+            458.6111111111111
+          ]
+        },
+        {
+          "left": {
+            "id": "session-to-matching",
+            "from": "session-controller",
+            "to": "matching-mode",
+            "label": "choose matching",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "session-to-srs",
+            "from": "session-controller",
+            "to": "srs-engine",
+            "label": "select weighted word · typed / choice",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "point": [
+            561,
+            449
+          ],
+          "sharedNode": "session-controller"
+        },
+        {
+          "left": {
+            "id": "session-to-matching",
+            "from": "session-controller",
+            "to": "matching-mode",
+            "label": "choose matching",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "srs-to-storage",
+            "from": "srs-engine",
+            "to": "progress-storage",
+            "label": "read / write germanSRS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            570,
+            616
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "pages-to-practice",
+            "from": "pages",
+            "to": "practice-page",
+            "label": "serves static page",
+            "collectionIndex": 1,
+            "artifactIndex": 2
+          },
+          "bends": 3,
+          "stretch": 1.327
+        },
+        {
+          "relationship": {
+            "id": "repository-to-ci",
+            "from": "repository",
+            "to": "jekyll-ci",
+            "label": "push / PR to main",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "bends": 3,
+          "stretch": 1.334
+        },
+        {
+          "relationship": {
+            "id": "session-to-matching",
+            "from": "session-controller",
+            "to": "matching-mode",
+            "label": "choose matching",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "bends": 4,
+          "stretch": 1.567
+        },
+        {
+          "relationship": {
+            "id": "multiple-choice-to-srs",
+            "from": "multiple-choice-mode",
+            "to": "srs-engine",
+            "label": "record answer correctness",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "bends": 3,
+          "stretch": 1.243
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "session-controller → multiple-choice-mode crosses typed-mode → srs-engine: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "session-controller → matching-mode and session-controller → srs-engine cross next to session-controller: move node matching-mode or srs-engine so the two reach session-controller from different sides (for example one level with it, one directly above or below it).",
+      "session-controller → matching-mode crosses srs-engine → progress-storage: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "pages → practice-page needs 3 bends: move node pages or practice-page so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "repository → jekyll-ci needs 3 bends: move node repository or jekyll-ci so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "session-controller → matching-mode needs 4 bends: move node session-controller or matching-mode so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "multiple-choice-mode → srs-engine needs 3 bends: move node multiple-choice-mode or srs-engine so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}
