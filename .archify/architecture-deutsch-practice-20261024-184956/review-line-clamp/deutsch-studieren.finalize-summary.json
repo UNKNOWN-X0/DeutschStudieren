@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "ok": false,
+  "ok": true,
   "command": "finalize",
-  "status": "fail",
+  "status": "pass",
   "type": "architecture",
   "quality": "showcase",
   "specification": {
@@ -19,28 +19,12 @@
     "validate": "pass",
     "deliver": "pass",
     "check": "pass",
-    "browser-check": "fail"
+    "browser-check": "pass"
   },
-  "failedStage": "browser-check",
-  "diagnostics": [
-    {
-      "code": "viewer/browser-check-runtime",
-      "severity": "error",
-      "message": "browser-check could not complete its Chrome inspection.",
-      "subject": {
-        "artifact": "/Users/thanate/Developer/Education/DeutschStudieren/.archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html"
-      },
-      "evidence": {
-        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.23.1, libuv 1.51.0, darwin; pid=8657, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
-      },
-      "supportedFixes": [
-        "resolve the reported Chrome inspection error, then rerun browser-check"
-      ]
-    }
-  ],
+  "diagnostics": [],
   "diagnosticSummary": {
-    "total": 1,
-    "shown": 1,
+    "total": 0,
+    "shown": 0,
     "truncated": false
   },
   "evidence": {
@@ -59,9 +43,9 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 706,
+  "durationMs": 3495,
   "browserCheck": {
     "requested": true,
-    "ran": false
+    "ran": true
   }
 }
