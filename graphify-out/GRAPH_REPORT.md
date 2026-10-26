@@ -1,17 +1,17 @@
-# Graph Report - DeutschStudieren  (2026-10-24)
+# Graph Report - DeutschStudieren  (2026-10-26)
 
 ## Corpus Check
-- 30 files · ~106,332 words
+- 15 files · ~32,134 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 4 file(s) not represented in the graph (top: (none) 3, .css 1)
+- Unclassified: 5 file(s) not represented in the graph (top: (none) 4, .css 1)
 
 ## Summary
-- 119 nodes · 129 edges · 15 communities (10 shown, 5 thin omitted)
+- 117 nodes · 128 edges · 14 communities (10 shown, 4 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5f70455f`
+- Built from commit: `274059c9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -29,7 +29,6 @@
 - Matching Mode
 - Q: How should DeutschStudieren's architecture and graph cover its full learning journey, state, external services, and deployment?
 - Project instructions
-- CLAUDE.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `init()` - 8 edges
@@ -58,7 +57,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (15 total, 5 thin omitted)
+## Communities (14 total, 4 thin omitted)
 
 ### Community 0 - "DOM and Progress State"
 Cohesion: 0.07
@@ -102,8 +101,8 @@ Nodes (4): Answer, Outcome, Q: How should DeutschStudieren's architecture and gr
 
 ## Knowledge Gaps
 - **4 isolated node(s):** `Accuracy, answer count, and streak display`, `Datamuse related-word service`, `MyMemory translation service`, `Performance-weighted spaced repetition`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 59 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 57 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

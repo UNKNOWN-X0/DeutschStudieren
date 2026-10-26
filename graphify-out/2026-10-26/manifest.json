@@ -1,0 +1,224 @@
+{
+  ".github/workflows/jekyll-docker.yml": {
+    "mtime": 1792756185.336436,
+    "seen": 1792799089.370445,
+    "ast_hash": "29fe146da84567bcc68665ce404ff135",
+    "semantic_hash": "29fe146da84567bcc68665ce404ff135"
+  },
+  "js/answers-and-progress.js": {
+    "mtime": 1792764764.3327248,
+    "seen": 1792799089.3704488,
+    "ast_hash": "5e6af30fa71d22db3f953f40a2454198",
+    "semantic_hash": "5e6af30fa71d22db3f953f40a2454198"
+  },
+  "js/dom.js": {
+    "mtime": 1792758084.5885282,
+    "seen": 1792799089.370451,
+    "ast_hash": "e34efee0570c57c2fb00808c79b309a8",
+    "semantic_hash": "e34efee0570c57c2fb00808c79b309a8"
+  },
+  "js/matching.js": {
+    "mtime": 1792763469.165063,
+    "seen": 1792799089.370452,
+    "ast_hash": "ab630334bf760f2a95ee59e9149abaa2",
+    "semantic_hash": "ab630334bf760f2a95ee59e9149abaa2"
+  },
+  "js/multiple-choice.js": {
+    "mtime": 1792763469.1805217,
+    "seen": 1792799089.370453,
+    "ast_hash": "e4e51f1b986dfbb4304ba12fd68671f4",
+    "semantic_hash": "e4e51f1b986dfbb4304ba12fd68671f4"
+  },
+  "js/practice.js": {
+    "mtime": 1792763469.1721354,
+    "seen": 1792799089.370454,
+    "ast_hash": "b58f5eb7e4073f8c99720162847dfa59",
+    "semantic_hash": "b58f5eb7e4073f8c99720162847dfa59"
+  },
+  "js/setup.js": {
+    "mtime": 1792758084.5886092,
+    "seen": 1792799089.370455,
+    "ast_hash": "9ccaefdc18365bbd2c9eaf57b86c0c74",
+    "semantic_hash": "9ccaefdc18365bbd2c9eaf57b86c0c74"
+  },
+  "js/spaced-repetition.js": {
+    "mtime": 1792758084.588692,
+    "seen": 1792799089.370456,
+    "ast_hash": "9d3ac52d237de07976f681ae602c458a",
+    "semantic_hash": "9d3ac52d237de07976f681ae602c458a"
+  },
+  "js/state.js": {
+    "mtime": 1792763469.1547556,
+    "seen": 1792799089.3704572,
+    "ast_hash": "ad86b6cfb3c686572ea0fa22efe9e19e",
+    "semantic_hash": "ad86b6cfb3c686572ea0fa22efe9e19e"
+  },
+  "js/vocabulary-api.js": {
+    "mtime": 1792758084.5888593,
+    "seen": 1792799089.3704572,
+    "ast_hash": "9bb435dc8ec89837518a9bfa2545e6a0",
+    "semantic_hash": "9bb435dc8ec89837518a9bfa2545e6a0"
+  },
+  "tests/functionality.test.cjs": {
+    "mtime": 1792764764.3479114,
+    "seen": 1792799089.3704581,
+    "ast_hash": "3bb59752d2a5fce976fcbb095662b644",
+    "semantic_hash": "3bb59752d2a5fce976fcbb095662b644"
+  },
+  "words.js": {
+    "mtime": 1792756185.8030002,
+    "seen": 1792799089.3704588,
+    "ast_hash": "30face272ad09db581ed4574bd19e1a7",
+    "semantic_hash": "30face272ad09db581ed4574bd19e1a7"
+  },
+  "README.md": {
+    "mtime": 1792793610.5610597,
+    "seen": 1792799089.3704598,
+    "ast_hash": "9f0e39c5f3fe840be6b1716fc15c394a",
+    "semantic_hash": "9f0e39c5f3fe840be6b1716fc15c394a"
+  },
+  "index.html": {
+    "mtime": 1792758084.5899115,
+    "seen": 1792799089.370461,
+    "ast_hash": "8e2784e3e48a2e88e35a7096ba8dc5d6",
+    "semantic_hash": "8e2784e3e48a2e88e35a7096ba8dc5d6"
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/candidate.json": {
+    "mtime": 1792874179.456928,
+    "seen": 1792874328.584085,
+    "ast_hash": "4dcfb4e80a166bce89d6b1c8bc6c5881",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.delivery.json": {
+    "mtime": 1792874180.2850647,
+    "seen": 1792874328.584088,
+    "ast_hash": "ac939bbd8a39819cbd0cd7f6b5960cd0",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.browser-check.json": {
+    "mtime": 1792862558.2955022,
+    "seen": 1792874328.58409,
+    "ast_hash": "defc59fb990c78d10c1257b639b1a89f",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize-summary.json": {
+    "mtime": 1792862558.3223958,
+    "seen": 1792874328.584091,
+    "ast_hash": "dc9634ae0e8657fb97978ae5e3ac0877",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-3/deutsch-studieren.finalize.json": {
+    "mtime": 1792862558.3056266,
+    "seen": 1792874328.584092,
+    "ast_hash": "36a0d9e0b2f5e270aa84f998dab1999b",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.browser-check.json": {
+    "mtime": 1792874183.643627,
+    "seen": 1792874328.5840929,
+    "ast_hash": "1b6a4b813e0d930e1d6f7508be166ffe",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.finalize-summary.json": {
+    "mtime": 1792874183.7150943,
+    "seen": 1792874328.5840929,
+    "ast_hash": "68bc3ab9fa377466f9e2f53e83f45b0c",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.finalize.json": {
+    "mtime": 1792874183.6988058,
+    "seen": 1792874328.584094,
+    "ast_hash": "06530c0d350d7f079f1622914473a65f",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.json": {
+    "mtime": 1792874190.727853,
+    "seen": 1792874328.584095,
+    "ast_hash": "8e53822479f123600ac8e65d41e3e5f9",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-line-clamp/deutsch-studieren.browser-check.json": {
+    "mtime": 1792867769.1929681,
+    "seen": 1792874328.584096,
+    "ast_hash": "11f662035beba5f2913ba08119575279",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-line-clamp/deutsch-studieren.finalize-summary.json": {
+    "mtime": 1792867769.2834353,
+    "seen": 1792874328.584097,
+    "ast_hash": "35d0f20c09a505342cbeb3e7b21d0e12",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-line-clamp/deutsch-studieren.finalize.json": {
+    "mtime": 1792867769.2629814,
+    "seen": 1792874328.584097,
+    "ast_hash": "fb1c1c723d4c841b87778cc8fca53121",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1792798532.0171356,
+    "seen": 1792874328.584098,
+    "ast_hash": "861d739e89ffbf840768df26e75b610b",
+    "semantic_hash": ""
+  },
+  ".codex/hooks.json": {
+    "mtime": 1792798531.9544618,
+    "seen": 1792874328.584099,
+    "ast_hash": "1f5eb06d715397e6594b256c05469c6d",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/deutsch-studieren.html": {
+    "mtime": 1792874180.1809037,
+    "seen": 1792874328.584113,
+    "ast_hash": "90491d911c55ccc1f72f9e95e1a3898d",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.html": {
+    "mtime": 1792874190.7267792,
+    "seen": 1792874328.5841138,
+    "ast_hash": "8e1c1ae9b9bc076446a12ef3ef1edf48",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1792868331.153838,
+    "seen": 1792874328.584115,
+    "ast_hash": "1fd840c3868657581070dd0b1de8365e",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1792798532.0167353,
+    "seen": 1792874328.584115,
+    "ast_hash": "67d88e9d0760c3ba54c75dfd9551c1c5",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20261024_202921_2a34b43d_how_should_deutschstudieren_s_architecture_and_gra.md": {
+    "mtime": 1792873761.8469274,
+    "seen": 1792874328.584117,
+    "ast_hash": "fd37fbb26211fc24f2850278f0f003f4",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.1440x900.dark.png": {
+    "mtime": 1792874190.4190238,
+    "seen": 1792874328.584119,
+    "ast_hash": "badb49b33e4afeca68e0619770b74633",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.1440x900.light.png": {
+    "mtime": 1792874189.6496284,
+    "seen": 1792874328.58412,
+    "ast_hash": "ceaa58417f94a795dd523b053e890849",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.2048x1320.dark.png": {
+    "mtime": 1792874190.6868026,
+    "seen": 1792874328.584121,
+    "ast_hash": "dc4611dff07d1dc70937400506c956db",
+    "semantic_hash": ""
+  },
+  ".archify/architecture-deutsch-practice-20261024-184956/review-7/deutsch-studieren.visual-check.2048x1320.light.png": {
+    "mtime": 1792874190.210925,
+    "seen": 1792874328.584121,
+    "ast_hash": "2b26d88504f041b9fa504855da1d3f66",
+    "semantic_hash": ""
+  }
+}
